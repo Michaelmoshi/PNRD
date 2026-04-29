@@ -9,20 +9,26 @@
 </head>
 <body>
     <div id="header"></div>
-    <div id="slider"></div>
+    <div id="slider-placeholder"></div>
     <p>hello world3</p>
-    <div id="footer"></div>
+    <div id="footer-placeholder"></div>
 
+    <script src="script.js"></script>
     <script>
-    async function loadPart(id, file){
+    async function loadPart(id, file, callback) {
       const resp = await fetch(file);
-      const content = await resp.text();
-      document.getElementById(id).innerHTML = content;
+      const html = await resp.text();
+      document.getElementById(id).outerHTML = html;
+      if (typeof callback === 'function') callback();
     }
 
-    loadPart('header','header.html');
-    loadPart('slider','slider.html');
-    loadPart('footer','footer.html');
+    loadPart('header', 'header.html', function () {
+      initMenuToggle();
+    });
+    loadPart('slider-placeholder', 'slider.html', function () {
+      initSlider();
+    });
+    loadPart('footer-placeholder', 'footer.html');
   </script>
 
 </body>
