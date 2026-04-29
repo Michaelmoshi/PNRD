@@ -380,6 +380,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Chargement des composants partiels -->
+  <!-- script.js doit être chargé EN PREMIER pour que initSlider() soit disponible -->
+  <script src="script.js"></script>
+
   <script>
     function loadComponent(placeholderId, filePath, callback) {
       fetch(filePath)
@@ -402,8 +405,6 @@
     });
     loadComponent('footer-placeholder', 'footer.html');
   </script>
-
-  <script src="script.js"></script>
 </body>
 
 </html>
