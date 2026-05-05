@@ -89,7 +89,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
+  padding: 20px 30px;
   z-index: 1000;
 }
 
@@ -98,6 +98,10 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.logo a {
+  text-decoration: none;
 }
 
 .logo img {
@@ -166,7 +170,7 @@ nav a:hover::after {
    ============================================================ */
 .slider {
   position: relative;
-  margin-top: 70px;
+  margin-top: 90px;
   height: 400px;
   overflow: hidden;
 }
