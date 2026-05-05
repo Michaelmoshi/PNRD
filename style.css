@@ -25,22 +25,22 @@
    1. VARIABLES CSS
    ============================================================ */
 :root {
-  --color-blue:    #00529b;
-  --color-green:   #607c1d;
-  --color-yellow:  #ffcc00;
-  --color-dark:    #222;
-  --color-gray:    #444;
-  --color-light-bg:#f9fafb;
-  --color-white:   #fff;
+  --color-blue: #00529b;
+  --color-green: #607c1d;
+  --color-yellow: #ffcc00;
+  --color-dark: #222;
+  --color-gray: #444;
+  --color-light-bg: #f9fafb;
+  --color-white: #fff;
   --gradient-main: linear-gradient(90deg, #00529b, #ffcc00, #607c1d);
-  --font-base:     Arial, sans-serif;
-  --radius-sm:     10px;
-  --radius-md:     12px;
-  --radius-lg:     15px;
-  --shadow-sm:     0 2px 6px rgba(0, 0, 0, 0.1);
-  --shadow-md:     0 5px 15px rgba(0, 0, 0, 0.1);
-  --shadow-lg:     0 8px 30px rgba(0, 0, 0, 0.15);
-  --transition:    0.3s ease;
+  --font-base: Arial, sans-serif;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 15px;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --transition: 0.3s ease;
 }
 
 
@@ -536,7 +536,7 @@ nav a:hover::after {
   height: 300px;
 }
 
-.contact-info > div {
+.contact-info>div {
   flex: 1 1 350px;
   min-width: 280px;
   color: var(--color-dark);
@@ -588,14 +588,12 @@ nav a:hover::after {
 .social-icons a.instagram:hover,
 .social-icons a.instagram.active {
   color: #fff;
-  background: radial-gradient(
-    circle at 30% 107%,
-    #fdf497 0%,
-    #fdf497 5%,
-    #fd5949 45%,
-    #d6249f 60%,
-    #285aeb 90%
-  );
+  background: radial-gradient(circle at 30% 107%,
+      #fdf497 0%,
+      #fdf497 5%,
+      #fd5949 45%,
+      #d6249f 60%,
+      #285aeb 90%);
   box-shadow: 0 0 8px #d6249f;
 }
 
@@ -837,11 +835,25 @@ footer {
 }
 
 /* Hover couleurs spécifiques (footer) */
-.social-facebook:hover  { color: #1877f2; }
-.social-twitter:hover   { color: #1da1f2; }
-.social-instagram:hover { color: #e4405f; }
-.social-youtube:hover   { color: #ff0000; }
-.social-whatsapp:hover  { color: #25d366; }
+.social-facebook:hover {
+  color: #1877f2;
+}
+
+.social-twitter:hover {
+  color: #1da1f2;
+}
+
+.social-instagram:hover {
+  color: #e4405f;
+}
+
+.social-youtube:hover {
+  color: #ff0000;
+}
+
+.social-whatsapp:hover {
+  color: #25d366;
+}
 
 /* Bas de footer */
 .footer-bottom {
