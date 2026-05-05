@@ -232,6 +232,10 @@ nav a:hover::after {
    ============================================================ */
 
 /* 6a. Intro */
+.intro-section {
+  text-align: center;
+}
+
 .intro-section p {
   font-size: 1.2rem;
   line-height: 1.6;
@@ -239,6 +243,27 @@ nav a:hover::after {
   margin: 0 auto;
   text-align: justify;
   text-justify: inter-word;
+}
+
+.btn-savoir-plus {
+  display: inline-block;
+  margin-top: 40px;
+  padding: 14px 36px;
+  background: var(--color-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-savoir-plus:hover {
+  background: #003d75;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 82, 155, 0.35);
 }
 
 /* 6b. Vision */
