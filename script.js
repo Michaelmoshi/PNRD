@@ -71,4 +71,26 @@ function initSlider() {
 
 
 
+// Mini-sliders de la section "Qui sommes-nous ?"
+function initIntroGallery() {
+  const sliders = document.querySelectorAll('.mini-slider');
+  sliders.forEach(function (slider) {
+    const slides = slider.querySelectorAll('.mini-slide');
+    if (slides.length < 2) return;
+    let current = 0;
+    const interval = parseInt(slider.dataset.interval) || 3500;
+
+    setInterval(function () {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, interval);
+  });
+}
+
+if (document.querySelector('.mini-slider')) {
+  initIntroGallery();
+}
+
+
 ///////////////////// PAGE MEMBRES/////////////////////////////////////////////////////////////

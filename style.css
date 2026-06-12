@@ -237,16 +237,86 @@ nav a:hover::after {
 
 /* 6a. Intro */
 .intro-section {
-  text-align: center;
+  text-align: left;
 }
 
-.intro-section p {
+/* Disposition 2 colonnes */
+.intro-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* Colonne gauche — galerie */
+.intro-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mini-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mini-slider-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.mini-slider-label i {
+  color: var(--color-green);
+  font-size: 0.9rem;
+}
+
+.mini-slider {
+  position: relative;
+  height: 145px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.13);
+}
+
+.mini-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.85s ease;
+}
+
+.mini-slide.active {
+  opacity: 1;
+}
+
+.mini-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Colonne droite — texte */
+.intro-text h2 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.intro-text p {
   font-size: 1.2rem;
-  line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto;
+  line-height: 1.7;
   text-align: justify;
   text-justify: inter-word;
+  color: var(--color-gray);
+  margin-bottom: 30px;
 }
 
 .btn-savoir-plus {
@@ -873,6 +943,16 @@ footer {
 /* ============================================================
    11. RESPONSIVE — @media (max-width: 768px)
    ============================================================ */
+@media (max-width: 900px) and (min-width: 769px) {
+  .intro-layout {
+    gap: 30px;
+  }
+
+  .mini-slider {
+    height: 120px;
+  }
+}
+
 @media (max-width: 768px) {
 
   /* — Navigation mobile — */
@@ -942,6 +1022,32 @@ footer {
 
   .slider-content p {
     font-size: 1rem;
+  }
+
+  /* — Section Qui sommes-nous — */
+  .intro-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .intro-gallery {
+    order: -1; /* galerie au-dessus du texte */
+  }
+
+  .mini-slider {
+    height: 160px;
+  }
+
+  .intro-section {
+    text-align: center;
+  }
+
+  .intro-text h2 {
+    text-align: center;
+  }
+
+  .intro-text p {
+    text-align: justify;
   }
 
   /* — Événements à venir — */
