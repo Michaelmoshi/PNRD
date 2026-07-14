@@ -280,7 +280,7 @@ nav a:hover::after {
 
 .mini-slider {
   position: relative;
-  height: 145px;
+  height: 190px;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.13);
@@ -677,6 +677,12 @@ nav a:hover::after {
   background: #e6f9ea;
 }
 
+.social-icons a.youtube:hover,
+.social-icons a.youtube.active {
+  color: #ff0000;
+  background: #ffe5e5;
+}
+
 
 /* ============================================================
    8. PARTENAIRES
@@ -694,28 +700,70 @@ nav a:hover::after {
   margin-bottom: 40px;
 }
 
-.partners-logos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 40px;
+.partners-track-wrapper {
+  overflow: hidden;
+  position: relative;
 }
 
-.partners-logos a {
+.partners-track-wrapper::before,
+.partners-track-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.partners-track-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.partners-track-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #fff, transparent);
+}
+
+@keyframes partners-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.partners-track {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  width: max-content;
+  animation: partners-scroll 20s linear infinite;
+}
+
+.partners-track-wrapper:hover .partners-track {
+  animation-play-state: paused;
+}
+
+.partners-track a {
   display: inline-block;
   width: 120px;
-  transition: transform var(--transition), box-shadow var(--transition);
+  flex-shrink: 0;
+  transition: transform var(--transition);
 }
 
-.partners-logos a:hover {
+.partners-track a:hover {
   transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.partners-logos img {
+.partners-track img {
   width: 100%;
   height: auto;
   display: block;
+  filter: grayscale(100%);
+  transition: filter var(--transition);
+}
+
+.partners-track a:hover img {
+  filter: grayscale(0%);
 }
 
 
@@ -793,6 +841,7 @@ nav a:hover::after {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   overflow: hidden;
 }
 
@@ -949,7 +998,7 @@ footer {
   }
 
   .mini-slider {
-    height: 120px;
+    height: 160px;
   }
 }
 
@@ -1035,7 +1084,7 @@ footer {
   }
 
   .mini-slider {
-    height: 160px;
+    height: 200px;
   }
 
   .intro-section {
