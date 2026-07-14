@@ -61,7 +61,7 @@ html {
    3. LAYOUT COMMUN
    ============================================================ */
 section {
-  padding: 70px 20px 40px;
+  padding: 60px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -97,7 +97,7 @@ header {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
 }
 
 .logo a {
@@ -105,22 +105,34 @@ header {
 }
 
 .logo img {
-  height: 50px;
-  width: 50px;
+  height: 80px;
+  width: auto;
   object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.logo a:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-text {
   font-weight: 700;
   font-size: 1.2rem;
   color: var(--color-blue);
+  text-align: center;
+  width: 100%;
 }
 
 .logo-subtext {
   font-size: 0.85rem;
   color: var(--color-green);
   font-style: italic;
-  margin-left: 6px;
+  text-align: center;
+  width: 100%;
+  margin: 0;
 }
 
 /* Navigation */
@@ -597,11 +609,6 @@ nav a.active::after {
 /* ============================================================
    7. CONTACT
    ============================================================ */
-#contact {
-  margin: 80px 0;
-  padding-top: 80px;
-}
-
 #contact h2 {
   margin-bottom: 30px;
 }
@@ -704,8 +711,6 @@ nav a.active::after {
    ============================================================ */
 #partenaires {
   max-width: 960px;
-  margin: 80px auto 100px;
-  padding: 0 20px;
   text-align: center;
 }
 
