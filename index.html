@@ -209,7 +209,7 @@
     <h2>Prochains Événements</h2>
     <div class="events-container">
       <article class="event-card">
-        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
+        <img src="assets/images/Jeunesse1.jpeg"
           alt="Conférence jeunesse" />
         <div class="event-info">
           <time datetime="2025-09-12T15:00">12 septembre 2025 - 15h00</time>
@@ -329,13 +329,54 @@
           devenir membre actif et contribuer au changement.
         </p>
       </div>
-      <form action="https://formspree.io/f/meoznbyg" method="POST">
-        <input type="text" name="Nom complet" placeholder="Nom complet" required />
-        <input type="email" name="Email" placeholder="Adresse email" required />
-        <input type="tel" name="Téléphone" placeholder="Numéro de téléphone" pattern="[0-9+\-\s]{7,15}" required />
-        <textarea name="Détails" placeholder="Détails ou message" rows="4"></textarea>
-        <button type="submit">Envoyer</button>
+      <form id="adhesion-form">
+        <input type="text" id="f-nom" placeholder="Nom complet" required />
+        <input type="email" id="f-email" placeholder="Adresse email" required />
+        <input type="tel" id="f-tel" placeholder="Numéro de téléphone" pattern="[0-9+\-\s]{7,15}" required />
+        <textarea id="f-msg" placeholder="Détails ou message" rows="4"></textarea>
+        <button type="submit" id="adhesion-btn">Envoyer</button>
+        <p id="adhesion-status" style="margin-top:12px; font-weight:600; display:none;"></p>
       </form>
+
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+      <script>
+        (function () {
+          emailjs.init('0VBOxYZujOv7UuSVa');
+        })();
+
+        document.getElementById('adhesion-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+          var btn    = document.getElementById('adhesion-btn');
+          var status = document.getElementById('adhesion-status');
+
+          btn.disabled    = true;
+          btn.textContent = 'Envoi en cours…';
+
+          var params = {
+            nom:       document.getElementById('f-nom').value,
+            email:     document.getElementById('f-email').value,
+            telephone: document.getElementById('f-tel').value,
+            message:   document.getElementById('f-msg').value
+          };
+
+          emailjs.send('service_a2c1zxf', 'template_caknya8', params)
+            .then(function () {
+              status.textContent = 'Message envoyé avec succès !';
+              status.style.color = '#25a244';
+              status.style.display = 'block';
+              document.getElementById('adhesion-form').reset();
+            })
+            .catch(function () {
+              status.textContent = 'Erreur lors de l\'envoi. Réessayez.';
+              status.style.color = '#e53935';
+              status.style.display = 'block';
+            })
+            .finally(function () {
+              btn.disabled    = false;
+              btn.textContent = 'Envoyer';
+            });
+        });
+      </script>
     </div>
   </section>
 
