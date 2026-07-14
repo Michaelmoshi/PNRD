@@ -5,8 +5,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PNRD - Parti National du Renouveau pour le Développement</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Le Parti National du Renouveau pour le Développement (PNRD) œuvre pour un Congo fort, uni et prospère. Rejoignez le mouvement pour la démocratie, la justice et le développement durable." />
+  <meta name="keywords" content="PNRD, parti politique, RDC, Congo, développement, démocratie, renouveau, Kinshasa" />
+  <meta name="author" content="PNRD" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph (partage réseaux sociaux) -->
+  <meta property="og:title" content="PNRD - Parti National du Renouveau pour le Développement" />
+  <meta property="og:description" content="Rejoignez le PNRD, le parti qui œuvre pour un Congo fort, uni et prospère." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_CD" />
+  <meta property="og:image" content="assets/images/Slider1.jpeg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PNRD - Parti National du Renouveau pour le Développement" />
+  <meta name="twitter:description" content="Rejoignez le PNRD, le parti qui œuvre pour un Congo fort, uni et prospère." />
+  <meta name="twitter:image" content="assets/images/Slider1.jpeg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="shortcut icon" href="assets/favicon.svg" />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -25,14 +48,14 @@
       </a>
     </div>
     <nav>
-      <a href="#">Accueil</a>
+      <a href="index.html">Accueil</a>
       <a href="Apropos.html">À propos</a>
       <a href="#vision">Vision</a>
       <a href="#programme">Programmes</a>
       <a href="#prochains-evenements">Prochains événements</a>
       <a href="#evenements">Événements</a>
-      <a href="#contact">Contacts</a>
       <a href="#adhesion">Nous rejoindre</a>
+      <a href="#contact">Contacts</a>
     </nav>
     <div class="menu-toggle" aria-label="Menu">&#9776;</div>
   </header>
@@ -413,9 +436,9 @@
   <!-- Équipe Dirigeante -->
   <section id="equipe-dirigeante" style="max-width:960px; margin:80px auto; padding:0 20px; text-align:center;">
     <h2 style="color:#00529b; font-size:2.4rem; margin-bottom:30px;">Notre Équipe Dirigeante</h2>
-    <img src="https://via.placeholder.com/900x300.png?text=Photo+d%27ensemble+de+l%27%C3%A9quipe"
+     <!--<img src="assets/images/leadership2.jpeg"
       alt="Photo d'ensemble de l'équipe dirigeante"
-      style="width:100%; border-radius:12px; box-shadow:0 3px 15px rgba(0,0,0,0.1); margin-bottom:25px;" />
+      style="width:100%; border-radius:12px; box-shadow:0 3px 15px rgba(0,0,0,0.1); margin-bottom:25px;" />-->
     <p style="font-size:1.15rem; color:#444; max-width:700px; margin:0 auto 40px;">
       L’équipe dirigeante du PNRD est composée de professionnels engagés, passionnés par le développement durable, la
       justice sociale et le progrès de notre nation.
@@ -492,6 +515,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Chargement des composants partiels -->
+  <!-- Bouton retour en haut -->
+  <button id="back-to-top" aria-label="Retour en haut">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
   <!-- script.js doit être chargé EN PREMIER pour que initSlider() soit disponible -->
   <script src="script.js"></script>
 
@@ -516,6 +544,65 @@
       initSlider();
     });
     loadComponent('footer-placeholder', 'footer.html');
+  </script>
+
+  <script>
+    /* Scroll spy — menu actif selon section visible */
+    (function () {
+      var sections = document.querySelectorAll('section[id], div[id="slider-placeholder"]');
+      var navLinks = document.querySelectorAll('nav a');
+
+      function setActive() {
+        var scrollY = window.scrollY + 100;
+        var current = '';
+
+        document.querySelectorAll('section[id]').forEach(function (section) {
+          if (section.offsetTop <= scrollY) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(function (link) {
+          link.classList.remove('active');
+          var href = link.getAttribute('href');
+          if (current && href && href.includes(current)) {
+            link.classList.add('active');
+          }
+          if (!current && (href === 'index.html' || href === '#')) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', setActive);
+      setActive();
+    })();
+
+    /* Bouton retour en haut */
+    var btn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      btn.classList.toggle('visible', window.scrollY > 400);
+    });
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* Animations au scroll */
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(
+      '.vision-item, .programme-item, .event-card, .mini-slider-group, .intro-text, #equipe-dirigeante, #partenaires, #contact'
+    ).forEach(function (el) {
+      el.classList.add('scroll-hidden');
+      observer.observe(el);
+    });
   </script>
 </body>
 

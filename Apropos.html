@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>À propos - PNRD</title>
+  <meta name="description" content="Découvrez l'histoire, les valeurs et la vision du Parti National du Renouveau pour le Développement (PNRD)." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -225,6 +227,16 @@
       initSlider();
     });
     loadComponent('footer-placeholder', 'footer.html');
+  </script>
+
+  <script>
+    /* Lien actif selon la page courante */
+    var page = window.location.pathname.split('/').pop();
+    document.querySelectorAll('nav a').forEach(function (link) {
+      if (link.getAttribute('href') === page) {
+        link.classList.add('active');
+      }
+    });
   </script>
 </body>
 
