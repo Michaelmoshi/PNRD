@@ -88,6 +88,7 @@ html {
   background-color: var(--color-light-bg);
   color: var(--color-dark);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
@@ -774,6 +775,7 @@ nav a.active::after {
   gap: 25px;
   overflow-x: auto;
   padding-bottom: 15px;
+  touch-action: pan-y;
 }
 
 .events-section .event-card {
@@ -1682,6 +1684,7 @@ footer::before {
     box-shadow: none;
     background: none;
     min-height: 0;
+    min-width: 0;
   }
 
   .team-group {
@@ -1714,6 +1717,7 @@ footer::before {
     gap: 20px;
     overflow-x: auto;
     padding-bottom: 15px;
+    touch-action: pan-y;
   }
 
   .member-card {
