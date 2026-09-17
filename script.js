@@ -67,6 +67,7 @@ function initSlider() {
     });
     dots.forEach((dot, i) => {
       dot.classList.toggle("active", i === currentSlide);
+      dot.setAttribute("aria-selected", i === currentSlide ? "true" : "false");
     });
   }
 
@@ -105,6 +106,13 @@ function initSlider() {
     dot.addEventListener("click", () => {
       showSlide(parseInt(dot.dataset.index, 10));
       resetAutoplay();
+    });
+    dot.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        showSlide(parseInt(dot.dataset.index, 10));
+        resetAutoplay();
+      }
     });
   });
 

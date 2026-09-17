@@ -1,5 +1,12 @@
 /* ============================================================
    PNRD - style.css
+
+   Design : couleurs natives PNRD (bleu #00529b, vert #607c1d,
+   jaune #ffcc00) conservées à l'identique. Amélioration de la
+   structure : typographie (Archivo / Work Sans / IBM Plex Mono),
+   signature "horizon doré" sous les titres, hero avec voile
+   dégradé + navigation manuelle, footer bleu nuit.
+
    Structure :
    1.  Variables CSS
    2.  Reset & Base
@@ -20,26 +27,52 @@
    11. Responsive (media queries regroupées)
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 /* ============================================================
    1. VARIABLES CSS
    ============================================================ */
 :root {
-  --color-blue: #00529b;
+  /* Couleurs natives PNRD (palette d'origine du site) */
+  --color-navy: #00529b;
+  /* bleu PNRD — couleur primaire */
+  --color-navy-deep: #003b70;
+  /* bleu foncé — footer */
+  --color-burgundy: #607c1d;
+  /* = vert PNRD, 2e accent natif (alias conservé pour ne pas toucher chaque règle) */
+  --color-burgundy-deep: #4c6216;
   --color-green: #607c1d;
-  --color-yellow: #ffcc00;
+  /* vert PNRD */
+  --color-gold: #ffcc00;
+  /* jaune PNRD */
+  --color-gold-light: #ffe38a;
+
   --color-dark: #222;
   --color-gray: #444;
   --color-light-bg: #f9fafb;
   --color-white: #fff;
-  --gradient-main: linear-gradient(90deg, #00529b, #ffcc00, #607c1d);
-  --font-base: Arial, sans-serif;
+
+  /* Alias historiques conservés pour compat (nav, liens…) */
+  --color-blue: var(--color-navy);
+  --color-yellow: var(--color-gold);
+
+  --gradient-main: linear-gradient(90deg, var(--color-navy), var(--color-gold), var(--color-green));
+  --gradient-dawn-overlay: linear-gradient(160deg,
+      rgba(0, 82, 155, 0.8) 0%,
+      rgba(0, 82, 155, 0.48) 40%,
+      rgba(96, 124, 29, 0.38) 70%,
+      rgba(255, 204, 0, 0.48) 100%);
+
+  --font-base: 'Work Sans', Arial, sans-serif;
+  --font-display: 'Archivo', 'Work Sans', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
   --radius-sm: 10px;
   --radius-md: 12px;
   --radius-lg: 15px;
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 6px rgba(0, 82, 155, 0.1);
+  --shadow-md: 0 5px 15px rgba(0, 82, 155, 0.12);
+  --shadow-lg: 0 8px 30px rgba(0, 82, 155, 0.18);
   --transition: 0.3s ease;
 }
 
@@ -54,6 +87,28 @@ html {
   font-family: var(--font-base);
   background-color: var(--color-light-bg);
   color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+a {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 
@@ -61,17 +116,58 @@ html {
    3. LAYOUT COMMUN
    ============================================================ */
 section {
-  padding: 60px 20px;
+  padding: 70px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 h2 {
   text-align: center;
-  color: var(--color-blue);
-  margin-bottom: 30px;
-  font-size: 2.4rem;
-  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 26px;
+  padding-bottom: 22px;
+  font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+/* Signature "Aube" — horizon doré + soleil, sous chaque titre de section */
+h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 72px;
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 9px;
+  height: 9px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.18);
 }
 
 
@@ -83,13 +179,13 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(255, 204, 0, 0.35), 0 8px 24px rgba(0, 82, 155, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
+  padding: 16px 30px;
   z-index: 1000;
 }
 
@@ -119,17 +215,22 @@ header {
 }
 
 .logo-text {
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: var(--color-blue);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--color-navy);
   text-align: center;
   width: 100%;
 }
 
 .logo-subtext {
-  font-size: 0.85rem;
-  color: var(--color-green);
-  font-style: italic;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-burgundy);
+  font-style: normal;
   text-align: center;
   width: 100%;
   margin: 0;
@@ -145,10 +246,15 @@ nav a {
   text-decoration: none;
   color: var(--color-dark);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.96rem;
   position: relative;
   padding: 5px 8px;
   white-space: nowrap;
+  transition: color var(--transition);
+}
+
+nav a:hover {
+  color: var(--color-navy);
 }
 
 nav a::after {
@@ -158,7 +264,7 @@ nav a::after {
   bottom: -4px;
   width: 0;
   height: 2px;
-  background: var(--color-blue);
+  background: linear-gradient(90deg, var(--color-burgundy), var(--color-gold));
   transition: width var(--transition);
   border-radius: 2px;
 }
@@ -168,14 +274,14 @@ nav a:hover::after {
 }
 
 nav a.active {
-  color: var(--color-blue);
+  color: var(--color-burgundy);
   font-weight: 700;
 }
 
 nav a.active::after {
   width: 40%;
   left: 30%;
-  background: var(--color-blue);
+  background: linear-gradient(90deg, var(--color-burgundy), var(--color-gold));
   height: 3px;
 }
 
@@ -195,8 +301,21 @@ nav a.active::after {
 .slider {
   position: relative;
   margin-top: 90px;
-  height: 400px;
+  height: 460px;
   overflow: hidden;
+  background: var(--color-navy-deep);
+}
+
+/* Horizon doré — le soleil du logo qui se lève au bas du hero */
+.slider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  z-index: 6;
 }
 
 .slide {
@@ -204,7 +323,7 @@ nav a.active::after {
   top: 0;
   left: 100%;
   width: 100%;
-  height: 400px;
+  height: 100%;
   background-size: cover;
   background-position: center;
   transition: left 0.8s ease-in-out;
@@ -212,46 +331,58 @@ nav a.active::after {
   align-items: center;
   justify-content: center;
   color: var(--color-white);
-  text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
   padding: 20px;
+  isolation: isolate;
 }
 
 .slide.active {
   left: 0;
 }
 
+/* Voile "aube" — unifie les photos sous la palette de marque */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-dawn-overlay);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
 .slider-content {
-  max-width: 700px;
+  position: relative;
+  max-width: 720px;
   text-align: center;
 }
 
+.slider-content .slide-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  margin-bottom: 14px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
 .slider-content h1 {
-  font-size: 2.8rem;
-  margin-bottom: 0.5rem;
+  font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.55);
 }
 
 .slider-content p {
-  font-size: 1.3rem;
+  font-family: var(--font-base);
+  font-size: 1.2rem;
+  font-weight: 400;
   margin-bottom: 1.2rem;
-}
-
-.slider-content button {
-  font-size: 1.1rem;
-  padding: 10px 25px;
-  background: var(--gradient-main);
-  border: none;
-  border-radius: 25px;
-  color: var(--color-white);
-  cursor: pointer;
-  font-weight: 700;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: background-position 0.5s ease;
-  background-size: 200% 100%;
-  background-position: 0 0;
-}
-
-.slider-content button:hover {
-  background-position: 100% 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .slider-arrow {
@@ -259,8 +390,8 @@ nav a.active::after {
   top: 50%;
   transform: translateY(-50%);
   z-index: 5;
-  background: rgba(0, 0, 0, 0.35);
-  border: none;
+  background: rgba(0, 82, 155, 0.4);
+  border: 1.5px solid rgba(255, 227, 138, 0.5);
   color: var(--color-white);
   width: 42px;
   height: 42px;
@@ -270,11 +401,18 @@ nav a.active::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease;
+  transition: background var(--transition), border-color var(--transition);
 }
 
 .slider-arrow:hover {
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-burgundy);
+  border-color: var(--color-gold);
+}
+
+.slider-arrow:focus-visible,
+.slider-dot:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
 }
 
 .slider-arrow-prev {
@@ -299,13 +437,14 @@ nav a.active::after {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.45);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .slider-dot.active {
-  background: var(--color-white);
+  background: var(--color-gold);
+  transform: scale(1.15);
 }
 
 
@@ -388,6 +527,16 @@ nav a.active::after {
   margin-bottom: 20px;
 }
 
+.intro-text h2::after {
+  left: 0;
+  transform: none;
+}
+
+.intro-text h2::before {
+  left: 36px;
+  transform: none;
+}
+
 .intro-text p {
   font-size: 1.2rem;
   line-height: 1.7;
@@ -398,24 +547,37 @@ nav a.active::after {
 }
 
 .btn-savoir-plus {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 40px;
-  padding: 14px 36px;
-  background: var(--color-blue);
+  padding: 14px 32px;
+  background: var(--color-navy);
   color: var(--color-white);
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 
+.btn-savoir-plus::after {
+  content: "\2192";
+  transition: transform var(--transition);
+}
+
 .btn-savoir-plus:hover {
-  background: #003d75;
+  background: var(--color-burgundy);
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 82, 155, 0.35);
+  box-shadow: 0 8px 20px rgba(96, 124, 29, 0.3);
+}
+
+.btn-savoir-plus:hover::after {
+  transform: translateX(4px);
 }
 
 /* 6b. Vision */
@@ -429,27 +591,30 @@ nav a.active::after {
 .vision-item {
   background: var(--color-white);
   flex: 1 1 280px;
-  padding: 25px;
+  padding: 28px 25px;
   border-radius: var(--radius-md);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+  border-top: 3px solid var(--color-gold);
+  box-shadow: 0 6px 15px rgba(0, 82, 155, 0.07);
   text-align: center;
-  transition: transform var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .vision-item:hover {
   transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 82, 155, 0.14);
 }
 
 .vision-item-icon {
-  font-size: 3rem;
+  font-size: 2.6rem;
   margin-bottom: 15px;
-  color: var(--color-blue);
+  color: var(--color-navy);
 }
 
 .vision-item h3 {
+  font-family: var(--font-display);
   font-weight: 700;
   margin-bottom: 12px;
-  color: var(--color-green);
+  color: var(--color-burgundy);
 }
 
 .vision-item p {
@@ -470,25 +635,27 @@ nav a.active::after {
   flex: 1 1 280px;
   padding: 30px 20px;
   border-radius: var(--radius-lg);
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 18px rgba(0, 82, 155, 0.09);
   text-align: center;
-  transition: box-shadow var(--transition);
+  transition: box-shadow var(--transition), transform var(--transition);
 }
 
 .programme-item:hover {
   box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
 }
 
 .programme-icon {
-  font-size: 3rem;
+  font-size: 2.6rem;
   margin-bottom: 18px;
   color: var(--color-green);
 }
 
 .programme-item h3 {
+  font-family: var(--font-display);
   font-weight: 700;
   margin-bottom: 12px;
-  color: var(--color-blue);
+  color: var(--color-navy);
 }
 
 .programme-item p {
@@ -511,11 +678,12 @@ nav a.active::after {
   max-width: 320px;
   box-shadow: var(--shadow-md);
   cursor: default;
-  transition: box-shadow var(--transition);
+  transition: box-shadow var(--transition), transform var(--transition);
 }
 
 .event-card:hover {
-  box-shadow: 0 9px 25px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 14px 30px rgba(0, 82, 155, 0.18);
+  transform: translateY(-5px);
 }
 
 .event-card img {
@@ -530,16 +698,21 @@ nav a.active::after {
 
 .event-info time {
   display: block;
-  font-size: 0.9rem;
-  color: #999;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
   margin-bottom: 8px;
   text-align: left;
 }
 
 .event-info h3 {
+  font-family: var(--font-display);
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--color-blue);
+  color: var(--color-navy);
   text-align: center;
 }
 
@@ -595,18 +768,20 @@ nav a.active::after {
 
 /* 6f. Adhésion */
 #adhesion {
-  background: #e9f0d9;
+  background: linear-gradient(180deg, #fff 0%, #fbf1de 100%);
+  border: 1px solid rgba(255, 204, 0, 0.35);
   padding: 60px 20px 80px;
   border-radius: 18px;
   margin: 40px auto;
   max-width: 800px;
   text-align: center;
+  box-shadow: var(--shadow-md);
 }
 
 #adhesion h2 {
   font-size: 2.2rem;
   margin-bottom: 15px;
-  color: var(--color-blue);
+  color: var(--color-navy);
 }
 
 #adhesion p {
@@ -627,9 +802,10 @@ nav a.active::after {
 #adhesion textarea {
   padding: 12px 15px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--color-green);
+  border: 1.5px solid #ddd0b3;
+  font-family: var(--font-base);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   resize: vertical;
   outline-offset: 2px;
   transition: border-color var(--transition);
@@ -637,26 +813,28 @@ nav a.active::after {
 
 #adhesion input:focus,
 #adhesion textarea:focus {
-  border-color: var(--color-blue);
-  background: #f9fdf5;
+  border-color: var(--color-navy);
+  background: #fffdf7;
 }
 
 #adhesion button {
   background: var(--gradient-main);
   border: none;
   color: var(--color-white);
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   padding: 14px;
-  border-radius: 25px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-position 0.4s ease;
+  transition: background-position 0.4s ease, transform var(--transition);
   background-size: 200% 100%;
   background-position: 0 0;
 }
 
 #adhesion button:hover {
   background-position: 100% 0;
+  transform: translateY(-2px);
 }
 
 
@@ -707,19 +885,23 @@ nav a.active::after {
 }
 
 .social-icons a {
-  font-size: 2.8rem;
-  color: var(--color-dark);
-  transition: color var(--transition);
+  font-size: 1.5rem;
+  color: var(--color-navy);
+  transition: color var(--transition), background var(--transition), transform var(--transition);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: #f0f0f0;
+  background: #f2eee3;
   box-shadow: var(--shadow-sm);
   text-decoration: none;
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
 }
 
 /* Hover couleurs spécifiques (section contact) */
@@ -770,7 +952,7 @@ nav a.active::after {
 
 #partenaires h2 {
   font-size: 2.4rem;
-  color: var(--color-blue);
+  color: var(--color-navy);
   margin-bottom: 40px;
 }
 
@@ -792,12 +974,12 @@ nav a.active::after {
 
 .partners-track-wrapper::before {
   left: 0;
-  background: linear-gradient(to right, #fff, transparent);
+  background: linear-gradient(to right, var(--color-light-bg), transparent);
 }
 
 .partners-track-wrapper::after {
   right: 0;
-  background: linear-gradient(to left, #fff, transparent);
+  background: linear-gradient(to left, var(--color-light-bg), transparent);
 }
 
 @keyframes partners-scroll {
@@ -841,14 +1023,75 @@ nav a.active::after {
 }
 
 
+/* Équipe dirigeante (index.html) */
+.leadership-section {
+  max-width: 960px;
+  text-align: center;
+}
+
+.leadership-intro {
+  font-size: 1.1rem;
+  color: var(--color-gray);
+  max-width: 700px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.leadership-grid {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.leadership-item {
+  width: 150px;
+}
+
+.leadership-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-white);
+  box-shadow: 0 0 0 3px var(--color-gold), 0 6px 16px rgba(0, 82, 155, 0.15);
+  margin-bottom: 12px;
+}
+
+.leadership-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.leadership-role {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  margin: 4px 0 0;
+}
+
+
 /* ============================================================
    9. PAGE MEMBRES
    ============================================================ */
 .section-title {
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 800;
+  color: var(--color-navy);
   margin-bottom: 15px;
+  padding-bottom: 0;
   text-align: left;
+}
+
+.section-title::after,
+.section-title::before {
+  content: none;
 }
 
 .member-scroll {
@@ -873,15 +1116,17 @@ nav a.active::after {
   flex: 0 0 auto;
   background-color: var(--color-white);
   border-radius: var(--radius-md);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  border-bottom: 3px solid var(--color-gold);
+  box-shadow: 0 4px 12px rgba(0, 82, 155, 0.1);
+  padding: 24px 20px;
   width: 250px;
   text-align: center;
-  transition: transform 0.2s;
+  transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .member-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 12px 26px rgba(0, 82, 155, 0.16);
 }
 
 .member-photo {
@@ -890,17 +1135,25 @@ nav a.active::after {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 15px;
+  border: 3px solid var(--color-light-bg);
+  box-shadow: 0 0 0 2px var(--color-gold);
 }
 
 .member-name {
-  font-weight: bold;
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: 18px;
+  color: var(--color-navy);
   margin-bottom: 5px;
 }
 
 .member-function {
-  font-style: italic;
-  color: #555;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
   margin-bottom: 10px;
 }
 
@@ -924,10 +1177,22 @@ nav a.active::after {
    10. FOOTER
    ============================================================ */
 footer {
-  background-color: #f2f2f2;
-  color: var(--color-blue);
-  padding: 40px 20px 20px;
+  background: var(--color-navy-deep);
+  color: #d9def0;
+  padding: 56px 20px 20px;
   font-family: var(--font-base);
+  position: relative;
+}
+
+/* Liseré doré — écho de l'horizon du hero : la nuit qui referme le cycle */
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
 }
 
 .footer-container {
@@ -946,32 +1211,43 @@ footer {
 
 /* Colonne 1 — Logo */
 .logo-col .footer-logo {
-  width: 200px;
-  height: 200px;
+  width: 76px;
+  height: 76px;
   object-fit: contain;
-  margin-bottom: 12px;
-  opacity: 0.18;
-  mix-blend-mode: multiply;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: var(--color-white);
+  padding: 8px;
+  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.4);
 }
 
 .logo-col h3 {
+  font-family: var(--font-display);
   margin: 0 0 8px;
-  font-size: 1.6rem;
-  color: var(--color-blue);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
 }
 
 .logo-col p {
-  font-style: italic;
-  color: #333;
+  font-style: normal;
+  font-size: 0.92rem;
+  color: #aab4d4;
+  max-width: 30ch;
 }
 
 /* Colonne 2 — Navigation */
 .nav-col h4,
 .contact-col h4 {
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  border-bottom: 2px solid var(--color-blue);
-  padding-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+  padding-bottom: 10px;
 }
 
 .nav-col ul {
@@ -985,52 +1261,66 @@ footer {
 }
 
 .nav-col ul li a {
-  color: var(--color-blue);
+  color: #d9def0;
   text-decoration: none;
-  transition: color var(--transition);
+  transition: color var(--transition), padding-left var(--transition);
 }
 
 .nav-col ul li a:hover,
 .nav-col ul li a:focus {
-  color: #004080;
+  color: var(--color-gold-light);
+  padding-left: 4px;
   outline: none;
 }
 
 .nav-col ul li a:active {
-  color: var(--color-blue);
+  color: var(--color-gold);
 }
 
 /* Colonne 3 — Contact */
 .contact-col p {
   margin: 12px 0;
-  font-size: 1rem;
+  font-size: 0.98rem;
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-blue);
+  color: #d9def0;
 }
 
 .address-icon {
-  font-size: 1.2rem;
-  color: red;
+  font-size: 1.1rem;
+  color: var(--color-gold-light);
 }
 
 .mail-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  color: var(--color-gold-light);
 }
 
 /* Réseaux sociaux footer */
 .social-icons-footer {
-  margin-top: 15px;
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
 }
 
 .social-icons-footer a {
-  font-size: 1.6rem;
-  margin-right: 15px;
+  font-size: 1.1rem;
   cursor: pointer;
-  color: var(--color-dark);
-  transition: color var(--transition);
-  display: inline-block;
+  color: #d9def0;
+  background: rgba(255, 255, 255, 0.08);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition), background var(--transition), transform var(--transition);
+}
+
+.social-icons-footer a:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 /* Hover couleurs spécifiques (footer) */
@@ -1060,12 +1350,12 @@ footer {
 
 /* Bas de footer */
 .footer-bottom {
-  margin-top: 30px;
+  margin-top: 36px;
   text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-  border-top: 1px solid #ccc;
-  padding-top: 12px;
+  font-size: 0.85rem;
+  color: #8a92b5;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
 }
 
 
@@ -1079,7 +1369,7 @@ footer {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--color-blue);
+  background: var(--color-navy);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -1087,11 +1377,11 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 82, 155, 0.35);
   opacity: 0;
   transform: translateY(20px);
   pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
   z-index: 999;
 }
 
@@ -1102,7 +1392,7 @@ footer {
 }
 
 #back-to-top:hover {
-  background: var(--color-green);
+  background: var(--color-burgundy);
 }
 
 /* ============================================================
@@ -1269,7 +1559,7 @@ footer {
     justify-content: center;
   }
 
-  .social-icons-footer a {
-    margin: 0 10px;
+  .social-icons-footer {
+    justify-content: center;
   }
 }

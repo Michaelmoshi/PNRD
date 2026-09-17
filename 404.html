@@ -8,13 +8,14 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6fb;
-      color: #222;
+      font-family: 'Work Sans', Arial, sans-serif;
+      background: #faf7f1;
+      color: #201a14;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -29,34 +30,37 @@
     }
 
     .code {
+      font-family: 'Archivo', sans-serif;
       font-size: 7rem;
       font-weight: 900;
-      color: #00529b;
+      color: #0b2545;
       line-height: 1;
       letter-spacing: -4px;
     }
 
     .code span {
-      color: #4caf50;
+      color: #cf9a3e;
     }
 
     .divider {
       width: 60px;
       height: 4px;
-      background: linear-gradient(to right, #00529b, #4caf50);
+      background: linear-gradient(to right, transparent, #cf9a3e, transparent);
       border-radius: 2px;
-      margin: 20px auto;
+      margin: 24px auto;
     }
 
     h1 {
+      font-family: 'Archivo', sans-serif;
       font-size: 1.6rem;
-      color: #00529b;
+      font-weight: 800;
+      color: #0b2545;
       margin-bottom: 14px;
     }
 
     p {
       font-size: 1.05rem;
-      color: #555;
+      color: #5b5548;
       line-height: 1.7;
       margin-bottom: 32px;
     }
@@ -65,30 +69,38 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: #00529b;
+      background: #0b2545;
       color: #fff;
       text-decoration: none;
       padding: 13px 32px;
       border-radius: 30px;
+      font-family: 'Archivo', sans-serif;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       transition: background 0.25s ease, transform 0.2s ease;
     }
 
     .btn-home:hover {
-      background: #4caf50;
+      background: #7a1e33;
       transform: translateY(-2px);
     }
 
-    .logo-text {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #00529b;
-      margin-bottom: 32px;
-      letter-spacing: 2px;
+    .btn-home:focus-visible {
+      outline: 2px solid #cf9a3e;
+      outline-offset: 3px;
     }
 
-    .logo-text span { color: #4caf50; }
+    .logo-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #7a1e33;
+      margin-bottom: 32px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .logo-text span { color: #cf9a3e; }
   </style>
 </head>
 
