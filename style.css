@@ -201,10 +201,13 @@ header {
 }
 
 .logo img {
-  height: 80px;
-  width: auto;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  height: 64px;
+  width: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--color-white);
+  padding: 2px;
+  box-shadow: 0 0 0 1.5px rgba(255, 204, 0, 0.5);
 }
 
 .logo a:last-child {
@@ -264,7 +267,7 @@ nav a::after {
   bottom: -4px;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-burgundy), var(--color-gold));
+  background: var(--color-navy);
   transition: width var(--transition);
   border-radius: 2px;
 }
@@ -274,15 +277,35 @@ nav a:hover::after {
 }
 
 nav a.active {
-  color: var(--color-burgundy);
+  color: var(--color-navy);
   font-weight: 700;
 }
 
 nav a.active::after {
   width: 40%;
   left: 30%;
-  background: linear-gradient(90deg, var(--color-burgundy), var(--color-gold));
+  background: var(--color-navy);
   height: 3px;
+}
+
+/* CTA "Nous rejoindre" — distinct des liens d'ancrage */
+.nav-cta {
+  background: var(--color-navy);
+  color: var(--color-white) !important;
+  padding: 9px 22px !important;
+  border-radius: 999px;
+  font-weight: 700;
+  margin-left: 6px;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.nav-cta::after {
+  content: none;
+}
+
+.nav-cta:hover {
+  background: var(--color-navy-deep);
+  transform: translateY(-2px);
 }
 
 /* Menu burger (mobile) */
@@ -405,8 +428,8 @@ nav a.active::after {
 }
 
 .slider-arrow:hover {
-  background: var(--color-burgundy);
-  border-color: var(--color-gold);
+  background: var(--color-navy);
+  border-color: var(--color-navy);
 }
 
 .slider-arrow:focus-visible,
@@ -495,6 +518,28 @@ nav a.active::after {
   font-size: 0.9rem;
 }
 
+/* Photo d'ensemble — remplace les deux mini-sliders, même volume total */
+.intro-photo-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.intro-photo {
+  position: relative;
+  height: 450px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 82, 155, 0.15);
+}
+
+.intro-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .mini-slider {
   position: relative;
   height: 190px;
@@ -571,9 +616,9 @@ nav a.active::after {
 }
 
 .btn-savoir-plus:hover {
-  background: var(--color-burgundy);
+  background: var(--color-navy-deep);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(96, 124, 29, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 82, 155, 0.3);
 }
 
 .btn-savoir-plus:hover::after {
@@ -766,75 +811,125 @@ nav a.active::after {
   text-decoration: underline;
 }
 
-/* 6f. Adhésion */
-#adhesion {
-  background: linear-gradient(180deg, #fff 0%, #fbf1de 100%);
-  border: 1px solid rgba(255, 204, 0, 0.35);
-  padding: 60px 20px 80px;
-  border-radius: 18px;
-  margin: 40px auto;
-  max-width: 800px;
+/* 6f. Page Adhésion (adhesion.html) */
+.page-banner {
+  max-width: none;
+  margin: 90px 0 0;
+  background: var(--color-navy);
+  background-image: linear-gradient(160deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+  color: var(--color-white);
+  padding: 64px 20px 52px;
   text-align: center;
-  box-shadow: var(--shadow-md);
 }
 
-#adhesion h2 {
-  font-size: 2.2rem;
-  margin-bottom: 15px;
-  color: var(--color-navy);
+.section-eyebrow-light {
+  color: var(--color-gold-light);
 }
 
-#adhesion p {
-  font-size: 1.15rem;
-  margin-bottom: 30px;
-  color: var(--color-gray);
+.page-banner h1 {
+  font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin: 4px 0 10px;
 }
 
-#adhesion form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 450px;
+.page-banner p {
+  font-size: 1.1rem;
+  color: #d9def0;
+  max-width: 560px;
   margin: 0 auto;
 }
 
-#adhesion input,
-#adhesion textarea {
+.adhesion-page {
+  max-width: 860px;
+}
+
+.adhesion-card {
+  background: var(--color-white);
+  border: 1px solid rgba(255, 204, 0, 0.35);
+  border-radius: 18px;
+  padding: 48px 36px 52px;
+  box-shadow: var(--shadow-md);
+}
+
+.adhesion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 10px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-field {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.form-field-full {
+  flex: 1 1 100%;
+}
+
+.form-field label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+
+.form-field input,
+.form-field select {
   padding: 12px 15px;
   border-radius: var(--radius-sm);
   border: 1.5px solid #ddd0b3;
+  background: var(--color-white);
   font-family: var(--font-base);
   font-size: 1rem;
   font-weight: 500;
-  resize: vertical;
-  outline-offset: 2px;
+  color: var(--color-dark);
   transition: border-color var(--transition);
 }
 
-#adhesion input:focus,
-#adhesion textarea:focus {
+.form-field input:focus,
+.form-field select:focus {
   border-color: var(--color-navy);
-  background: #fffdf7;
+  background: var(--color-white);
+  outline: none;
 }
 
-#adhesion button {
-  background: var(--gradient-main);
+.adhesion-form button[type="submit"] {
+  align-self: center;
+  margin-top: 8px;
+  background: var(--color-navy);
   border: none;
   color: var(--color-white);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.15rem;
-  padding: 14px;
+  font-size: 1.1rem;
+  padding: 14px 54px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background-position 0.4s ease, transform var(--transition);
-  background-size: 200% 100%;
-  background-position: 0 0;
+  transition: background var(--transition), transform var(--transition);
 }
 
-#adhesion button:hover {
-  background-position: 100% 0;
+.adhesion-form button[type="submit"]:hover {
+  background: var(--color-navy-deep);
   transform: translateY(-2px);
+}
+
+.form-status {
+  text-align: center;
+  font-weight: 600;
+  display: none;
 }
 
 
@@ -846,7 +941,7 @@ nav a.active::after {
 }
 
 .contact-info {
-  max-width: 900px;
+  max-width: 1080px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -856,12 +951,12 @@ nav a.active::after {
 }
 
 .contact-info iframe {
-  flex: 1 1 450px;
+  flex: 1.3 1 560px;
   border-radius: var(--radius-md);
   border: 0;
   min-width: 280px;
   max-width: 100%;
-  height: 300px;
+  height: 320px;
 }
 
 .contact-info>div {
@@ -913,8 +1008,8 @@ nav a.active::after {
 
 .social-icons a.twitter:hover,
 .social-icons a.twitter.active {
-  color: #3fb7eb;
-  background: #e0e0e0;
+  color: #fff;
+  background: #000;
 }
 
 .social-icons a.instagram:hover,
@@ -1077,39 +1172,185 @@ nav a.active::after {
 
 
 /* ============================================================
+   8b. PAGE À PROPOS (Apropos.html)
+   ============================================================ */
+.about-page {
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.about-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.about-row-media {
+  flex: 1 1 380px;
+}
+
+.about-row-media img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 18px rgba(0, 82, 155, 0.15);
+  display: block;
+}
+
+/* Photo verticale — cadrer sur le visage/haut du sujet plutôt que le centre */
+.about-row-media img.portrait-focus {
+  object-position: center 18%;
+}
+
+.about-row-content {
+  flex: 1 1 380px;
+}
+
+.about-row-content h2 {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.about-row-content h2::after {
+  left: 0;
+  transform: none;
+}
+
+.about-row-content h2::before {
+  left: 36px;
+  transform: none;
+}
+
+.about-row-content p {
+  color: var(--color-gray);
+  line-height: 1.75;
+  font-size: 1.04rem;
+  margin-bottom: 14px;
+}
+
+.about-row-content p:last-of-type {
+  margin-bottom: 0;
+}
+
+.about-row-content .btn-savoir-plus {
+  margin-top: 22px;
+}
+
+
+/* ============================================================
    9. PAGE MEMBRES
    ============================================================ */
-.section-title {
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--color-navy);
-  margin-bottom: 15px;
-  padding-bottom: 0;
-  text-align: left;
+.team-section {
+  max-width: 1200px;
 }
 
-.section-title::after,
-.section-title::before {
-  content: none;
-}
-
-.member-scroll {
+.team-layout {
   display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scroll-behavior: smooth;
-  white-space: nowrap;
+  align-items: flex-start;
+  gap: 40px;
 }
 
-.member-scroll::-webkit-scrollbar {
-  height: 8px;
+/* Grande carte — affichage des membres */
+.team-display {
+  flex: 2.2 1 600px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 40px;
+  min-height: 380px;
 }
 
-.member-scroll::-webkit-scrollbar-thumb {
-  background: #aaa;
-  border-radius: 4px;
+.team-group {
+  display: none;
+}
+
+.team-group.active {
+  display: block;
+  animation: fade-in-up 0.4s ease;
+}
+
+/* Le bouton d'accordéon n'existe que pour la version mobile */
+.team-group-header {
+  display: none;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.member-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+/* Liste de sélection des catégories */
+.team-nav {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 110px;
+}
+
+.team-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  background: var(--color-white);
+  border: 1.5px solid #eee;
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.team-tab .hero-icon {
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.team-tab:hover {
+  border-color: var(--color-navy);
+}
+
+.team-tab.active {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+.team-tab.active .hero-icon {
+  color: var(--color-gold-light);
+}
+
+/* Icônes Heroicons (SVG en ligne) — dimensionnées comme une icône de texte */
+.hero-icon {
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
 }
 
 .member-card {
@@ -1307,6 +1548,7 @@ footer::before {
 .social-icons-footer a {
   font-size: 1.1rem;
   cursor: pointer;
+  text-decoration: none;
   color: #d9def0;
   background: rgba(255, 255, 255, 0.08);
   width: 38px;
@@ -1328,16 +1570,13 @@ footer::before {
   color: #1877f2;
 }
 
-.social-twitter:hover {
-  color: #1da1f2;
+.social-icons-footer a.social-twitter:hover {
+  color: #000;
+  background: #fff;
 }
 
 .social-instagram:hover {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #d6249f;
 }
 
 .social-youtube:hover {
@@ -1392,7 +1631,7 @@ footer::before {
 }
 
 #back-to-top:hover {
-  background: var(--color-burgundy);
+  background: var(--color-navy-deep);
 }
 
 /* ============================================================
@@ -1420,9 +1659,103 @@ footer::before {
   .mini-slider {
     height: 160px;
   }
+
+  .intro-photo {
+    height: 360px;
+  }
 }
 
 @media (max-width: 768px) {
+
+  /* — Page Membres : tout visible, on scrolle — */
+  .team-layout {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .team-nav {
+    display: none;
+  }
+
+  .team-display {
+    padding: 0;
+    box-shadow: none;
+    background: none;
+    min-height: 0;
+  }
+
+  .team-group {
+    display: block !important;
+    margin-bottom: 30px;
+    animation: none;
+  }
+
+  .team-group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--color-gold);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-navy);
+  }
+
+  .team-group-header .hero-icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .team-group .member-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 15px;
+  }
+
+  .member-card {
+    min-width: 220px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  /* — Page À propos — */
+  .about-row,
+  .about-row.reverse {
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .about-row-media img {
+    height: 240px;
+  }
+
+  .about-row-content h2,
+  .about-row-content h2::after,
+  .about-row-content h2::before {
+    text-align: center;
+  }
+
+  .about-row-content h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .about-row-content h2::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .about-row-content p {
+    text-align: center;
+  }
+
+  .about-row-content {
+    text-align: center;
+  }
 
   /* — Navigation mobile — */
   nav {
@@ -1442,6 +1775,35 @@ footer::before {
 
   nav.active {
     display: flex;
+  }
+
+  /* Le soulignement animé (pensé pour une barre horizontale) ne convient pas
+     à une liste verticale : on le désactive au profit de séparateurs nets. */
+  nav a::after {
+    display: none;
+  }
+
+  nav a {
+    width: 100%;
+    padding: 10px 4px;
+    border-bottom: 1px solid rgba(0, 82, 155, 0.1);
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+
+  nav a.nav-cta {
+    border-bottom: none;
+    text-align: center;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  nav a.active {
+    color: var(--color-navy);
+    background: rgba(0, 82, 155, 0.06);
+    border-radius: 6px;
   }
 
   .menu-toggle {
@@ -1529,6 +1891,16 @@ footer::before {
     text-align: center;
   }
 
+  .intro-text h2::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .intro-text h2::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .intro-text p {
     text-align: justify;
   }
@@ -1553,6 +1925,11 @@ footer::before {
   .footer-column {
     min-width: 100%;
     text-align: center;
+  }
+
+  .logo-col p {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .contact-col p {

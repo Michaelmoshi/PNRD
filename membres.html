@@ -1,189 +1,270 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membres - PNRD</title>
-    <meta name="description" content="Découvrez les membres et l'équipe dirigeante du Parti National du Renouveau pour le Développement (PNRD)." />
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membres - PNRD</title>
+  <meta name="description" content="Découvrez les membres et l'équipe dirigeante du Parti National du Renouveau pour le Développement (PNRD)." />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
-    <div id="header"></div>
-    <div id="slider"></div>
-    
-<h2>Nos Membres</h2>
-<!-- Section Gouvernance -->
-<section class="member-section">
-  <h2 class="section-title">La Gouvernance</h2>
-  <div class="member-scroll">
-    <div class="member-card">
-      <img src="https://via.placeholder.com/120.png?text=TK" alt="Tony KANKU" class="member-photo">
-      <div class="member-name">Tony KANKU</div>
-      <div class="member-function">Autorité morale</div>
-      <div class="member-description">Guide moral et référence spirituelle du parti.</div>
-    </div>
 
-    <div class="member-card">
-      <img src="assets/images/Ali2.jpeg" alt="Ali KUTUMISA" class="member-photo">
-      <div class="member-name">Ali KUTUMISA</div>
-      <div class="member-function">Président</div>
-      <div class="member-description">Dirige le parti et incarne la vision du PNRD pour un Congo prospère.</div>
+  <header>
+    <div class="logo">
+      <a href="index.html">
+        <img src="assets/logo/logo1.jpeg" alt="Logo PNRD" />
+      </a>
+      <a href="index.html">
+        <div class="logo-text">PNRD</div>
+        <div class="logo-subtext">
+          Parti National du Renouveau pour le Développement
+        </div>
+      </a>
     </div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="index.html#a-propos">À propos</a>
+      <a href="index.html#vision">Vision</a>
+      <a href="index.html#programme">Programmes</a>
+      <a href="index.html#prochains-evenements">Prochains événements</a>
+      <a href="index.html#evenements">Événements</a>
+      <a href="membres.html" class="active">Équipe</a>
+      <a href="index.html#contact">Contacts</a>
+      <a href="adhesion.html" class="nav-cta">Nous rejoindre</a>
+    </nav>
+    <div class="menu-toggle" aria-label="Menu">&#9776;</div>
+  </header>
 
-    <div class="member-card">
-      <img src="https://via.placeholder.com/120.png?text=MI" alt="Martin IWEMBA" class="member-photo">
-      <div class="member-name">Martin IWEMBA</div>
-      <div class="member-function">Secrétaire Général</div>
-      <div class="member-description">Coordonne les activités administratives et organisationnelles du parti.</div>
-    </div>
-  </div>
-</section>
-<!-- Section Logistique -->
-<section class="member-section">
-  <h2 class="section-title">La Logistique</h2>
-  <div class="member-scroll">
-    <div class="member-card">
-      <img src="photo4.jpg" alt="Membre logistique 1" class="member-photo">
-      <div class="member-name">Alice Dupuis</div>
-      <div class="member-function">Responsable Transport</div>
-      <div class="member-description">Gère les déplacements des membres.</div>
-    </div>
+  <!-- Bandeau de page -->
+  <section class="page-banner">
+    <span class="section-eyebrow section-eyebrow-light">Notre équipe</span>
+    <h1>Nos Membres</h1>
+    <p>Les hommes et les femmes qui font vivre le PNRD au quotidien.</p>
+  </section>
 
-    <div class="member-card">
-      <img src="photo5.jpg" alt="Membre logistique 2" class="member-photo">
-      <div class="member-name">Karim El Amrani</div>
-      <div class="member-function">Coordination Logistique</div>
-      <div class="member-description">Supervise la logistique des événements.</div>
-    </div>
+  <section class="team-section">
+    <div class="team-layout">
 
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-  </div>
-</section>
-<!-- Section Presse  -->
-<section class="member-section">
-  <h2 class="section-title">La Presse</h2>
-  <div class="member-scroll">
-    <div class="member-card">
-      <img src="photo4.jpg" alt="Membre presse 1" class="member-photo">
-      <div class="member-name">Alice Dupuis</div>
-      <div class="member-function">Responsable Presse</div>
-      <div class="member-description">Gère les déplacements des membres.</div>
-    </div>
+      <!-- Grande carte — affichage des membres -->
+      <div class="team-display">
 
-    <div class="member-card">
-      <img src="photo5.jpg" alt="Membre presse 2" class="member-photo">
-      <div class="member-name">Karim El Amrani</div>
-      <div class="member-function">Coordination Presse</div>
-      <div class="member-description">Supervise la presse des événements.</div>
-    </div>
+        <div class="team-group active" data-team="gouvernance">
+          <div class="team-group-header">
+            <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+            </svg>
+            <span>La Gouvernance</span>
+          </div>
+          <div class="member-grid">
+            <div class="member-card">
+              <img src="https://via.placeholder.com/120.png?text=TK" alt="Tony KANKU" class="member-photo">
+              <div class="member-name">Tony KANKU</div>
+              <div class="member-function">Autorité morale</div>
+              <div class="member-description">Guide moral et référence spirituelle du parti.</div>
+            </div>
+            <div class="member-card">
+              <img src="assets/images/Ali2.jpeg" alt="Ali KUTUMISA" class="member-photo">
+              <div class="member-name">Ali KUTUMISA</div>
+              <div class="member-function">Président</div>
+              <div class="member-description">Dirige le parti et incarne la vision du PNRD pour un Congo prospère.</div>
+            </div>
+            <div class="member-card">
+              <img src="https://via.placeholder.com/120.png?text=MI" alt="Martin IWEMBA" class="member-photo">
+              <div class="member-name">Martin IWEMBA</div>
+              <div class="member-function">Secrétaire Général</div>
+              <div class="member-description">Coordonne les activités administratives et organisationnelles du parti.</div>
+            </div>
+          </div>
+        </div>
 
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre presse 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-  </div>
-</section>
-<!-- Section Informatique  -->
-<section class="member-section">
-  <h2 class="section-title">L'Informatique</h2>
-  <div class="member-scroll">
-    <div class="member-card">
-      <img src="photo4.jpg" alt="Membre logistique 1" class="member-photo">
-      <div class="member-name">Alice Dupuis</div>
-      <div class="member-function">Responsable Transport</div>
-      <div class="member-description">Gère les déplacements des membres.</div>
-    </div>
+        <div class="team-group" data-team="logistique">
+          <div class="team-group-header">
+            <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+            </svg>
+            <span>La Logistique</span>
+          </div>
+          <div class="member-grid">
+            <div class="member-card">
+              <img src="photo4.jpg" alt="Membre logistique 1" class="member-photo">
+              <div class="member-name">Alice Dupuis</div>
+              <div class="member-function">Responsable Transport</div>
+              <div class="member-description">Gère les déplacements des membres.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo5.jpg" alt="Membre logistique 2" class="member-photo">
+              <div class="member-name">Karim El Amrani</div>
+              <div class="member-function">Coordination Logistique</div>
+              <div class="member-description">Supervise la logistique des événements.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
+              <div class="member-name">Laura Petit</div>
+              <div class="member-function">Gestion Matériel</div>
+              <div class="member-description">S'occupe des équipements et approvisionnements.</div>
+            </div>
+          </div>
+        </div>
 
-    <div class="member-card">
-      <img src="photo5.jpg" alt="Membre logistique 2" class="member-photo">
-      <div class="member-name">Karim El Amrani</div>
-      <div class="member-function">Coordination Logistique</div>
-      <div class="member-description">Supervise la logistique des événements.</div>
-    </div>
+        <div class="team-group" data-team="presse">
+          <div class="team-group-header">
+            <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+            </svg>
+            <span>La Presse</span>
+          </div>
+          <div class="member-grid">
+            <div class="member-card">
+              <img src="photo4.jpg" alt="Membre presse 1" class="member-photo">
+              <div class="member-name">Alice Dupuis</div>
+              <div class="member-function">Responsable Presse</div>
+              <div class="member-description">Assure le lien entre le parti et les médias.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo5.jpg" alt="Membre presse 2" class="member-photo">
+              <div class="member-name">Karim El Amrani</div>
+              <div class="member-function">Coordination Presse</div>
+              <div class="member-description">Supervise la couverture presse des événements.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo6.jpg" alt="Membre presse 3" class="member-photo">
+              <div class="member-name">Laura Petit</div>
+              <div class="member-function">Attachée de presse</div>
+              <div class="member-description">Rédige les communiqués et dossiers de presse.</div>
+            </div>
+          </div>
+        </div>
 
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-  </div>
-</section>
-<!-- Section Communication -->
-<section class="member-section">
-  <h2 class="section-title">La Communication</h2>
-  <div class="member-scroll">
-    <div class="member-card">
-      <img src="photo4.jpg" alt="Membre communication 1" class="member-photo">
-      <div class="member-name">Alice Dupuis</div>
-      <div class="member-function">Responsable Communication</div>
-      <div class="member-description">Gère les communications internes et externes.</div>
-    </div>
+        <div class="team-group" data-team="informatique">
+          <div class="team-group-header">
+            <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+            </svg>
+            <span>L'Informatique</span>
+          </div>
+          <div class="member-grid">
+            <div class="member-card">
+              <img src="photo4.jpg" alt="Membre informatique 1" class="member-photo">
+              <div class="member-name">Alice Dupuis</div>
+              <div class="member-function">Responsable Informatique</div>
+              <div class="member-description">Gère les outils numériques et le site du parti.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo5.jpg" alt="Membre informatique 2" class="member-photo">
+              <div class="member-name">Karim El Amrani</div>
+              <div class="member-function">Coordination Informatique</div>
+              <div class="member-description">Supervise l'infrastructure technique du parti.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo6.jpg" alt="Membre informatique 3" class="member-photo">
+              <div class="member-name">Laura Petit</div>
+              <div class="member-function">Support Technique</div>
+              <div class="member-description">Accompagne les membres sur les outils numériques.</div>
+            </div>
+          </div>
+        </div>
 
-    <div class="member-card">
-      <img src="photo5.jpg" alt="Membre communication 2" class="member-photo">
-      <div class="member-name">Karim El Amrani</div>
-      <div class="member-function">Coordination Communication</div>
-      <div class="member-description">Supervise la communication des événements.</div>
+        <div class="team-group" data-team="communication">
+          <div class="team-group-header">
+            <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
+            </svg>
+            <span>La Communication</span>
+          </div>
+          <div class="member-grid">
+            <div class="member-card">
+              <img src="photo4.jpg" alt="Membre communication 1" class="member-photo">
+              <div class="member-name">Alice Dupuis</div>
+              <div class="member-function">Responsable Communication</div>
+              <div class="member-description">Gère les communications internes et externes.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo5.jpg" alt="Membre communication 2" class="member-photo">
+              <div class="member-name">Karim El Amrani</div>
+              <div class="member-function">Coordination Communication</div>
+              <div class="member-description">Supervise la communication des événements.</div>
+            </div>
+            <div class="member-card">
+              <img src="photo6.jpg" alt="Membre communication 3" class="member-photo">
+              <div class="member-name">Laura Petit</div>
+              <div class="member-function">Chargée de Communication</div>
+              <div class="member-description">Anime les réseaux sociaux et les campagnes du parti.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Liste de sélection des catégories -->
+      <nav class="team-nav" aria-label="Catégories de membres">
+        <button class="team-tab active" data-team="gouvernance" type="button">
+          <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+          </svg>
+          La Gouvernance
+        </button>
+        <button class="team-tab" data-team="logistique" type="button">
+          <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+          </svg>
+          La Logistique
+        </button>
+        <button class="team-tab" data-team="presse" type="button">
+          <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+          </svg>
+          La Presse
+        </button>
+        <button class="team-tab" data-team="informatique" type="button">
+          <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+          </svg>
+          L'Informatique
+        </button>
+        <button class="team-tab" data-team="communication" type="button">
+          <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
+          </svg>
+          La Communication
+        </button>
+      </nav>
+
     </div>
+  </section>
 
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre communication 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-    <div class="member-card">
-      <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
-      <div class="member-name">Laura Petit</div>
-      <div class="member-function">Gestion Matériel</div>
-      <div class="member-description">S’occupe des équipements et approvisionnements.</div>
-    </div>
-  </div>
-</section>
+  <div id="footer-placeholder"></div>
 
+  <button id="back-to-top" aria-label="Retour en haut">
+    <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+    </svg>
+  </button>
 
-
-    <div id="footer"></div>
-
-    <script>
-    async function loadPart(id, file){
+  <script src="script.js"></script>
+  <script>
+    async function loadPart(id, file, callback) {
       const resp = await fetch(file);
-      const content = await resp.text();
-      document.getElementById(id).innerHTML = content;
+      const html = await resp.text();
+      document.getElementById(id).outerHTML = html;
+      if (typeof callback === 'function') callback();
     }
 
-    loadPart('header','header.html');
-    loadPart('slider','slider.html');
-    loadPart('footer','footer.html');
+    loadPart('footer-placeholder', 'footer.html');
+
+    var backBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      backBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+    backBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 
 </body>
+
 </html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adhésion - PNRD</title>
+  <meta name="description" content="Rejoignez le Parti National du Renouveau pour le Développement (PNRD) : remplissez le formulaire d'adhésion en ligne." />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <a href="index.html">
+        <img src="assets/logo/logo1.jpeg" alt="Logo PNRD" />
+      </a>
+      <a href="index.html">
+        <div class="logo-text">PNRD</div>
+        <div class="logo-subtext">
+          Parti National du Renouveau pour le Développement
+        </div>
+      </a>
+    </div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="index.html#a-propos">À propos</a>
+      <a href="index.html#vision">Vision</a>
+      <a href="index.html#programme">Programmes</a>
+      <a href="index.html#prochains-evenements">Prochains événements</a>
+      <a href="index.html#evenements">Événements</a>
+      <a href="membres.html">Équipe</a>
+      <a href="index.html#contact">Contacts</a>
+      <a href="adhesion.html" class="nav-cta active">Nous rejoindre</a>
+    </nav>
+    <div class="menu-toggle" aria-label="Menu">&#9776;</div>
+  </header>
+
+  <!-- Bandeau de page -->
+  <section class="page-banner">
+    <span class="section-eyebrow section-eyebrow-light">Rejoignez le mouvement</span>
+    <h1>Adhérer au PNRD</h1>
+    <p>Devenez membre actif et prenez part au renouveau du Congo.</p>
+  </section>
+
+  <section class="adhesion-page">
+
+    <div class="adhesion-card">
+      <h2>Formulaire d'adhésion</h2>
+
+      <form id="adhesion-form" class="adhesion-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-nom">Nom</label>
+            <input type="text" id="f-nom" name="nom" placeholder="Entrer votre nom" required />
+          </div>
+          <div class="form-field">
+            <label for="f-postnom">Post-nom</label>
+            <input type="text" id="f-postnom" name="postnom" placeholder="Entrer votre post nom" required />
+          </div>
+          <div class="form-field">
+            <label for="f-prenom">Prénom</label>
+            <input type="text" id="f-prenom" name="prenom" placeholder="Entrer votre prénom" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-tel">Tél</label>
+            <input type="tel" id="f-tel" name="telephone" placeholder="Ex : +243900000000"
+              pattern="[0-9+\-\s]{7,15}" required />
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" name="email" placeholder="Email" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-piece">N° passeport ou Carte d'électeur</label>
+            <input type="text" id="f-piece" name="piece" placeholder="Ex: 123445" required />
+          </div>
+          <div class="form-field">
+            <label for="f-sexe">Sexe</label>
+            <select id="f-sexe" name="sexe" required>
+              <option value="" disabled selected>Sélectionner</option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femme</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-profession">Profession</label>
+            <input type="text" id="f-profession" name="profession" placeholder="Votre profession" />
+          </div>
+          <div class="form-field">
+            <label for="f-ville">Ville ou Territoire d'habitation</label>
+            <input type="text" id="f-ville" name="ville" placeholder="Votre ville ou territoire" required />
+          </div>
+        </div>
+
+        <div class="form-field form-field-full">
+          <label for="f-adresse">Adresse</label>
+          <input type="text" id="f-adresse" name="adresse" placeholder="votre Adresse" required />
+        </div>
+
+        <button type="submit" id="adhesion-btn">S'enregistrer</button>
+        <p id="adhesion-status" class="form-status"></p>
+      </form>
+    </div>
+
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+  <button id="back-to-top" aria-label="Retour en haut">
+    <svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    async function loadPart(id, file, callback) {
+      const resp = await fetch(file);
+      const html = await resp.text();
+      document.getElementById(id).outerHTML = html;
+      if (typeof callback === 'function') callback();
+    }
+
+    loadPart('footer-placeholder', 'footer.html');
+
+    (function () {
+      emailjs.init('0VBOxYZujOv7UuSVa');
+    })();
+
+    document.getElementById('adhesion-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('adhesion-btn');
+      var status = document.getElementById('adhesion-status');
+
+      var field = function (id) { return document.getElementById(id).value; };
+
+      var params = {
+        nom: field('f-nom'),
+        postnom: field('f-postnom'),
+        prenom: field('f-prenom'),
+        telephone: field('f-tel'),
+        email: field('f-email'),
+        piece: field('f-piece'),
+        sexe: field('f-sexe'),
+        profession: field('f-profession'),
+        ville: field('f-ville'),
+        adresse: field('f-adresse'),
+        message: [
+          'Nom : ' + field('f-nom'),
+          'Post-nom : ' + field('f-postnom'),
+          'Prénom : ' + field('f-prenom'),
+          'Tél : ' + field('f-tel'),
+          'Email : ' + field('f-email'),
+          "N° passeport / carte d'électeur : " + field('f-piece'),
+          'Sexe : ' + field('f-sexe'),
+          'Profession : ' + field('f-profession'),
+          "Ville / territoire d'habitation : " + field('f-ville'),
+          'Adresse : ' + field('f-adresse')
+        ].join('\n')
+      };
+
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours…';
+
+      emailjs.send('service_a2c1zxf', 'template_caknya8', params)
+        .then(function () {
+          status.textContent = 'Votre demande d\'adhésion a bien été envoyée !';
+          status.style.color = '#25a244';
+          status.style.display = 'block';
+          document.getElementById('adhesion-form').reset();
+        })
+        .catch(function () {
+          status.textContent = 'Erreur lors de l\'envoi. Réessayez.';
+          status.style.color = '#e53935';
+          status.style.display = 'block';
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = "S'enregistrer";
+        });
+    });
+
+    /* Bouton retour en haut */
+    var backBtn = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function () {
+      backBtn.classList.toggle('visible', window.scrollY > 400);
+    });
+    backBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+
+</html>
