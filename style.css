@@ -775,7 +775,7 @@ nav a.active::after {
   gap: 25px;
   overflow-x: auto;
   padding-bottom: 15px;
-  touch-action: pan-y;
+  touch-action: pan-x;
 }
 
 .events-section .event-card {
@@ -1719,7 +1719,7 @@ footer::before {
     gap: 20px;
     overflow-x: auto;
     padding-bottom: 15px;
-    touch-action: pan-y;
+    touch-action: pan-x;
   }
 
   .member-card {
