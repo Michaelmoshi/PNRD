@@ -1669,11 +1669,11 @@ footer::before {
 
 @media (max-width: 768px) {
 
-  /* — Page Membres : tout visible, on scrolle — */
+  /* — Page Membres : structure simple, identique aux Événements passés
+     (section + titre + bande défilante), sans conteneur flex parent
+     qui avait causé les bugs de largeur/scroll précédents. — */
   .team-layout {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
+    display: block;
   }
 
   .team-nav {
@@ -1681,12 +1681,12 @@ footer::before {
   }
 
   .team-display {
+    display: block;
     width: 100%;
     padding: 0;
     box-shadow: none;
     background: none;
     min-height: 0;
-    min-width: 0;
   }
 
   .team-group {
@@ -1723,9 +1723,31 @@ footer::before {
   }
 
   .member-card {
-    min-width: 220px;
-    width: auto;
+    width: 160px;
+    min-width: 160px;
     flex-shrink: 0;
+    padding: 16px 12px;
+  }
+
+  .member-photo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+  }
+
+  .member-name {
+    font-size: 14px;
+  }
+
+  .member-function {
+    font-size: 0.68rem;
+    margin-bottom: 6px;
+  }
+
+  .member-description {
+    font-size: 12px;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
   }
 
   /* — Page À propos — */
