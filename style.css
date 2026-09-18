@@ -1714,19 +1714,20 @@ footer::before {
     flex-shrink: 0;
   }
 
+  /* Scroll horizontal abandonné sur mobile : trop peu fiable au toucher
+     (geste avalé par le carrousel au lieu de faire défiler la page).
+     Les cartes s'enroulent en grille à la place — un seul sens de
+     défilement possible, plus aucune ambiguïté de geste. */
   .team-group .member-grid {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 15px;
-    touch-action: pan-x;
-    overscroll-behavior-x: contain;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
   }
 
   .member-card {
-    width: 160px;
-    min-width: 160px;
+    width: 42%;
+    min-width: 140px;
     flex-shrink: 0;
     padding: 16px 12px;
   }
