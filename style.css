@@ -776,6 +776,7 @@ nav a.active::after {
   overflow-x: auto;
   padding-bottom: 15px;
   touch-action: pan-x;
+  overscroll-behavior-x: contain;
 }
 
 .events-section .event-card {
@@ -1720,6 +1721,7 @@ footer::before {
     overflow-x: auto;
     padding-bottom: 15px;
     touch-action: pan-x;
+    overscroll-behavior-x: contain;
   }
 
   .member-card {
