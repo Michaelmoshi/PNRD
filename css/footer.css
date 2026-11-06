@@ -256,26 +256,6 @@ footer::before {
   font-weight: 700;
 }
 
-/* Liens légaux du pied de page */
-.footer-legal {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px 24px;
-  margin-bottom: 12px;
-}
-
-.footer-legal a {
-  color: #d9def0;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.footer-legal a:hover {
-  color: var(--color-gold-light);
-  text-decoration: underline;
-}
-
 /* ============================================================
    11. BOUTON RETOUR EN HAUT
    ============================================================ */
