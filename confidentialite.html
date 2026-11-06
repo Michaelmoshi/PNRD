@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — PNRD</title>
+  <meta name="description" content="Comment le PNRD collecte et utilise les données personnelles saisies dans le formulaire d'adhésion." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#003b70" />
+  <meta property="og:title" content="Politique de confidentialité — PNRD" />
+  <meta property="og:description" content="Comment le PNRD collecte et utilise les données personnelles saisies dans le formulaire d'adhésion." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_CD" />
+  <meta property="og:site_name" content="PNRD" />
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <section class="ap-hero">
+    <div class="ap-hero-inner">
+      <span class="section-eyebrow">Vos données</span>
+      <h1>Politique de confidentialité</h1>
+      <p>Quelles données nous collectons, pourquoi, et quels sont vos droits.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="ap-section">
+      <div class="ap-inner">
+        <div class="legal">
+          <h2>Qui est responsable de vos données ?</h2>
+          <p>
+            Le responsable du traitement est le <strong>Parti National du Renouveau pour le Développement (PNRD)</strong>,
+            Plateau des Professeurs, Université de Kinshasa (UNIKIN), Kinshasa, RDC.
+            Contact : <a href="mailto:infopnrd09@gmail.com">infopnrd09@gmail.com</a>.
+          </p>
+
+          <h2>Quelles données collectons-nous ?</h2>
+          <p>Lorsque vous remplissez le formulaire d'adhésion, nous collectons :</p>
+          <ul>
+            <li>votre nom, post-nom et prénom ;</li>
+            <li>votre téléphone et votre adresse e-mail ;</li>
+            <li>votre numéro de passeport ou de carte d'électeur ;</li>
+            <li>votre sexe, votre profession, votre ville ou territoire et votre adresse.</li>
+          </ul>
+
+          <h2>Pourquoi ?</h2>
+          <p>
+            Ces informations sont utilisées uniquement pour traiter votre demande d'adhésion et pour vous répondre.
+            Vous avez donné votre accord en cochant la case prévue à cet effet dans le formulaire.
+          </p>
+
+          <h2>Qui reçoit ces données ?</h2>
+          <p>
+            Les demandes sont transmises par e-mail à l'équipe du PNRD. L'envoi est réalisé par le prestataire technique
+            <strong>EmailJS</strong>, qui transmet le message à la boîte e-mail du parti. Le site charge également des services
+            tiers (polices Google Fonts, icônes Font Awesome, images et cartes Google Maps), qui peuvent recevoir votre adresse IP
+            lors de l'affichage des pages.
+          </p>
+
+          <h2>Combien de temps sont-elles conservées ?</h2>
+          <p><span class="legal-todo">[À compléter]</span> (durée de conservation des demandes d'adhésion).</p>
+
+          <h2>Vos droits</h2>
+          <p>
+            Vous pouvez demander l'accès à vos données, leur rectification ou leur suppression, ou retirer votre consentement,
+            en écrivant à <a href="mailto:infopnrd09@gmail.com">infopnrd09@gmail.com</a>. Nous répondrons dans les meilleurs délais.
+          </p>
+
+          <h2>Cookies</h2>
+          <p>
+            Ce site n'utilise pas de cookies publicitaires ni d'outil de mesure d'audience. Les services tiers cités plus haut
+            (par exemple Google Maps) peuvent déposer leurs propres cookies lorsque leur contenu est affiché.
+          </p>
+
+          <h2>Mise à jour</h2>
+          <p>Cette politique peut évoluer. La date de dernière mise à jour est indiquée ci-dessous.</p>
+          <p class="legal-date">Dernière mise à jour : <span class="legal-todo">[À compléter]</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="script.js"></script>
+  <script>
+    async function loadPart(id, file, callback) {
+      const resp = await fetch(file);
+      const html = await resp.text();
+      document.getElementById(id).outerHTML = html;
+      if (typeof callback === 'function') callback();
+    }
+
+    loadPart('header', 'header.html', function () {
+      initMenuToggle();
+    });
+    loadPart('footer-placeholder', 'footer.html');
+  </script>
+
+</body>
+
+</html>

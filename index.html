@@ -30,6 +30,28 @@
   <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#003b70" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PoliticalParty",
+  "name": "Parti National du Renouveau pour le Développement",
+  "alternateName": "PNRD",
+  "slogan": "PNRD TOKO LONGA, PNRD ESI TOLONGI",
+  "description": "Le PNRD œuvre pour un Congo fort, uni et prospère.",
+  "email": "infopnrd09@gmail.com",
+  "telephone": "+243817661504",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Plateau des Professeurs, Université de Kinshasa (UNIKIN)",
+    "addressLocality": "Kinshasa",
+    "addressCountry": "CD"
+  },
+  "areaServed": "CD"
+}
+  </script>
 </head>
 
 <body>
@@ -46,15 +68,32 @@
         </div>
       </a>
     </div>
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="#a-propos">À propos</a>
-      <a href="#vision">Vision</a>
-      <a href="#programme">Programmes</a>
-      <a href="#prochains-evenements">Prochains événements</a>
-      <a href="#evenements">Événements</a>
-      <a href="membres.html">Équipe</a>
-      <a href="#contact">Contacts</a>
+    <nav aria-label="Navigation principale">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <div class="nav-item has-dropdown" data-sections="a-propos vision">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">À propos<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="Apropos.html" role="menuitem"><strong>Qui sommes-nous</strong><span>Histoire, mission, vision et valeurs</span></a>
+          <a href="#vision" role="menuitem"><strong>Notre vision</strong><span>Les cinq priorités du parti</span></a>
+          <a href="membres.html" role="menuitem"><strong>Équipe &amp; gouvernance</strong><span>Les personnes qui portent le parti</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown" data-sections="programme implantation">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Nos activités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#programme" role="menuitem"><strong>Programmes</strong><span>Des actions concrètes sur le terrain</span></a>
+          <a href="#implantation" role="menuitem"><strong>Notre implantation</strong><span>Une présence dans les 26 provinces</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown" data-sections="prochains-evenements evenements">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Actualités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#prochains-evenements" role="menuitem"><strong>Prochains événements</strong><span>L’agenda des rendez-vous du parti</span></a>
+          <a href="#evenements" role="menuitem"><strong>Événements passés</strong><span>Vidéos et comptes rendus</span></a>
+        </div>
+      </div>
+      <a href="#partenaires" class="nav-link">Partenaires</a>
+      <a href="#contact" class="nav-link">Contact</a>
       <a href="adhesion.html" class="nav-cta">Nous rejoindre</a>
     </nav>
     <div class="menu-toggle" aria-label="Menu">&#9776;</div>
@@ -72,7 +111,10 @@
 
         <div class="intro-photo-group">
           <div class="intro-photo">
-            <img src="assets/images/leadership2.jpeg" alt="L'équipe du PNRD réunie" />
+            <img loading="lazy" decoding="async" src="assets/images/leadership2.jpeg" alt="L'équipe du PNRD réunie" />
+          </div>
+          <div class="intro-photo-accent">
+            <img loading="lazy" decoding="async" src="assets/images/leadership1.jpeg" alt="Session de formation stratégique du PNRD" />
           </div>
         </div>
 
@@ -80,7 +122,8 @@
 
       <!-- Contenu texte — colonne droite -->
       <div class="intro-text">
-        <h2>Qui sommes-nous ?</h2>
+        <span class="section-eyebrow">Qui sommes-nous</span>
+        <h2>Un parti engagé pour le renouveau du Congo</h2>
         <p>
           Le Parti National de Renouveau pour le Développement (PNRD) est engagé à
           bâtir une République Démocratique du Congo forte, unie et prospère. Nous
@@ -90,7 +133,7 @@
           d’innovation pour répondre aux défis de notre pays. Ensemble, avançons
           vers un renouveau qui profite à tous.
         </p>
-        <a href="Apropos.html" class="btn-savoir-plus">En savoir plus</a>
+        <a href="Apropos.html" class="section-link">En savoir plus</a>
       </div>
 
     </div>
@@ -98,7 +141,10 @@
 
   <!-- Vision -->
   <section class="vision-section" id="vision">
-    <h2>Notre Vision</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">Notre vision</span>
+      <h2>Cinq priorités pour un Congo uni et prospère</h2>
+    </div>
     <div class="vision-grid">
       <div class="vision-item">
         <div class="vision-item-icon" aria-hidden="true"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -155,180 +201,247 @@
 
   <!-- Programmes -->
   <section class="programme-section" id="programme">
-    <h2>Nos Programmes</h2>
+    <div class="programme-header">
+      <div>
+        <span class="section-eyebrow">Programmes &amp; réalisations</span>
+        <h2>Des actions concrètes sur le terrain</h2>
+      </div>
+      <a class="programme-link" href="#" onclick="return false;">Toutes nos réalisations</a>
+    </div>
     <div class="programme-grid">
-      <div class="programme-item">
-        <div class="programme-icon" aria-hidden="true"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-          </svg></div>
-        <h3>Éducation</h3>
-        <p>
-          Renforcer le système éducatif pour offrir une éducation accessible et de
-          qualité à chaque enfant congolais.
-        </p>
+      <article class="programme-item programme-featured">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" alt="Élèves en classe" />
+        <div class="programme-content">
+          <span class="programme-tag">Social</span>
+          <h3>Éducation</h3>
+          <p>
+            Renforcer le système éducatif pour offrir une éducation accessible et de
+            qualité à chaque enfant congolais.
+          </p>
+          <a class="programme-cta" href="#" onclick="return false;">Voir le projet</a>
+        </div>
+      </article>
+      <article class="programme-item">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=700&q=80" alt="Environnement" />
+        <div class="programme-content">
+          <span class="programme-tag">Développement durable</span>
+          <h3>Environnement</h3>
+          <p>
+            Protéger nos ressources naturelles et promouvoir un développement
+            respectueux de l’environnement.
+          </p>
+        </div>
+      </article>
+      <article class="programme-item">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=700&q=80" alt="Infrastructures" />
+        <div class="programme-content">
+          <span class="programme-tag">Aménagement</span>
+          <h3>Infrastructures</h3>
+          <p>
+            Développer des infrastructures modernes pour soutenir la croissance
+            économique et la qualité de vie.
+          </p>
+        </div>
+      </article>
+      <article class="programme-item">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=700&q=80" alt="Innovation et technologie" />
+        <div class="programme-content">
+          <span class="programme-tag">Numérique</span>
+          <h3>Innovation &amp; Technologie</h3>
+          <p>
+            Encourager l’innovation technologique pour moderniser les services
+            publics et privés.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Chiffres clés -->
+  <section class="stats-band" id="implantation" aria-labelledby="stats-title">
+    <div class="stats-inner">
+      <div class="stats-intro">
+        <span class="section-eyebrow">Notre implantation</span>
+        <h2 id="stats-title">Un parti présent dans toutes les provinces</h2>
+        <p>Des fédérations, des permanences et des militants engagés à travers les 26 provinces de la RDC.</p>
       </div>
-      <div class="programme-item">
-        <div class="programme-icon" aria-hidden="true"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-          </svg></div>
-        <h3>Environnement</h3>
-        <p>
-          Protéger nos ressources naturelles et promouvoir un développement
-          respectueux de l’environnement.
-        </p>
-      </div>
-      <div class="programme-item">
-        <div class="programme-icon" aria-hidden="true"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
-          </svg></div>
-        <h3>Infrastructures</h3>
-        <p>
-          Développer les infrastructures modernes pour soutenir la croissance
-          économique et améliorer la qualité de vie.
-        </p>
-      </div>
-      <div class="programme-item">
-        <div class="programme-icon" aria-hidden="true"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-          </svg></div>
-        <h3>Innovation & Technologie</h3>
-        <p>
-          Encourager l’innovation technologique pour moderniser les services
-          publics et privés.
-        </p>
-      </div>
+      <ul class="stats-list">
+        <li class="stat">
+          <span class="stat-number" data-count="26">26</span>
+          <span class="stat-label">Provinces d’implantation</span>
+        </li>
+        <li class="stat">
+          <span class="stat-number" data-count="120" data-suffix="+">120+</span>
+          <span class="stat-label">Sites et permanences</span>
+        </li>
+        <li class="stat stat-growth">
+          <span class="stat-number" data-count="15000" data-suffix="+">15&nbsp;000+</span>
+          <span class="stat-label">Membres, en hausse constante</span>
+          <svg class="stat-trend" viewBox="0 0 120 40" aria-hidden="true" focusable="false">
+            <polyline points="2,36 24,30 44,32 66,20 88,14 108,5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <polyline points="96,4 109,4 109,17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </li>
+        <li class="stat">
+          <span class="stat-number" data-count="50" data-suffix="+">50+</span>
+          <span class="stat-label">Partenaires</span>
+        </li>
+      </ul>
     </div>
   </section>
 
   <!-- Prochains événements -->
   <section class="upcoming-events" id="prochains-evenements">
-    <h2>Prochains Événements</h2>
-    <div class="events-container">
-      <article class="event-card">
-        <img src="assets/images/Jeunesse1.jpeg"
-          alt="Conférence jeunesse" />
-        <div class="event-info">
-          <time datetime="2025-09-12T15:00">12 septembre 2025 - 15h00</time>
-          <h3>Conférence sur la jeunesse et l’emploi</h3>
-          <p>
-            Une rencontre pour discuter des solutions innovantes à l’emploi des
-            jeunes en RDC.
-          </p>
-        </div>
-      </article>
-      <article class="event-card">
-        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
-          alt="Forum économique" />
-        <div class="event-info">
-          <time datetime="2025-10-05T09:30">5 octobre 2025 - 09h30</time>
-          <h3>Forum économique national</h3>
-          <p>
-            Discussion autour des perspectives de croissance économique durable en
-            RDC.
-          </p>
-        </div>
-      </article>
-      <article class="event-card">
-        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=80"
-          alt="Atelier santé" />
-        <div class="event-info">
-          <time datetime="2025-11-20T14:00">20 novembre 2025 - 14h00</time>
-          <h3>Atelier sur la santé communautaire</h3>
-          <p>
-            Atelier de sensibilisation sur l’importance des soins préventifs et
-            accès aux services de santé.
-          </p>
-        </div>
-      </article>
+    <div class="upcoming-layout">
+      <div class="upcoming-intro">
+        <span class="section-eyebrow">Agenda</span>
+        <h2>Prochains événements</h2>
+        <p>Conférences, forums et ateliers : retrouvez les rendez-vous du parti.</p>
+        <a class="btn-agenda" href="#evenements">Voir les événements passés</a>
+      </div>
+      <div class="events-container">
+        <article class="event-card">
+          <time class="event-date-box" datetime="2025-09-12T15:00"><span class="event-day">12</span><span class="event-month">Sept</span></time>
+          <div class="event-info">
+            <h3>Conférence sur la jeunesse et l’emploi</h3>
+            <p>Solutions innovantes à l’emploi des jeunes en RDC.</p>
+            <span class="event-time"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>15h00</span>
+          </div>
+          <span class="event-badge">À venir</span>
+        </article>
+        <article class="event-card">
+          <time class="event-date-box" datetime="2025-10-05T09:30"><span class="event-day">05</span><span class="event-month">Oct</span></time>
+          <div class="event-info">
+            <h3>Forum économique national</h3>
+            <p>Perspectives de croissance économique durable en RDC.</p>
+            <span class="event-time"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>09h30</span>
+          </div>
+          <span class="event-badge">À venir</span>
+        </article>
+        <article class="event-card">
+          <time class="event-date-box" datetime="2025-11-20T14:00"><span class="event-day">20</span><span class="event-month">Nov</span></time>
+          <div class="event-info">
+            <h3>Atelier sur la santé communautaire</h3>
+            <p>Sensibilisation aux soins préventifs et à l’accès aux services de santé.</p>
+            <span class="event-time"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>14h00</span>
+          </div>
+          <span class="event-badge">À venir</span>
+        </article>
+      </div>
     </div>
   </section>
 
   <!-- Événements passés -->
   <section class="events-section" id="evenements">
-    <h2>Événements Passés</h2>
-    <div class="events-slider">
-      <article class="event-card">
-        <div class="event-video">
-          <video controls preload="metadata" poster="assets/images/evement1.jpeg">
-            <source src="assets/videos/video1.webm" type="video/webm" />
-            <source src="assets/videos/video1.mp4" type="video/mp4" />
+    <div class="events-header">
+      <div>
+        <span class="section-eyebrow">Retour en images</span>
+        <h2>Événements passés</h2>
+      </div>
+      <a class="events-link" href="#" onclick="return false;">Toutes les archives</a>
+    </div>
+    <div class="archive">
+      <div class="archive-stage">
+        <div class="archive-player">
+          <video id="archive-video" controls preload="metadata">
+            <source src="assets/videos/video1.webm#t=0.5" type="video/webm" />
+            <source src="assets/videos/video1.mp4#t=0.5" type="video/mp4" />
             Votre navigateur ne supporte pas la lecture vidéo.
           </video>
         </div>
-        <div class="event-info">
-          <div class="event-date">15 juillet 2025</div>
-          <div class="event-description" onclick="window.location.href='details-evenement1.html'">Retour sur la
-            cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO.</div>
+        <div class="archive-caption" id="archive-caption">
+          <time class="archive-date" id="archive-date" datetime="2025-07-15">15 juillet 2025</time>
+          <h3 id="archive-title">Clôture du Mois de la Femme</h3>
+          <p id="archive-text">Retour sur la cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO.</p>
+          <a class="archive-cta" id="archive-cta" href="details-evenement1.html">Lire le compte rendu</a>
         </div>
-      </article>
-      <article class="event-card">
-        <div class="event-video">
-          <video controls preload="metadata"
-            poster="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80">
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.webm" type="video/webm" />
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.mp4" type="video/mp4" />
-            Votre navigateur ne supporte pas la lecture vidéo.
-          </video>
-        </div>
-        <div class="event-info">
-          <div class="event-date">28 août 2025</div>
-          <div class="event-description" onclick="window.location.href='details-evenement2.html'">Assemblée générale
-            annuelle du PNRD et bilan des actions réalisées.</div>
-        </div>
-      </article>
-
-      <article class="event-card">
-        <div class="event-video">
-          <video controls preload="metadata"
-            poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80">
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" type="video/webm" />
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" type="video/mp4" />
-            Votre navigateur ne supporte pas la lecture vidéo.
-          </video>
-        </div>
-        <div class="event-info">
-          <div class="event-date">10 juin 2025</div>
-          <div class="event-description" onclick="window.location.href='details-evenement3.html'">Atelier citoyen sur la
-            participation politique et le renouveau
-            démocratique.</div>
-        </div>
-      </article>
-
-
-      <article class="event-card">
-        <div class="event-video">
-          <video controls preload="metadata"
-            poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80">
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" type="video/webm" />
-            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" type="video/mp4" />
-            Votre navigateur ne supporte pas la lecture vidéo.
-          </video>
-        </div>
-        <div class="event-info">
-          <div class="event-date">10 juin 2025</div>
-          <div class="event-description" onclick="window.location.href='details-evenement4.html'">Atelier citoyen sur la
-            participation politique et le renouveau
-            démocratique.</div>
-        </div>
-      </article>
+      </div>
+      <div class="archive-list">
+        <span class="archive-list-label">À revoir · 04 vidéos</span>
+        <ul>
+        <li>
+          <button type="button" class="archive-item is-active" data-video-webm="assets/videos/video1.webm#t=0.5" data-video-mp4="assets/videos/video1.mp4#t=0.5" data-poster="" data-iso="2025-07-15" data-date="15 juillet 2025" data-title="Clôture du Mois de la Femme" data-text="Retour sur la cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO." data-href="details-evenement1.html" aria-pressed="true">
+            <span class="archive-thumb"><video src="assets/videos/video1.mp4#t=0.5" preload="metadata" muted playsinline tabindex="-1"></video><span class="archive-play" aria-hidden="true"></span></span>
+            <span class="archive-item-body">
+              <time datetime="2025-07-15">15 juillet 2025</time>
+              <strong>Clôture du Mois de la Femme</strong>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.mp4" data-poster="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" data-iso="2025-08-28" data-date="28 août 2025" data-title="Assemblée générale annuelle" data-text="Assemblée générale annuelle du PNRD et bilan des actions réalisées." data-href="details-evenement2.html" aria-pressed="false">
+            <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
+            <span class="archive-item-body">
+              <time datetime="2025-08-28">28 août 2025</time>
+              <strong>Assemblée générale annuelle</strong>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" data-poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" data-iso="2025-06-10" data-date="10 juin 2025" data-title="Atelier citoyen" data-text="Atelier citoyen sur la participation politique et le renouveau démocratique." data-href="details-evenement3.html" aria-pressed="false">
+            <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
+            <span class="archive-item-body">
+              <time datetime="2025-06-10">10 juin 2025</time>
+              <strong>Atelier citoyen</strong>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" data-poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" data-iso="2025-06-10" data-date="10 juin 2025" data-title="Atelier citoyen, suite" data-text="Atelier citoyen sur la participation politique et le renouveau démocratique." data-href="details-evenement4.html" aria-pressed="false">
+            <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
+            <span class="archive-item-body">
+              <time datetime="2025-06-10">10 juin 2025</time>
+              <strong>Atelier citoyen, suite</strong>
+            </span>
+          </button>
+        </li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- Contact -->
   <section id="contact">
-    <h2>Nous Contacter</h2>
-    <div class="contact-info">
+    <div class="section-head">
+      <span class="section-eyebrow">Contact</span>
+      <h2>Venez à notre rencontre</h2>
+    </div>
+    <div class="contact-map">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.863921653264!2d15.330057215292516!3d-4.327291096145981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a3b07dfe5b2d5%3A0xfbd79843dce91b9e!2sKinshasa%2C%20RD%20Congo!5e0!3m2!1sfr!2scd!4v1691522000000!5m2!1sfr!2scd"
-        width="560" height="320" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade" title="Localisation PNRD"></iframe>
-      <div>
-        <p>
-          <strong>Adresse :</strong> Avenue RTNC n°1, Quartier Sans-fil, Commune
-          Masina, Kinshasa, RDC
-        </p>
-        <p><strong>Réseaux sociaux :</strong></p>
-        <div class="social-icons">
+        src="https://maps.google.com/maps?q=-4.4213,15.3110&amp;z=17&amp;hl=fr&amp;output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen
+        title="Carte Google Maps : club du PNRD, Plateau des Professeurs, UNIKIN"></iframe>
+      <div class="contact-map-actions">
+        <a class="contact-btn contact-btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=-4.4213,15.3110" target="_blank" rel="noopener">Itinéraire</a>
+        <a class="contact-btn" href="https://www.google.com/maps/search/?api=1&amp;query=-4.4213,15.3110" target="_blank" rel="noopener">Ouvrir dans Google Maps</a>
+      </div>
+    </div>
+    <ul class="contact-details">
+      <li>
+        <span class="contact-details-icon"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg></span>
+        <div>
+          <span class="contact-details-label">Adresse</span>
+          <span class="contact-details-value">Plateau des Professeurs, Université de Kinshasa (UNIKIN), Kinshasa, RDC</span>
+        </div>
+      </li>
+      <li>
+        <span class="contact-details-icon"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg></span>
+        <div>
+          <span class="contact-details-label">E-mail</span>
+          <a class="contact-details-value" href="mailto:infopnrd09@gmail.com">infopnrd09@gmail.com</a>
+        </div>
+      </li>
+      <li>
+        <span class="contact-details-icon"><svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg></span>
+        <div>
+          <span class="contact-details-label">Téléphone</span>
+          <a class="contact-details-value" href="tel:+243817661504">+243 817 661 504</a>
+        </div>
+      </li>
+    </ul>
+    <div class="contact-social">
+      <p><strong>Réseaux sociaux :</strong></p>
+      <div class="social-icons">
           <a href="https://www.facebook.com/PNRD" target="_blank" class="social-link facebook" aria-label="Facebook"><i
               class="fab fa-facebook-f"></i></a>
           <a href="https://twitter.com/PNRD" target="_blank" class="social-link twitter" aria-label="X (Twitter)"><i
@@ -340,13 +453,18 @@
           <a href="https://youtube.com/pnrd" target="_blank" aria-label="YouTube" class="social-link youtube">
             <i class="fab fa-youtube"></i></a>
         </div>
-      </div>
     </div>
   </section>
 
   <!-- Équipe Dirigeante -->
   <section id="equipe-dirigeante" class="leadership-section">
-    <h2>Notre Équipe Dirigeante</h2>
+    <div class="leadership-header">
+      <div>
+        <span class="section-eyebrow">Direction du parti</span>
+        <h2>Une équipe engagée au service du Congo</h2>
+      </div>
+      <a href="membres.html" class="section-link">Voir tous les membres</a>
+    </div>
     <p class="leadership-intro">
       L’équipe dirigeante du PNRD est composée de professionnels engagés, passionnés par le développement durable, la
       justice sociale et le progrès de notre nation.
@@ -355,60 +473,62 @@
     </p>
     <div class="leadership-grid">
       <div class="leadership-item">
-        <img src="https://via.placeholder.com/140.png?text=Nom1" alt="Tony Kanku" class="leadership-photo" />
+        <img loading="lazy" decoding="async" src="https://via.placeholder.com/140.png?text=Nom1" alt="Tony Kanku" class="leadership-photo" />
         <p class="leadership-name">Tony KANKU</p>
         <p class="leadership-role">Autorité morale</p>
       </div>
       <div class="leadership-item">
-        <img src="assets/images/Ali2.jpeg" alt="Ali Kutumisa" class="leadership-photo" />
+        <img loading="lazy" decoding="async" src="assets/images/Ali2.jpeg" alt="Ali Kutumisa" class="leadership-photo" />
         <p class="leadership-name">Ali KUTUMISA</p>
         <p class="leadership-role">Président</p>
       </div>
       <div class="leadership-item">
-        <img src="https://via.placeholder.com/140.png?text=Nom3" alt="Martin Iwemba" class="leadership-photo" />
+        <img loading="lazy" decoding="async" src="https://via.placeholder.com/140.png?text=Nom3" alt="Martin Iwemba" class="leadership-photo" />
         <p class="leadership-name">Martin IWEMBA</p>
         <p class="leadership-role">Secrétaire Général</p>
       </div>
     </div>
-    <a href="membres.html" class="btn-savoir-plus">Voir tous les membres</a>
   </section>
 
   <!-- partenaire -->
   <section id="partenaires">
-    <h2>Nos Partenaires</h2>
+    <div class="section-head">
+      <span class="section-eyebrow">Partenaires</span>
+      <h2>Ils nous font confiance</h2>
+    </div>
     <div class="partners-track-wrapper">
       <div class="partners-track">
         <!-- Série 1 -->
         <a href="https://adesco-rdc.com/" target="_blank" rel="noopener noreferrer" title="ADESCO">
-          <img src="assets/Partenaires/ADESCO.jpeg" alt="Logo ADESCO" />
+          <img loading="lazy" decoding="async" src="assets/Partenaires/ADESCO.jpeg" alt="Logo ADESCO" />
         </a>
         <a href="https://www.afdb.org/en/" target="_blank" rel="noopener noreferrer" title="Banque Africaine de Développement">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/African_Development_Bank_Logo.svg/120px-African_Development_Bank_Logo.svg.png" alt="Logo BAD" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/African_Development_Bank_Logo.svg/120px-African_Development_Bank_Logo.svg.png" alt="Logo BAD" />
         </a>
         <a href="https://www.unicef.org/fr" target="_blank" rel="noopener noreferrer" title="UNICEF">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/UNICEF_Logo.svg/120px-UNICEF_Logo.svg.png" alt="Logo UNICEF" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/UNICEF_Logo.svg/120px-UNICEF_Logo.svg.png" alt="Logo UNICEF" />
         </a>
         <a href="https://www.who.int/fr" target="_blank" rel="noopener noreferrer" title="OMS">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/WHO_Logo.svg/120px-WHO_Logo.svg.png" alt="Logo OMS" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/WHO_Logo.svg/120px-WHO_Logo.svg.png" alt="Logo OMS" />
         </a>
         <a href="https://www.worldbank.org/" target="_blank" rel="noopener noreferrer" title="Banque mondiale">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/World_Bank_logo.svg/120px-World_Bank_logo.svg.png" alt="Logo Banque mondiale" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/World_Bank_logo.svg/120px-World_Bank_logo.svg.png" alt="Logo Banque mondiale" />
         </a>
         <!-- Série 2 — copie pour boucle infinie -->
         <a href="https://adesco-rdc.com/" target="_blank" rel="noopener noreferrer" title="ADESCO">
-          <img src="assets/Partenaires/ADESCO.jpeg" alt="Logo ADESCO" />
+          <img loading="lazy" decoding="async" src="assets/Partenaires/ADESCO.jpeg" alt="Logo ADESCO" />
         </a>
         <a href="https://www.afdb.org/en/" target="_blank" rel="noopener noreferrer" title="Banque Africaine de Développement">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/African_Development_Bank_Logo.svg/120px-African_Development_Bank_Logo.svg.png" alt="Logo BAD" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/African_Development_Bank_Logo.svg/120px-African_Development_Bank_Logo.svg.png" alt="Logo BAD" />
         </a>
         <a href="https://www.unicef.org/fr" target="_blank" rel="noopener noreferrer" title="UNICEF">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/UNICEF_Logo.svg/120px-UNICEF_Logo.svg.png" alt="Logo UNICEF" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/UNICEF_Logo.svg/120px-UNICEF_Logo.svg.png" alt="Logo UNICEF" />
         </a>
         <a href="https://www.who.int/fr" target="_blank" rel="noopener noreferrer" title="OMS">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/WHO_Logo.svg/120px-WHO_Logo.svg.png" alt="Logo OMS" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/WHO_Logo.svg/120px-WHO_Logo.svg.png" alt="Logo OMS" />
         </a>
         <a href="https://www.worldbank.org/" target="_blank" rel="noopener noreferrer" title="Banque mondiale">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/World_Bank_logo.svg/120px-World_Bank_logo.svg.png" alt="Logo Banque mondiale" />
+          <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/World_Bank_logo.svg/120px-World_Bank_logo.svg.png" alt="Logo Banque mondiale" />
         </a>
       </div>
     </div>
@@ -459,7 +579,7 @@
     /* Scroll spy — menu actif selon section visible */
     (function () {
       var sections = document.querySelectorAll('section[id], div[id="slider-placeholder"]');
-      var navLinks = document.querySelectorAll('nav a');
+      var navLinks = document.querySelectorAll('header nav a');
 
       function setActive() {
         var scrollY = window.scrollY + 100;
@@ -473,13 +593,20 @@
 
         navLinks.forEach(function (link) {
           link.classList.remove('active');
-          var href = link.getAttribute('href');
-          if (current && href && href.includes(current)) {
+          var href = link.getAttribute('href') || '';
+          var hash = href.indexOf('#') > -1 ? href.split('#')[1] : '';
+          if (current && hash === current) {
             link.classList.add('active');
           }
-          if (!current && (href === 'index.html' || href === '#')) {
+          if (!current && href === 'index.html') {
             link.classList.add('active');
           }
+        });
+
+        /* Le menu déroulant parent s'allume quand une de ses sections est visible */
+        document.querySelectorAll('.nav-item[data-sections]').forEach(function (item) {
+          var list = item.getAttribute('data-sections').split(' ');
+          item.classList.toggle('has-active', list.indexOf(current) > -1);
         });
       }
 
@@ -512,6 +639,62 @@
       el.classList.add('scroll-hidden');
       observer.observe(el);
     });
+  </script>
+  <script>
+    // Archives vidéo : un clic sur une miniature charge la vidéo dans le lecteur principal
+    (function () {
+      var video = document.getElementById('archive-video');
+      var caption = document.getElementById('archive-caption');
+      if (!video || !caption) return;
+      var items = document.querySelectorAll('.archive-item');
+      function show(btn) {
+        items.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        video.pause();
+        if (btn.dataset.poster) { video.poster = btn.dataset.poster; } else { video.removeAttribute('poster'); }
+        video.innerHTML = '<source src="' + btn.dataset.videoWebm + '" type="video/webm"><source src="' + btn.dataset.videoMp4 + '" type="video/mp4">';
+        video.load();
+        caption.classList.add('is-changing');
+        setTimeout(function () {
+          var d = document.getElementById('archive-date');
+          d.textContent = btn.dataset.date;
+          d.setAttribute('datetime', btn.dataset.iso);
+          document.getElementById('archive-title').textContent = btn.dataset.title;
+          document.getElementById('archive-text').textContent = btn.dataset.text;
+          document.getElementById('archive-cta').setAttribute('href', btn.dataset.href);
+          caption.classList.remove('is-changing');
+        }, 150);
+      }
+      items.forEach(function (b) { b.addEventListener('click', function () { show(b); }); });
+    })();
+  </script>
+  <script>
+    // Chiffres clés : décompte animé quand la bande entre à l'écran (valeur finale déjà dans le HTML)
+    (function () {
+      var nums = document.querySelectorAll('.stat-number[data-count]');
+      if (!nums.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+      function fmt(n) { return n.toLocaleString('fr-FR'); }
+      function run(el) {
+        var end = parseInt(el.dataset.count, 10), suffix = el.dataset.suffix || '', start = null, dur = 1400;
+        function step(t) {
+          if (start === null) start = t;
+          var p = Math.min((t - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(Math.round(end * eased)) + (p === 1 ? suffix : '');
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.6 });
+      nums.forEach(function (n) { io.observe(n); });
+    })();
   </script>
 </body>
 

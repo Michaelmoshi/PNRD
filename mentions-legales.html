@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales — PNRD</title>
+  <meta name="description" content="Mentions légales du site du Parti National du Renouveau pour le Développement (PNRD)." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#003b70" />
+  <meta property="og:title" content="Mentions légales — PNRD" />
+  <meta property="og:description" content="Mentions légales du site du Parti National du Renouveau pour le Développement (PNRD)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_CD" />
+  <meta property="og:site_name" content="PNRD" />
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <section class="ap-hero">
+    <div class="ap-hero-inner">
+      <span class="section-eyebrow">Informations légales</span>
+      <h1>Mentions légales</h1>
+      <p>Qui édite ce site, qui l'héberge et comment nous contacter.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="ap-section">
+      <div class="ap-inner">
+        <div class="legal">
+          <h2>Éditeur du site</h2>
+          <p>Le site est édité par le <strong>Parti National du Renouveau pour le Développement (PNRD)</strong>.</p>
+          <ul>
+            <li>Siège : Plateau des Professeurs, Université de Kinshasa (UNIKIN), Kinshasa, République Démocratique du Congo</li>
+            <li>E-mail : <a href="mailto:infopnrd09@gmail.com">infopnrd09@gmail.com</a></li>
+            <li>Téléphone : <a href="tel:+243817661504">+243 817 661 504</a></li>
+            <li>Numéro d'enregistrement du parti : <span class="legal-todo">[À compléter]</span></li>
+          </ul>
+
+          <h2>Directeur de la publication</h2>
+          <p><span class="legal-todo">[À compléter]</span> (nom et fonction du responsable de la publication).</p>
+
+          <h2>Hébergement</h2>
+          <p>Le site est hébergé par <span class="legal-todo">[À compléter]</span> (nom, adresse et contact de l'hébergeur).</p>
+
+          <h2>Propriété intellectuelle</h2>
+          <p>
+            Les textes, images, vidéos, logos et l'emblème du PNRD présents sur ce site sont protégés. Toute reproduction,
+            représentation ou diffusion, totale ou partielle, sans l'autorisation préalable du PNRD est interdite.
+            Les logos des partenaires et organisations cités appartiennent à leurs propriétaires respectifs.
+          </p>
+
+          <h2>Responsabilité</h2>
+          <p>
+            Le PNRD s'efforce de fournir des informations exactes et à jour, mais ne peut garantir l'absence d'erreurs ou
+            d'omissions. Le site peut contenir des liens vers des sites tiers (réseaux sociaux, services de cartographie) dont le
+            PNRD n'est pas responsable du contenu.
+          </p>
+
+          <h2>Contact</h2>
+          <p>Pour toute question ou signalement, écrivez à <a href="mailto:infopnrd09@gmail.com">infopnrd09@gmail.com</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="script.js"></script>
+  <script>
+    async function loadPart(id, file, callback) {
+      const resp = await fetch(file);
+      const html = await resp.text();
+      document.getElementById(id).outerHTML = html;
+      if (typeof callback === 'function') callback();
+    }
+
+    loadPart('header', 'header.html', function () {
+      initMenuToggle();
+    });
+    loadPart('footer-placeholder', 'footer.html');
+  </script>
+
+</body>
+
+</html>

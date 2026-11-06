@@ -10,6 +10,14 @@
   <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#003b70" />
+  <meta property="og:title" content="Membres - PNRD" />
+  <meta property="og:description" content="Découvrez les membres et l'équipe dirigeante du Parti National du Renouveau pour le Développement (PNRD)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_CD" />
+  <meta property="og:site_name" content="PNRD" />
 </head>
 
 <body>
@@ -26,25 +34,44 @@
         </div>
       </a>
     </div>
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="index.html#a-propos">À propos</a>
-      <a href="index.html#vision">Vision</a>
-      <a href="index.html#programme">Programmes</a>
-      <a href="index.html#prochains-evenements">Prochains événements</a>
-      <a href="index.html#evenements">Événements</a>
-      <a href="membres.html" class="active">Équipe</a>
-      <a href="index.html#contact">Contacts</a>
+    <nav aria-label="Navigation principale">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <div class="nav-item has-dropdown" data-sections="a-propos vision">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">À propos<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="Apropos.html" role="menuitem"><strong>Qui sommes-nous</strong><span>Histoire, mission, vision et valeurs</span></a>
+          <a href="index.html#vision" role="menuitem"><strong>Notre vision</strong><span>Les cinq priorités du parti</span></a>
+          <a href="membres.html" role="menuitem"><strong>Équipe &amp; gouvernance</strong><span>Les personnes qui portent le parti</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown" data-sections="programme implantation">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Nos activités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="index.html#programme" role="menuitem"><strong>Programmes</strong><span>Des actions concrètes sur le terrain</span></a>
+          <a href="index.html#implantation" role="menuitem"><strong>Notre implantation</strong><span>Une présence dans les 26 provinces</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown" data-sections="prochains-evenements evenements">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Actualités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="index.html#prochains-evenements" role="menuitem"><strong>Prochains événements</strong><span>L’agenda des rendez-vous du parti</span></a>
+          <a href="index.html#evenements" role="menuitem"><strong>Événements passés</strong><span>Vidéos et comptes rendus</span></a>
+        </div>
+      </div>
+      <a href="index.html#partenaires" class="nav-link">Partenaires</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
       <a href="adhesion.html" class="nav-cta">Nous rejoindre</a>
     </nav>
     <div class="menu-toggle" aria-label="Menu">&#9776;</div>
   </header>
 
   <!-- Bandeau de page -->
-  <section class="page-banner">
-    <span class="section-eyebrow section-eyebrow-light">Notre équipe</span>
-    <h1>Nos Membres</h1>
-    <p>Les hommes et les femmes qui font vivre le PNRD au quotidien.</p>
+  <section class="ap-hero">
+    <div class="ap-hero-inner">
+      <span class="section-eyebrow">Notre équipe</span>
+      <h1>Nos membres</h1>
+      <p>Les hommes et les femmes qui font vivre le PNRD au quotidien.</p>
+    </div>
   </section>
 
   <section class="team-section">
@@ -62,19 +89,19 @@
           </div>
           <div class="member-grid">
             <div class="member-card">
-              <img src="https://via.placeholder.com/120.png?text=TK" alt="Tony KANKU" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Tony KANKU"><span aria-hidden="true">TK</span></div>
               <div class="member-name">Tony KANKU</div>
               <div class="member-function">Autorité morale</div>
               <div class="member-description">Guide moral et référence spirituelle du parti.</div>
             </div>
             <div class="member-card">
-              <img src="assets/images/Ali2.jpeg" alt="Ali KUTUMISA" class="member-photo">
+              <img loading="lazy" decoding="async" src="assets/images/Ali2.jpeg" alt="Ali KUTUMISA" class="member-photo">
               <div class="member-name">Ali KUTUMISA</div>
               <div class="member-function">Président</div>
               <div class="member-description">Dirige le parti et incarne la vision du PNRD pour un Congo prospère.</div>
             </div>
             <div class="member-card">
-              <img src="https://via.placeholder.com/120.png?text=MI" alt="Martin IWEMBA" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Martin IWEMBA"><span aria-hidden="true">MI</span></div>
               <div class="member-name">Martin IWEMBA</div>
               <div class="member-function">Secrétaire Général</div>
               <div class="member-description">Coordonne les activités administratives et organisationnelles du parti.</div>
@@ -91,19 +118,19 @@
           </div>
           <div class="member-grid">
             <div class="member-card">
-              <img src="photo4.jpg" alt="Membre logistique 1" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Alice Dupuis"><span aria-hidden="true">AD</span></div>
               <div class="member-name">Alice Dupuis</div>
               <div class="member-function">Responsable Transport</div>
               <div class="member-description">Gère les déplacements des membres.</div>
             </div>
             <div class="member-card">
-              <img src="photo5.jpg" alt="Membre logistique 2" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Karim El Amrani"><span aria-hidden="true">KE</span></div>
               <div class="member-name">Karim El Amrani</div>
               <div class="member-function">Coordination Logistique</div>
               <div class="member-description">Supervise la logistique des événements.</div>
             </div>
             <div class="member-card">
-              <img src="photo6.jpg" alt="Membre logistique 3" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Laura Petit"><span aria-hidden="true">LP</span></div>
               <div class="member-name">Laura Petit</div>
               <div class="member-function">Gestion Matériel</div>
               <div class="member-description">S'occupe des équipements et approvisionnements.</div>
@@ -120,19 +147,19 @@
           </div>
           <div class="member-grid">
             <div class="member-card">
-              <img src="photo4.jpg" alt="Membre presse 1" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Alice Dupuis"><span aria-hidden="true">AD</span></div>
               <div class="member-name">Alice Dupuis</div>
               <div class="member-function">Responsable Presse</div>
               <div class="member-description">Assure le lien entre le parti et les médias.</div>
             </div>
             <div class="member-card">
-              <img src="photo5.jpg" alt="Membre presse 2" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Karim El Amrani"><span aria-hidden="true">KE</span></div>
               <div class="member-name">Karim El Amrani</div>
               <div class="member-function">Coordination Presse</div>
               <div class="member-description">Supervise la couverture presse des événements.</div>
             </div>
             <div class="member-card">
-              <img src="photo6.jpg" alt="Membre presse 3" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Laura Petit"><span aria-hidden="true">LP</span></div>
               <div class="member-name">Laura Petit</div>
               <div class="member-function">Attachée de presse</div>
               <div class="member-description">Rédige les communiqués et dossiers de presse.</div>
@@ -149,19 +176,19 @@
           </div>
           <div class="member-grid">
             <div class="member-card">
-              <img src="photo4.jpg" alt="Membre informatique 1" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Alice Dupuis"><span aria-hidden="true">AD</span></div>
               <div class="member-name">Alice Dupuis</div>
               <div class="member-function">Responsable Informatique</div>
               <div class="member-description">Gère les outils numériques et le site du parti.</div>
             </div>
             <div class="member-card">
-              <img src="photo5.jpg" alt="Membre informatique 2" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Karim El Amrani"><span aria-hidden="true">KE</span></div>
               <div class="member-name">Karim El Amrani</div>
               <div class="member-function">Coordination Informatique</div>
               <div class="member-description">Supervise l'infrastructure technique du parti.</div>
             </div>
             <div class="member-card">
-              <img src="photo6.jpg" alt="Membre informatique 3" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Laura Petit"><span aria-hidden="true">LP</span></div>
               <div class="member-name">Laura Petit</div>
               <div class="member-function">Support Technique</div>
               <div class="member-description">Accompagne les membres sur les outils numériques.</div>
@@ -178,19 +205,19 @@
           </div>
           <div class="member-grid">
             <div class="member-card">
-              <img src="photo4.jpg" alt="Membre communication 1" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Alice Dupuis"><span aria-hidden="true">AD</span></div>
               <div class="member-name">Alice Dupuis</div>
               <div class="member-function">Responsable Communication</div>
               <div class="member-description">Gère les communications internes et externes.</div>
             </div>
             <div class="member-card">
-              <img src="photo5.jpg" alt="Membre communication 2" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Karim El Amrani"><span aria-hidden="true">KE</span></div>
               <div class="member-name">Karim El Amrani</div>
               <div class="member-function">Coordination Communication</div>
               <div class="member-description">Supervise la communication des événements.</div>
             </div>
             <div class="member-card">
-              <img src="photo6.jpg" alt="Membre communication 3" class="member-photo">
+              <div class="member-photo member-photo-empty" role="img" aria-label="Photo à venir : Laura Petit"><span aria-hidden="true">LP</span></div>
               <div class="member-name">Laura Petit</div>
               <div class="member-function">Chargée de Communication</div>
               <div class="member-description">Anime les réseaux sociaux et les campagnes du parti.</div>

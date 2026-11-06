@@ -16,6 +16,8 @@ function initMenuToggle() {
     }
   });
 
+  initNavDropdowns(nav);
+
   // Fermer le menu si on clique sur un lien (uniquement en mobile)
   const navLinks = nav.querySelectorAll("a");
   navLinks.forEach(link => {
@@ -163,4 +165,55 @@ function initTeamTabs() {
 
 if (document.querySelector('.team-tab')) {
   initTeamTabs();
+}
+
+
+// Menus déroulants du header : clic (mobile/clavier), Échap, clic extérieur.
+// Sur ordinateur, l'ouverture au survol est gérée en CSS.
+function initNavDropdowns(nav) {
+  const items = nav.querySelectorAll(".nav-item");
+
+  function closeAll(except) {
+    items.forEach((item) => {
+      if (item === except) return;
+      item.classList.remove("open");
+      const t = item.querySelector(".nav-trigger");
+      if (t) t.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  items.forEach((item) => {
+    const trigger = item.querySelector(".nav-trigger");
+    if (!trigger) return;
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const willOpen = !item.classList.contains("open");
+      closeAll(item);
+      item.classList.toggle("open", willOpen);
+      trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    });
+
+    // Après un clic sur un sous-lien, le panneau se referme même si la souris reste dessus
+    item.querySelectorAll(".nav-dropdown a").forEach((link) => {
+      link.addEventListener("click", () => {
+        item.classList.remove("open");
+        item.classList.add("suppress");
+        trigger.setAttribute("aria-expanded", "false");
+      });
+    });
+    item.addEventListener("mouseleave", () => item.classList.remove("suppress"));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!nav.contains(e.target)) closeAll();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeAll();
+      const focused = nav.querySelector(".nav-trigger:focus");
+      if (focused) focused.blur();
+    }
+  });
 }

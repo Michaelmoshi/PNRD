@@ -1,20 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Document</title>
-</head>
-<body>
-    <div id="header"></div>
-    <div id="slider-placeholder"></div>
-    <p>hello world2</p>
-    <div id="footer-placeholder"></div>
+<html lang="fr">
 
-    <script src="script.js"></script>
-    <script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assemblée générale annuelle — PNRD</title>
+  <meta name="description" content="Assemblée générale annuelle du PNRD et bilan des actions réalisées." />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#003b70" />
+  <meta property="og:title" content="Assemblée générale annuelle — PNRD" />
+  <meta property="og:description" content="Assemblée générale annuelle du PNRD et bilan des actions réalisées." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_CD" />
+  <meta property="og:site_name" content="PNRD" />
+</head>
+
+<body>
+  <div id="header"></div>
+
+  <section class="ap-hero">
+    <div class="ap-hero-inner">
+      <span class="section-eyebrow"><time datetime="2025-08-28">28 août 2025</time></span>
+      <h1>Assemblée générale annuelle</h1>
+      <p>Assemblée générale annuelle du PNRD et bilan des actions réalisées.</p>
+      <div class="ap-chips">
+        <a href="index.html#evenements">← Tous les événements</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="ap-section">
+      <div class="ap-inner ev-layout">
+        <article class="ev-main">
+          <div class="archive-player">
+            <video controls preload="metadata" poster="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80">
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.webm" type="video/webm" />
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.mp4" type="video/mp4" />
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+          </div>
+          <div class="ev-text">
+            <div class="section-head">
+              <span class="section-eyebrow">Compte rendu</span>
+              <h2>Retour sur l’événement</h2>
+            </div>
+            <p>Assemblée générale annuelle du PNRD et bilan des actions réalisées.</p>
+            <p>Le compte rendu détaillé de cet événement sera publié prochainement.</p>
+          </div>
+        </article>
+        <aside class="ev-side">
+          <span class="ev-side-label">Autres événements</span>
+          <ul>
+          <li>
+            <a class="ev-link" href="details-evenement1.html">
+              <span class="archive-thumb"><video src="assets/videos/video1.mp4#t=0.5" preload="metadata" muted playsinline tabindex="-1"></video><span class="archive-play" aria-hidden="true"></span></span>
+              <span class="archive-item-body"><time datetime="2025-07-15">15 juillet 2025</time><strong>Clôture du Mois de la Femme</strong></span>
+            </a>
+          </li>
+          <li>
+            <a class="ev-link" href="details-evenement3.html">
+              <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
+              <span class="archive-item-body"><time datetime="2025-06-10">10 juin 2025</time><strong>Atelier citoyen</strong></span>
+            </a>
+          </li>
+          <li>
+            <a class="ev-link" href="details-evenement4.html">
+              <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
+              <span class="archive-item-body"><time datetime="2025-06-10">10 juin 2025</time><strong>Atelier citoyen, suite</strong></span>
+            </a>
+          </li>
+          </ul>
+          <a href="index.html#evenements" class="section-link">Tous les événements</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="script.js"></script>
+  <script>
     async function loadPart(id, file, callback) {
       const resp = await fetch(file);
       const html = await resp.text();
@@ -25,11 +96,9 @@
     loadPart('header', 'header.html', function () {
       initMenuToggle();
     });
-    loadPart('slider-placeholder', 'slider.html', function () {
-      initSlider();
-    });
     loadPart('footer-placeholder', 'footer.html');
   </script>
 
 </body>
+
 </html>

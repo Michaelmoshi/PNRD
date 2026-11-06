@@ -15,8 +15,10 @@
 
     body {
       font-family: 'Work Sans', Arial, sans-serif;
-      background: #faf7f1;
-      color: #201a14;
+      background:
+        radial-gradient(120% 140% at 0% 0%, #0b5a96 0%, rgba(11, 90, 150, 0) 55%),
+        linear-gradient(135deg, #003b70 0%, #0d3a5c 100%);
+      color: #fff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -26,102 +28,106 @@
       padding: 20px;
     }
 
-    .container {
-      max-width: 560px;
+    .container { max-width: 560px; }
+
+    .logo-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ffcc00;
+    }
+
+    .logo-text::before,
+    .logo-text::after {
+      content: "";
+      width: 40px;
+      height: 2px;
+      background: #ffcc00;
     }
 
     .code {
       font-family: 'Archivo', sans-serif;
-      font-size: 7rem;
+      font-size: 8rem;
       font-weight: 900;
-      color: #0b2545;
+      color: #fff;
       line-height: 1;
       letter-spacing: -4px;
     }
 
-    .code span {
-      color: #cf9a3e;
-    }
+    .code span { color: #ffcc00; }
 
     .divider {
-      width: 60px;
-      height: 4px;
-      background: linear-gradient(to right, transparent, #cf9a3e, transparent);
+      width: 72px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ffcc00, transparent);
       border-radius: 2px;
-      margin: 24px auto;
+      margin: 26px auto;
     }
 
     h1 {
       font-family: 'Archivo', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      color: #0b2545;
       margin-bottom: 14px;
     }
 
     p {
       font-size: 1.05rem;
-      color: #5b5548;
+      color: rgba(255, 255, 255, 0.82);
       line-height: 1.7;
       margin-bottom: 32px;
     }
 
-    .btn-home {
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn-home,
+    .btn-contact {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: #0b2545;
-      color: #fff;
       text-decoration: none;
-      padding: 13px 32px;
-      border-radius: 30px;
+      padding: 13px 30px;
+      border-radius: 999px;
       font-family: 'Archivo', sans-serif;
       font-size: 1rem;
       font-weight: 700;
-      transition: background 0.25s ease, transform 0.2s ease;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.16s ease-out;
     }
 
-    .btn-home:hover {
-      background: #7a1e33;
-      transform: translateY(-2px);
-    }
+    .btn-home { background: #ffcc00; color: #003b70; }
+    .btn-contact { border: 1px solid rgba(255, 255, 255, 0.35); color: #fff; }
 
-    .btn-home:focus-visible {
-      outline: 2px solid #cf9a3e;
+    .btn-home:hover { background: #ffe38a; }
+    .btn-contact:hover { background: #fff; color: #003b70; }
+    .btn-home:active, .btn-contact:active { transform: scale(0.97); }
+
+    .btn-home:focus-visible,
+    .btn-contact:focus-visible {
+      outline: 2px solid #fff;
       outline-offset: 3px;
     }
 
-    .logo-text {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #7a1e33;
-      margin-bottom: 32px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .logo-text span { color: #cf9a3e; }
-
     @media (max-width: 480px) {
-      .code {
-        font-size: 4.5rem;
-      }
-
-      h1 {
-        font-size: 1.3rem;
-      }
-
-      .logo-text {
-        font-size: 1rem;
-      }
+      .code { font-size: 5rem; }
+      h1 { font-size: 1.4rem; }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="logo-text">PN<span>RD</span></div>
+    <div class="logo-text">PNRD</div>
     <div class="code">4<span>0</span>4</div>
     <div class="divider"></div>
     <h1>Page introuvable</h1>
@@ -129,12 +135,15 @@
       La page que vous recherchez n'existe pas ou a été déplacée.<br />
       Revenez à l'accueil pour continuer votre navigation.
     </p>
+    <div class="actions">
     <a href="index.html" class="btn-home">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" style="width:1.1em;height:1.1em;vertical-align:-0.15em;">
         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
       </svg>
       Retour à l'accueil
     </a>
+    <a href="index.html#contact" class="btn-contact">Nous contacter</a>
+    </div>
   </div>
 </body>
 
