@@ -32,8 +32,8 @@ footer::before {
 }
 
 .footer-column {
-  flex: 1 1 280px;
-  min-width: 250px;
+  flex: 1 1 200px;
+  min-width: 200px;
 }
 
 /* Colonne 1 — Logo */
