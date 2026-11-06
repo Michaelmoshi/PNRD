@@ -378,6 +378,19 @@ a.contact-details-value:hover {
   font-size: 1.15rem;
 }
 
+/* Liens légaux sous les réseaux sociaux */
+.contact-legal {
+  margin-top: 28px;
+  font-size: 0.9rem;
+  color: var(--color-gray);
+}
+
+.contact-legal a {
+  margin: 0 8px;
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
 /* Icônes réseaux sociaux (section contact) */
 .social-icons {
   margin-top: 10px;

@@ -47,4 +47,10 @@ const server = http.createServer((req, res) => {
 
 server.listen(port, () => {
   console.log(`Serveur démarré sur http://localhost:${port}`);
+
+  // Pour tester sur un téléphone : même réseau Wi-Fi que l'ordinateur, puis ouvrir l'une de ces adresses
+  const os = require('os');
+  Object.values(os.networkInterfaces()).flat()
+    .filter((n) => n.family === 'IPv4' && !n.internal)
+    .forEach((n) => console.log(`Sur téléphone (même Wi-Fi) : http://${n.address}:${port}`));
 });

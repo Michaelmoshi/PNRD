@@ -37,6 +37,13 @@ for (const file of htmlFiles(root)) {
   add(/\son[a-z]+\s*=\s*["']/gi, 'gestionnaire en ligne (onclick…) : utiliser un fichier dans js/');
   add(/href\s*=\s*["']\s*javascript:/gi, 'lien javascript: : utiliser un bouton ou un fichier dans js/');
 
+  // Bonne pratique de sécurité : un lien ouvert dans un nouvel onglet doit porter rel="noopener"
+  for (const m of html.matchAll(/<a\b[^>]*>/gi)) {
+    if (/target\s*=\s*["']_blank["']/i.test(m[0]) && !/rel\s*=\s*["'][^"']*noopener/i.test(m[0])) {
+      problems.push(`${rel}:${lineOf(html, m.index)}  target="_blank" sans rel="noopener noreferrer"`);
+    }
+  }
+
   for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
     const attrs = m[1];
     if (/\bsrc\s*=/.test(attrs)) continue;                       // script externe : correct
@@ -49,4 +56,4 @@ if (problems.length) {
   console.error(`${problems.length} problème(s) :\n` + problems.map((p) => '  ' + p).join('\n'));
   process.exit(1);
 }
-console.log('HTML propre : aucun CSS ni JavaScript en ligne.');
+console.log('HTML propre : aucun CSS ni JavaScript en ligne, liens externes sécurisés.');

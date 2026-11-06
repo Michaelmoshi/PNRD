@@ -1,0 +1,16 @@
+{
+  "name": "pnrd-site",
+  "version": "1.0.0",
+  "description": "Site web du Parti National du Renouveau pour le Développement (PNRD)",
+  "private": true,
+  "scripts": {
+    "serve": "node tools/server.js",
+    "build": "node tools/build.js",
+    "lint": "node tools/lint-html.js",
+    "check": "node tools/build.js --check && node tools/lint-html.js",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

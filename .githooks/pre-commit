@@ -1,0 +1,8 @@
+#!/bin/sh
+# Avant chaque commit : les pages doivent être à jour et le HTML sans CSS ni JavaScript en ligne.
+# (Activé par « npm run prepare » ou « git config core.hooksPath .githooks ».)
+if ! node tools/build.js --check || ! node tools/lint-html.js; then
+  echo ""
+  echo "Commit annulé. Lancez « npm run build » puis « npm run check », puis recommencez."
+  exit 1
+fi
