@@ -328,6 +328,19 @@ nav {
   pointer-events: none;
 }
 
+/* Images de fond des slides (chemins relatifs à ce fichier CSS) */
+.slide--renouveau {
+  background-image: url('../assets/images/hero/slide-1-renouveau.jpeg');
+}
+
+.slide--jeunesse {
+  background-image: url('../assets/images/hero/slide-2-jeunesse.jpeg');
+}
+
+.slide--diversite {
+  background-image: url('../assets/images/hero/slide-3-diversite.jpeg');
+}
+
 .slider-content {
   position: relative;
   max-width: 720px;

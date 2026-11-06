@@ -931,6 +931,11 @@
   transition: transform var(--transition);
 }
 
+/* Lien pas encore actif (pas de href) */
+.events-link:not([href]) {
+  cursor: default;
+}
+
 .events-link:hover::after {
   transform: translateX(4px);
 }

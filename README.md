@@ -21,12 +21,27 @@ PORT=5600 node tools/server.js   # autre port si 5500 est pris
 
 Ne pas modifier le menu ou le pied de page directement dans une page : le prochain `build` écraserait le changement.
 
+## Bonnes pratiques
+
+- **HTML = structure uniquement** : pas de balise `<style>`, pas d'attribut `style="…"`, pas de `<script>` avec du code,
+  pas de `onclick="…"`. Le style va dans `css/`, le comportement dans `js/`.
+- Seule exception : les données structurées `<script type="application/ld+json">` de l'accueil (ce sont des données
+  pour les moteurs de recherche, pas du code).
+- Pour vérifier avant un commit :
+
+```bash
+node tools/lint-html.js
+```
+
+  Le script liste chaque ligne fautive (code de sortie 1 s'il y a un problème).
+- `404.html` est autonome : sa feuille de style est `css/404.css` (elle n'utilise pas les autres feuilles).
+
 ## Structure du projet
 
 ```
 PNRD/
 ├── index.html              Accueil
-├── 404.html                Page introuvable (autonome, doit rester à la racine pour GitHub Pages)
+├── 404.html                Page introuvable (autonome, doit rester à la racine pour GitHub Pages ; style : css/404.css)
 ├── pages/
 │   ├── a-propos.html       Histoire, idéologie, doctrine, valeurs, emblème, organisation
 │   ├── programmes.html     Programmes et réalisations (éducation, environnement, infrastructures, innovation)
@@ -48,6 +63,7 @@ PNRD/
 │   └── favicon.*
 └── tools/
     ├── build.js            recopie partials/ dans les pages
+    ├── lint-html.js        vérifie qu'il n'y a ni CSS ni JavaScript dans les pages HTML
     └── server.js           serveur de développement local (inutile en production)
 ```
 

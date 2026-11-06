@@ -21,11 +21,6 @@
         if (el.hasAttribute(attr)) el.setAttribute(attr, fix(el.getAttribute(attr)));
       });
     });
-    fragment.querySelectorAll('[style*="url("]').forEach(function (el) {
-      el.setAttribute('style', el.getAttribute('style').replace(/url\((['"]?)([^'")]+)\1\)/g, function (m, q, u) {
-        return 'url(' + q + fix(u) + q + ')';
-      }));
-    });
   }
 
   function load(placeholder) {

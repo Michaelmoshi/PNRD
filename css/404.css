@@ -1,0 +1,119 @@
+/* Page 404 (autonome : elle n'utilise pas les autres feuilles de style) */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Work Sans', Arial, sans-serif;
+  background:
+    radial-gradient(120% 140% at 0% 0%, #0b5a96 0%, rgba(11, 90, 150, 0) 55%),
+    linear-gradient(135deg, #003b70 0%, #0d3a5c 100%);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.container { max-width: 560px; }
+
+.logo-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffcc00;
+}
+
+.logo-text::before,
+.logo-text::after {
+  content: "";
+  width: 40px;
+  height: 2px;
+  background: #ffcc00;
+}
+
+.code {
+  font-family: 'Archivo', sans-serif;
+  font-size: 8rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -4px;
+}
+
+.code span { color: #ffcc00; }
+
+.divider {
+  width: 72px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+  border-radius: 2px;
+  margin: 26px auto;
+}
+
+h1 {
+  font-family: 'Archivo', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-home,
+.btn-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  padding: 13px 30px;
+  border-radius: 999px;
+  font-family: 'Archivo', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.16s ease-out;
+}
+
+.btn-home { background: #ffcc00; color: #003b70; }
+.btn-contact { border: 1px solid rgba(255, 255, 255, 0.35); color: #fff; }
+
+.btn-home:hover { background: #ffe38a; }
+.btn-contact:hover { background: #fff; color: #003b70; }
+.btn-home:active, .btn-contact:active { transform: scale(0.97); }
+
+.btn-home:focus-visible,
+.btn-contact:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .code { font-size: 5rem; }
+  h1 { font-size: 1.4rem; }
+}
+
+/* Icône de maison dans le bouton « Retour à l'accueil » */
+.icon-inline {
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.15em;
+}

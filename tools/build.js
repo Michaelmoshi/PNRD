@@ -33,9 +33,7 @@ const absolute = /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\/)/i;
 function rebase(html, base) {
   if (!base) return html;
   const fix = (v) => (!v || absolute.test(v) ? v : base + v);
-  return html
-    .replace(/\b(href|src|poster)="([^"]*)"/g, (m, attr, v) => `${attr}="${fix(v)}"`)
-    .replace(/url\((['"]?)([^'")]+)\1\)/g, (m, q, u) => `url(${q}${fix(u)}${q})`);
+  return html.replace(/\b(href|src|poster)="([^"]*)"/g, (m, attr, v) => `${attr}="${fix(v)}"`);
 }
 
 let changed = 0;
