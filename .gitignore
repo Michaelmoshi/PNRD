@@ -1,0 +1,16 @@
+# Éditeurs et outils locaux
+.idea/
+.vscode/
+.claude/
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dépendances et journaux
+node_modules/
+*.log
+
+# Fichiers temporaires de test
+_*.html
