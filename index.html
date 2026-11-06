@@ -61,10 +61,85 @@
 
 <body>
 
-  <div data-include="partials/header.html"></div>
+  <!-- include:header -->
+<header>
+  <div class="logo">
+    <a href="index.html">
+      <img src="assets/logo/logo-pnrd.jpeg" alt="Logo PNRD" />
+    </a>
+    <a href="index.html">
+      <div class="logo-text">PNRD</div>
+      <div class="logo-subtext">Parti National du Renouveau pour le Développement</div>
+    </a>
+  </div>
+  <nav aria-label="Navigation principale">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <div class="nav-item has-dropdown" data-sections="a-propos vision">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">À propos<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="pages/a-propos.html" role="menuitem"><strong>Qui sommes-nous</strong><span>Histoire, mission, vision et valeurs</span></a>
+          <a href="index.html#vision" role="menuitem"><strong>Notre vision</strong><span>Les cinq priorités du parti</span></a>
+          <a href="pages/membres.html" role="menuitem"><strong>Équipe &amp; gouvernance</strong><span>Les personnes qui portent le parti</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown" data-sections="programme implantation">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Nos activités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="index.html#programme" role="menuitem"><strong>Programmes</strong><span>Des actions concrètes sur le terrain</span></a>
+          <a href="index.html#implantation" role="menuitem"><strong>Notre implantation</strong><span>Une présence dans les 26 provinces</span></a>
+        </div>
+      </div>
+      <div class="nav-item has-dropdown" data-sections="prochains-evenements evenements">
+        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Actualités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav-dropdown" role="menu">
+          <a href="index.html#prochains-evenements" role="menuitem"><strong>Prochains événements</strong><span>L’agenda des rendez-vous du parti</span></a>
+          <a href="index.html#evenements" role="menuitem"><strong>Événements passés</strong><span>Vidéos et comptes rendus</span></a>
+        </div>
+      </div>
+      <a href="index.html#partenaires" class="nav-link">Partenaires</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+      <a href="pages/adhesion.html" class="nav-cta">Nous rejoindre</a>
+    </nav>
+  <div class="menu-toggle" aria-label="Menu">&#9776;</div>
+</header>
+<!-- /include:header -->
 
   <!-- Slider -->
-  <div data-include="partials/slider.html"></div>
+  <!-- include:slider -->
+<!-- Fragment : slider -->
+<div class="slider">
+  <div class="slide active" style="background-image: url('assets/images/hero/slide-1-renouveau.jpeg');">
+    <div class="slider-content">
+      <span class="slide-eyebrow">Parti National du Renouveau</span>
+      <h1>Ensemble pour le Renouveau</h1>
+      <p>Pour un développement durable et inclusif</p>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('assets/images/hero/slide-2-jeunesse.jpeg');">
+    <div class="slider-content">
+      <span class="slide-eyebrow">Jeunesse &amp; avenir</span>
+      <h1>Agir aujourd'hui</h1>
+      <p>Pour bâtir l’avenir de la RDC</p>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('assets/images/hero/slide-3-diversite.jpeg');">
+    <div class="slider-content">
+      <span class="slide-eyebrow">PNRD, Toko Longa !</span>
+      <h1>Unis dans la diversité</h1>
+      <p>Un Congo fort, uni et prospère</p>
+    </div>
+  </div>
+
+  <button class="slider-arrow slider-arrow-prev" aria-label="Slide précédente">&#10094;</button>
+  <button class="slider-arrow slider-arrow-next" aria-label="Slide suivante">&#10095;</button>
+
+  <div class="slider-dots" role="tablist" aria-label="Choisir une slide">
+    <span class="slider-dot active" data-index="0" role="tab" tabindex="0" aria-label="Slide 1"></span>
+    <span class="slider-dot" data-index="1" role="tab" tabindex="0" aria-label="Slide 2"></span>
+    <span class="slider-dot" data-index="2" role="tab" tabindex="0" aria-label="Slide 3"></span>
+  </div>
+</div>
+<!-- /include:slider -->
 
   <!-- À propos -->
   <section class="intro-section" id="a-propos">
@@ -498,7 +573,69 @@
   </section>
 
   <!-- Footer -->
-  <div data-include="partials/footer.html"></div>
+  <!-- include:footer -->
+<!-- Fragment : footer -->
+<footer>
+  <div class="footer-container">
+    <!-- Colonne 1 : Logo et nom -->
+    <div class="footer-column logo-col">
+      <img src="assets/logo/logo-pnrd.jpeg" alt="Logo PNRD" class="footer-logo" />
+      <h3>PNRD</h3>
+      <p>Parti National du Renouveau pour le Développement</p>
+    </div>
+
+    <!-- Colonne 2 : Navigation -->
+    <div class="footer-column nav-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="index.html#a-propos">À propos</a></li>
+        <li><a href="index.html#vision">Vision</a></li>
+        <li><a href="index.html#programme">Programmes</a></li>
+        <li><a href="index.html#prochains-evenements">Prochains événements</a></li>
+        <li><a href="index.html#evenements">Événements</a></li>
+        <li><a href="pages/membres.html">Équipe</a></li>
+        <li><a href="index.html#contact">Contacts</a></li>
+        <li><a href="pages/adhesion.html">Nous rejoindre</a></li>
+      </ul>
+    </div>
+
+    <!-- Colonne 3 : Contacts -->
+    <div class="footer-column contact-col">
+      <h4>Nous contacter</h4>
+      <p>
+        <svg class="hero-icon address-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+        </svg>
+        123 Avenue de la République, Kinshasa, RDC
+      </p>
+      <p>
+        <svg class="hero-icon mail-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+        </svg>
+        infopnrd09@gmail.com
+      </p>
+      <div class="social-icons-footer">
+        <a href="https://facebook.com/pnrd" target="_blank" aria-label="Facebook" class="social-facebook"><i
+            class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com/pnrd" target="_blank" aria-label="X (Twitter)" class="social-twitter"><i
+            class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://instagram.com/pnrd" target="_blank" aria-label="Instagram" class="social-instagram"><i
+            class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/pnrd" target="_blank" aria-label="YouTube" class="social-youtube"><i
+            class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/243817661504" target="_blank" aria-label="WhatsApp" class="social-whatsapp"><i
+            class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Copyright © 2025 PNRD. Tous droits réservés. Toute reproduction ou représentation, totale ou partielle, est
+      interdite sans autorisation préalable.</p>
+  </div>
+</footer>
+<!-- /include:footer -->
 
 
   <!-- FontAwesome CDN -->

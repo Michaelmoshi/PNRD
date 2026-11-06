@@ -1,6 +1,10 @@
-// Chargement des fragments communs (en-tête, pied de page, slider).
+// Fragments communs : repli au chargement dynamique + signal « partials:ready ».
 //
-// Une page déclare un emplacement :  <div data-include="partials/header.html"></div>
+// En fonctionnement normal, l'en-tête, le pied de page et le slider sont déjà copiés dans chaque page
+// par « node tools/build.js ». Ce script ne charge donc rien, mais prévient les autres scripts
+// (menu, slider, repérage de la page) que la page est prête.
+// Il sait aussi charger un fragment resté sous la forme  <div data-include="partials/header.html"></div>.
+//
 // Les liens du fragment sont écrits depuis la racine du site ; ils sont corrigés ici selon la
 // profondeur de la page (<html data-base="../"> pour les pages du dossier pages/).
 (function () {

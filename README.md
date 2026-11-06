@@ -4,13 +4,22 @@ Site vitrine statique (HTML, CSS, JavaScript), sans framework ni étape de compi
 
 ## Lancer le site en local
 
-L'en-tête, le pied de page et le slider sont chargés par JavaScript : il faut un petit serveur
-(ouvrir les fichiers directement dans le navigateur ne suffit pas).
+Le menu, le pied de page et le slider sont **écrits directement dans chaque page** : on peut ouvrir
+`index.html` tel quel dans le navigateur. Un petit serveur reste utile pour la page d'un événement
+(qui lit `data/evenements.json`) et pour tester comme en ligne :
 
 ```bash
 node tools/server.js          # http://localhost:5500
 PORT=5600 node tools/server.js   # autre port si 5500 est pris
 ```
+
+## Modifier le menu, le pied de page ou le slider
+
+1. Modifier le fichier concerné dans `partials/` (`header.html`, `footer.html`, `slider.html`), écrit avec des liens
+   depuis la racine du site (`assets/...`, `pages/...`).
+2. Lancer `node tools/build.js` : il recopie le fragment dans toutes les pages et corrige les liens selon leur dossier.
+
+Ne pas modifier le menu ou le pied de page directement dans une page : le prochain `build` écraserait le changement.
 
 ## Structure du projet
 
@@ -25,7 +34,7 @@ PNRD/
 │   ├── evenement.html      Détail d'un événement : evenement.html?id=1 (données dans data/evenements.json)
 │   ├── mentions-legales.html
 │   └── confidentialite.html
-├── partials/               Morceaux de page communs : header.html, footer.html, slider.html
+├── partials/               Sources du menu, du pied de page et du slider (recopiés dans les pages par tools/build.js)
 ├── css/                    Feuilles de style (voir ci-dessous)
 ├── js/                     Scripts, un fichier par rôle (voir ci-dessous)
 ├── data/
@@ -37,6 +46,7 @@ PNRD/
 │   ├── videos/evenements/  vidéos, nommées  AAAA-MM-JJ-titre.mp4
 │   └── favicon.*
 └── tools/
+    ├── build.js            recopie partials/ dans les pages
     └── server.js           serveur de développement local (inutile en production)
 ```
 
@@ -57,7 +67,7 @@ Les six fichiers sont chargés **dans cet ordre** par chaque page (l'ordre compt
 
 | Fichier | Rôle |
 | --- | --- |
-| `includes.js` | Charge les fragments (`<div data-include="partials/header.html">`) et corrige leurs liens selon la profondeur de la page |
+| `includes.js` | Signale que la page est prête aux autres scripts ; sait aussi charger un fragment `data-include` (repli) |
 | `nav.js` | Menu burger, menus déroulants, repérage de la page courante |
 | `slider.js` | Slider d'accueil |
 | `ui.js` | Bouton « retour en haut », apparition des blocs au défilement |
@@ -69,7 +79,7 @@ Les six fichiers sont chargés **dans cet ordre** par chaque page (l'ordre compt
 ### Chemins des pages
 
 - Les fichiers de `pages/` déclarent `<html data-base="../">` et utilisent des chemins en `../`.
-- Les fragments de `partials/` sont écrits **depuis la racine** (`assets/...`, `pages/...`) : `includes.js` ajoute `../` quand c'est nécessaire.
+- Les fragments de `partials/` sont écrits **depuis la racine** (`assets/...`, `pages/...`) : `tools/build.js` ajoute `../` dans les pages du dossier `pages/`.
 
 ## Ajouter ou modifier un événement passé
 
