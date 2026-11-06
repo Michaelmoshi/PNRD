@@ -243,8 +243,8 @@ nav {
   transform: translateY(-2px);
 }
 
-/* Écrans intermédiaires : menu plus compact pour tenir sur une ligne */
-@media (max-width: 1180px) and (min-width: 769px) {
+/* Écrans intermédiaires : menu plus compact pour tenir sur une ligne (au-dessus de 1000 px) */
+@media (max-width: 1380px) and (min-width: 1001px) {
   .nav-link {
     padding: 8px 8px;
     font-size: 0.78rem;
@@ -255,7 +255,10 @@ nav {
     padding: 9px 16px;
     margin-left: 4px;
   }
+}
 
+/* Le sous-titre du logo laisse la place au menu */
+@media (max-width: 1280px) and (min-width: 1001px) {
   .logo-subtext {
     display: none;
   }

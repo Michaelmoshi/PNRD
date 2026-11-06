@@ -13,7 +13,7 @@ function initMenuToggle() {
 
   // Fermer le menu si le curseur quitte la zone du menu (uniquement en mobile)
   nav.addEventListener("mouseleave", () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1000) {
       nav.classList.remove("active");
     }
   });
@@ -24,7 +24,7 @@ function initMenuToggle() {
   const navLinks = nav.querySelectorAll("a");
   navLinks.forEach(link => {
     link.addEventListener("click", () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 1000) {
         nav.classList.remove("active");
       }
     });
