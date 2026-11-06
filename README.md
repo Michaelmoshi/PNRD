@@ -29,6 +29,7 @@ PNRD/
 ├── 404.html                Page introuvable (autonome, doit rester à la racine pour GitHub Pages)
 ├── pages/
 │   ├── a-propos.html       Histoire, idéologie, doctrine, valeurs, emblème, organisation
+│   ├── programmes.html     Programmes et réalisations (éducation, environnement, infrastructures, innovation)
 │   ├── membres.html        Équipe par catégories
 │   ├── adhesion.html       Formulaire d'adhésion (envoi par EmailJS)
 │   ├── evenement.html      Détail d'un événement : evenement.html?id=1 (données dans data/evenements.json)

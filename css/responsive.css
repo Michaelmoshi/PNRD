@@ -212,6 +212,15 @@
     line-clamp: 3;
   }
 
+  /* — Page Programmes — */
+  .ap-prog-media img {
+    height: 240px;
+  }
+
+  .ap-split.is-reverse .ap-prog-media {
+    order: 0;
+  }
+
   /* — Page À propos — */
   .ap-hero {
     margin-top: 80px;

@@ -1342,3 +1342,17 @@ a.contact-details-value:hover {
   color: #6b5200;
   font-weight: 700;
 }
+
+/* Page Programmes : une section par programme, photo à gauche ou à droite */
+.ap-prog-media img {
+  display: block;
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 18px rgba(0, 82, 155, 0.15);
+}
+
+.ap-split.is-reverse .ap-prog-media {
+  order: 2;
+}

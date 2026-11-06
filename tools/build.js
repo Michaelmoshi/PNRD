@@ -18,6 +18,7 @@ const root = path.join(__dirname, '..');
 const PAGES = [
   'index.html',
   'pages/a-propos.html',
+  'pages/programmes.html',
   'pages/membres.html',
   'pages/adhesion.html',
   'pages/evenement.html',
