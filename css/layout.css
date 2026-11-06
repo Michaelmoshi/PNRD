@@ -68,8 +68,8 @@ header {
   margin: 0;
 }
 
-/* Navigation */
-nav {
+/* Navigation de l'en-tête */
+header nav {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -271,6 +271,11 @@ nav {
   cursor: pointer;
   user-select: none;
   color: var(--color-dark);
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  line-height: 1;
 }
 
 

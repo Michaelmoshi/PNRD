@@ -5,7 +5,7 @@
    ============================================================ */
 /* Menu burger : dès 1000 px, la barre de liens ne tient plus sur une ligne */
 @media (max-width: 1000px) {
-  nav {
+  header nav {
     display: none;
     flex-direction: column;
     align-items: stretch;
@@ -23,7 +23,7 @@
     z-index: 1100;
   }
 
-  nav.active {
+  header nav.active {
     display: flex;
   }
 

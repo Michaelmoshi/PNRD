@@ -3,18 +3,20 @@
 // Menu mobile toggle — appelé après injection du header dans le DOM
 function initMenuToggle() {
   const menuToggle = document.querySelector(".menu-toggle");
-  const nav = document.querySelector("nav");
+  const nav = document.querySelector("header nav");
 
   if (!menuToggle || !nav) return; // sécurité si header absent
 
   menuToggle.addEventListener("click", () => {
-    nav.classList.toggle("active");
+    const open = nav.classList.toggle("active");
+    menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
   });
 
   // Fermer le menu si le curseur quitte la zone du menu (uniquement en mobile)
   nav.addEventListener("mouseleave", () => {
     if (window.innerWidth <= 1000) {
       nav.classList.remove("active");
+      menuToggle.setAttribute("aria-expanded", "false");
     }
   });
 
