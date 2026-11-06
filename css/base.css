@@ -1,0 +1,174 @@
+/* ============================================================
+   PNRD - style.css
+
+   Design : couleurs natives PNRD (bleu #00529b, vert #607c1d,
+   jaune #ffcc00) conservées à l'identique. Amélioration de la
+   structure : typographie (Archivo / Work Sans / IBM Plex Mono),
+   signature "horizon doré" sous les titres, hero avec voile
+   dégradé + navigation manuelle, footer bleu nuit.
+
+   Structure :
+   1.  Variables CSS
+   2.  Reset & Base
+   3.  Layout commun
+   4.  Header & Navigation
+   5.  Slider (Hero)
+   6.  Sections de contenu
+       6a. Intro
+       6b. Vision
+       6c. Programme
+       6d. Événements à venir
+       6e. Événements passés
+       6f. Adhésion
+   7.  Contact
+   8.  Partenaires
+   9.  Page Membres
+   10. Footer
+   11. Responsive (media queries regroupées)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+/* ============================================================
+   1. VARIABLES CSS
+   ============================================================ */
+:root {
+  /* Couleurs natives PNRD (palette d'origine du site) */
+  --color-navy: #00529b;
+  /* bleu PNRD — couleur primaire */
+  --color-navy-deep: #003b70;
+  /* bleu foncé — footer */
+  --color-burgundy: #607c1d;
+  /* = vert PNRD, 2e accent natif (alias conservé pour ne pas toucher chaque règle) */
+  --color-burgundy-deep: #4c6216;
+  --color-green: #607c1d;
+  /* vert PNRD */
+  --color-gold: #ffcc00;
+  /* jaune PNRD */
+  --color-gold-light: #ffe38a;
+
+  --color-dark: #222;
+  --color-gray: #444;
+  --color-light-bg: #f9fafb;
+  --color-white: #fff;
+
+  /* Alias historiques conservés pour compat (nav, liens…) */
+  --color-blue: var(--color-navy);
+  --color-yellow: var(--color-gold);
+
+  --gradient-main: linear-gradient(90deg, var(--color-navy), var(--color-gold), var(--color-green));
+  --gradient-dawn-overlay: linear-gradient(160deg,
+      rgba(0, 82, 155, 0.8) 0%,
+      rgba(0, 82, 155, 0.48) 40%,
+      rgba(96, 124, 29, 0.38) 70%,
+      rgba(255, 204, 0, 0.48) 100%);
+
+  --font-base: 'Work Sans', Arial, sans-serif;
+  --font-display: 'Archivo', 'Work Sans', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 15px;
+  --shadow-sm: 0 2px 6px rgba(0, 82, 155, 0.1);
+  --shadow-md: 0 5px 15px rgba(0, 82, 155, 0.12);
+  --shadow-lg: 0 8px 30px rgba(0, 82, 155, 0.18);
+  --transition: 0.3s ease;
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-base);
+  background-color: var(--color-light-bg);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+a {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ============================================================
+   3. LAYOUT COMMUN
+   ============================================================ */
+section {
+  padding: 70px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-burgundy);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
+  color: var(--color-navy);
+  margin-bottom: 26px;
+  padding-bottom: 22px;
+  font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+/* Signature "Aube" — horizon doré + soleil, sous chaque titre de section */
+h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 72px;
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 9px;
+  height: 9px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.18);
+}
+
+

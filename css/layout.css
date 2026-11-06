@@ -1,0 +1,426 @@
+/* Structure : en-tête, navigation et slider d'accueil */
+
+/* ============================================================
+   4. HEADER & NAVIGATION
+   ============================================================ */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(255, 204, 0, 0.35), 0 8px 24px rgba(0, 82, 155, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 30px;
+  z-index: 1000;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo a {
+  text-decoration: none;
+}
+
+.logo img {
+  height: 64px;
+  width: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--color-white);
+  padding: 2px;
+  box-shadow: 0 0 0 1.5px rgba(255, 204, 0, 0.5);
+}
+
+.logo a:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--color-navy);
+  text-align: center;
+  width: 100%;
+}
+
+.logo-subtext {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-burgundy);
+  font-style: normal;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 0;
+  background: none;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--color-navy-deep);
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+/* Soulignement doré qui se déploie : survol, section visible, menu ouvert */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -2px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-link:hover,
+.nav-link.active,
+.nav-item.has-active > .nav-trigger,
+.nav-item.open > .nav-trigger {
+  color: var(--color-navy);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after,
+.nav-item.has-active > .nav-trigger::after,
+.nav-item.open > .nav-trigger::after {
+  transform: scaleX(1);
+}
+
+.nav-link:focus-visible,
+.nav-dropdown a:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.nav-chevron {
+  transition: transform 200ms ease-out;
+}
+
+.nav-item.open .nav-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-item {
+  position: relative;
+}
+
+/* Panneau déroulant */
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  min-width: 330px;
+  padding: 10px;
+  background: var(--color-white);
+  border: 1px solid rgba(0, 82, 155, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 160ms ease-out, transform 160ms ease-out, visibility 0s linear 160ms;
+}
+
+/* Pont invisible : évite que le panneau se ferme en traversant l'espace sous le lien */
+.nav-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.nav-item.open .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-item:hover:not(.suppress) .nav-dropdown,
+  .nav-item:focus-within:not(.suppress) .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .nav-item:hover:not(.suppress) > .nav-trigger::after {
+    transform: scaleX(1);
+  }
+
+  .nav-item:hover:not(.suppress) .nav-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.nav-dropdown a {
+  display: block;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background var(--transition);
+}
+
+.nav-dropdown a:hover {
+  background: rgba(0, 82, 155, 0.06);
+}
+
+.nav-dropdown strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-navy-deep);
+}
+
+.nav-dropdown span {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #5b6b7a;
+}
+
+/* CTA "Nous rejoindre" — distinct des liens d'ancrage */
+.nav-cta {
+  margin-left: 10px;
+  padding: 10px 22px;
+  background: var(--color-navy);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.nav-cta:hover {
+  background: var(--color-navy-deep);
+  transform: translateY(-2px);
+}
+
+/* Écrans intermédiaires : menu plus compact pour tenir sur une ligne */
+@media (max-width: 1180px) and (min-width: 769px) {
+  .nav-link {
+    padding: 8px 8px;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-cta {
+    padding: 9px 16px;
+    margin-left: 4px;
+  }
+
+  .logo-subtext {
+    display: none;
+  }
+}
+
+/* Menu burger (mobile) */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  color: var(--color-dark);
+}
+
+
+/* ============================================================
+   5. SLIDER (Hero)
+   ============================================================ */
+.slider {
+  position: relative;
+  margin-top: 90px;
+  height: 460px;
+  overflow: hidden;
+  background: var(--color-navy-deep);
+}
+
+/* Horizon doré — le soleil du logo qui se lève au bas du hero */
+.slider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  z-index: 6;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: left 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  padding: 20px;
+  isolation: isolate;
+}
+
+.slide.active {
+  left: 0;
+}
+
+/* Voile "aube" — unifie les photos sous la palette de marque */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-dawn-overlay);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.slider-content {
+  position: relative;
+  max-width: 720px;
+  text-align: center;
+}
+
+.slider-content .slide-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  margin-bottom: 14px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+.slider-content h1 {
+  font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.55);
+}
+
+.slider-content p {
+  font-family: var(--font-base);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  background: rgba(0, 82, 155, 0.4);
+  border: 1.5px solid rgba(255, 227, 138, 0.5);
+  color: var(--color-white);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.slider-arrow:hover {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+}
+
+.slider-arrow:focus-visible,
+.slider-dot:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+.slider-arrow-prev {
+  left: 20px;
+}
+
+.slider-arrow-next {
+  right: 20px;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  gap: 10px;
+}
+
+.slider-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.slider-dot.active {
+  background: var(--color-gold);
+  transform: scale(1.15);
+}
+
+

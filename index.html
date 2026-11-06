@@ -17,19 +17,24 @@
   <meta property="og:description" content="Rejoignez le PNRD, le parti qui œuvre pour un Congo fort, uni et prospère." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="fr_CD" />
-  <meta property="og:image" content="assets/images/Slider1.jpeg" />
+  <meta property="og:image" content="assets/images/hero/slide-4-partage.jpeg" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="PNRD - Parti National du Renouveau pour le Développement" />
   <meta name="twitter:description" content="Rejoignez le PNRD, le parti qui œuvre pour un Congo fort, uni et prospère." />
-  <meta name="twitter:image" content="assets/images/Slider1.jpeg" />
+  <meta name="twitter:image" content="assets/images/hero/slide-4-partage.jpeg" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <meta name="theme-color" content="#003b70" />
@@ -56,51 +61,10 @@
 
 <body>
 
-  <header>
-    <div class="logo">
-      <a href="index.html">
-        <img src="assets/logo/logo1.jpeg" alt="Logo PNRD" />
-      </a>
-      <a href="index.html">
-        <div class="logo-text">PNRD</div>
-        <div class="logo-subtext">
-          Parti National du Renouveau pour le Développement
-        </div>
-      </a>
-    </div>
-    <nav aria-label="Navigation principale">
-      <a href="index.html" class="nav-link">Accueil</a>
-      <div class="nav-item has-dropdown" data-sections="a-propos vision">
-        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">À propos<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-dropdown" role="menu">
-          <a href="Apropos.html" role="menuitem"><strong>Qui sommes-nous</strong><span>Histoire, mission, vision et valeurs</span></a>
-          <a href="#vision" role="menuitem"><strong>Notre vision</strong><span>Les cinq priorités du parti</span></a>
-          <a href="membres.html" role="menuitem"><strong>Équipe &amp; gouvernance</strong><span>Les personnes qui portent le parti</span></a>
-        </div>
-      </div>
-      <div class="nav-item has-dropdown" data-sections="programme implantation">
-        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Nos activités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-dropdown" role="menu">
-          <a href="#programme" role="menuitem"><strong>Programmes</strong><span>Des actions concrètes sur le terrain</span></a>
-          <a href="#implantation" role="menuitem"><strong>Notre implantation</strong><span>Une présence dans les 26 provinces</span></a>
-        </div>
-      </div>
-      <div class="nav-item has-dropdown" data-sections="prochains-evenements evenements">
-        <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-haspopup="true">Actualités<svg class="nav-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-        <div class="nav-dropdown" role="menu">
-          <a href="#prochains-evenements" role="menuitem"><strong>Prochains événements</strong><span>L’agenda des rendez-vous du parti</span></a>
-          <a href="#evenements" role="menuitem"><strong>Événements passés</strong><span>Vidéos et comptes rendus</span></a>
-        </div>
-      </div>
-      <a href="#partenaires" class="nav-link">Partenaires</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <a href="adhesion.html" class="nav-cta">Nous rejoindre</a>
-    </nav>
-    <div class="menu-toggle" aria-label="Menu">&#9776;</div>
-  </header>
+  <div data-include="partials/header.html"></div>
 
   <!-- Slider -->
-  <div id="slider-placeholder"></div>
+  <div data-include="partials/slider.html"></div>
 
   <!-- À propos -->
   <section class="intro-section" id="a-propos">
@@ -111,10 +75,10 @@
 
         <div class="intro-photo-group">
           <div class="intro-photo">
-            <img loading="lazy" decoding="async" src="assets/images/leadership2.jpeg" alt="L'équipe du PNRD réunie" />
+            <img loading="lazy" decoding="async" src="assets/images/about/equipe-pnrd-adesco.jpeg" alt="L'équipe du PNRD réunie" />
           </div>
           <div class="intro-photo-accent">
-            <img loading="lazy" decoding="async" src="assets/images/leadership1.jpeg" alt="Session de formation stratégique du PNRD" />
+            <img loading="lazy" decoding="async" src="assets/images/about/session-formation-strategique.jpeg" alt="Session de formation stratégique du PNRD" />
           </div>
         </div>
 
@@ -133,7 +97,7 @@
           d’innovation pour répondre aux défis de notre pays. Ensemble, avançons
           vers un renouveau qui profite à tous.
         </p>
-        <a href="Apropos.html" class="section-link">En savoir plus</a>
+        <a href="pages/a-propos.html" class="section-link">En savoir plus</a>
       </div>
 
     </div>
@@ -344,8 +308,7 @@
       <div class="archive-stage">
         <div class="archive-player">
           <video id="archive-video" controls preload="metadata">
-            <source src="assets/videos/video1.webm#t=0.5" type="video/webm" />
-            <source src="assets/videos/video1.mp4#t=0.5" type="video/mp4" />
+            <source src="assets/videos/evenements/2025-07-15-cloture-mois-de-la-femme.mp4#t=0.5" type="video/mp4" />
             Votre navigateur ne supporte pas la lecture vidéo.
           </video>
         </div>
@@ -353,15 +316,15 @@
           <time class="archive-date" id="archive-date" datetime="2025-07-15">15 juillet 2025</time>
           <h3 id="archive-title">Clôture du Mois de la Femme</h3>
           <p id="archive-text">Retour sur la cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO.</p>
-          <a class="archive-cta" id="archive-cta" href="details-evenement1.html">Lire le compte rendu</a>
+          <a class="archive-cta" id="archive-cta" href="pages/evenement.html?id=1">Lire le compte rendu</a>
         </div>
       </div>
       <div class="archive-list">
         <span class="archive-list-label">À revoir · 04 vidéos</span>
         <ul>
         <li>
-          <button type="button" class="archive-item is-active" data-video-webm="assets/videos/video1.webm#t=0.5" data-video-mp4="assets/videos/video1.mp4#t=0.5" data-poster="" data-iso="2025-07-15" data-date="15 juillet 2025" data-title="Clôture du Mois de la Femme" data-text="Retour sur la cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO." data-href="details-evenement1.html" aria-pressed="true">
-            <span class="archive-thumb"><video src="assets/videos/video1.mp4#t=0.5" preload="metadata" muted playsinline tabindex="-1"></video><span class="archive-play" aria-hidden="true"></span></span>
+          <button type="button" class="archive-item is-active" data-video-webm="" data-video-mp4="assets/videos/evenements/2025-07-15-cloture-mois-de-la-femme.mp4#t=0.5" data-poster="" data-iso="2025-07-15" data-date="15 juillet 2025" data-title="Clôture du Mois de la Femme" data-text="Retour sur la cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO." data-href="pages/evenement.html?id=1" aria-pressed="true">
+            <span class="archive-thumb"><video src="assets/videos/evenements/2025-07-15-cloture-mois-de-la-femme.mp4#t=0.5" preload="metadata" muted playsinline tabindex="-1"></video><span class="archive-play" aria-hidden="true"></span></span>
             <span class="archive-item-body">
               <time datetime="2025-07-15">15 juillet 2025</time>
               <strong>Clôture du Mois de la Femme</strong>
@@ -369,7 +332,7 @@
           </button>
         </li>
         <li>
-          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.mp4" data-poster="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" data-iso="2025-08-28" data-date="28 août 2025" data-title="Assemblée générale annuelle" data-text="Assemblée générale annuelle du PNRD et bilan des actions réalisées." data-href="details-evenement2.html" aria-pressed="false">
+          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.mp4" data-poster="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" data-iso="2025-08-28" data-date="28 août 2025" data-title="Assemblée générale annuelle" data-text="Assemblée générale annuelle du PNRD et bilan des actions réalisées." data-href="pages/evenement.html?id=2" aria-pressed="false">
             <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
             <span class="archive-item-body">
               <time datetime="2025-08-28">28 août 2025</time>
@@ -378,7 +341,7 @@
           </button>
         </li>
         <li>
-          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" data-poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" data-iso="2025-06-10" data-date="10 juin 2025" data-title="Atelier citoyen" data-text="Atelier citoyen sur la participation politique et le renouveau démocratique." data-href="details-evenement3.html" aria-pressed="false">
+          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" data-poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" data-iso="2025-06-10" data-date="10 juin 2025" data-title="Atelier citoyen" data-text="Atelier citoyen sur la participation politique et le renouveau démocratique." data-href="pages/evenement.html?id=3" aria-pressed="false">
             <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
             <span class="archive-item-body">
               <time datetime="2025-06-10">10 juin 2025</time>
@@ -387,7 +350,7 @@
           </button>
         </li>
         <li>
-          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" data-poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" data-iso="2025-06-10" data-date="10 juin 2025" data-title="Atelier citoyen, suite" data-text="Atelier citoyen sur la participation politique et le renouveau démocratique." data-href="details-evenement4.html" aria-pressed="false">
+          <button type="button" class="archive-item" data-video-webm="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm" data-video-mp4="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4" data-poster="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" data-iso="2025-06-10" data-date="10 juin 2025" data-title="Atelier citoyen, suite" data-text="Atelier citoyen sur la participation politique et le renouveau démocratique." data-href="pages/evenement.html?id=4" aria-pressed="false">
             <span class="archive-thumb"><img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" /><span class="archive-play" aria-hidden="true"></span></span>
             <span class="archive-item-body">
               <time datetime="2025-06-10">10 juin 2025</time>
@@ -463,7 +426,7 @@
         <span class="section-eyebrow">Direction du parti</span>
         <h2>Une équipe engagée au service du Congo</h2>
       </div>
-      <a href="membres.html" class="section-link">Voir tous les membres</a>
+      <a href="pages/membres.html" class="section-link">Voir tous les membres</a>
     </div>
     <p class="leadership-intro">
       L’équipe dirigeante du PNRD est composée de professionnels engagés, passionnés par le développement durable, la
@@ -478,7 +441,7 @@
         <p class="leadership-role">Autorité morale</p>
       </div>
       <div class="leadership-item">
-        <img loading="lazy" decoding="async" src="assets/images/Ali2.jpeg" alt="Ali Kutumisa" class="leadership-photo" />
+        <img loading="lazy" decoding="async" src="assets/images/team/ali-kutumisa.jpeg" alt="Ali Kutumisa" class="leadership-photo" />
         <p class="leadership-name">Ali KUTUMISA</p>
         <p class="leadership-role">Président</p>
       </div>
@@ -500,7 +463,7 @@
       <div class="partners-track">
         <!-- Série 1 -->
         <a href="https://adesco-rdc.com/" target="_blank" rel="noopener noreferrer" title="ADESCO">
-          <img loading="lazy" decoding="async" src="assets/Partenaires/ADESCO.jpeg" alt="Logo ADESCO" />
+          <img loading="lazy" decoding="async" src="assets/partners/adesco.jpeg" alt="Logo ADESCO" />
         </a>
         <a href="https://www.afdb.org/en/" target="_blank" rel="noopener noreferrer" title="Banque Africaine de Développement">
           <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/African_Development_Bank_Logo.svg/120px-African_Development_Bank_Logo.svg.png" alt="Logo BAD" />
@@ -516,7 +479,7 @@
         </a>
         <!-- Série 2 — copie pour boucle infinie -->
         <a href="https://adesco-rdc.com/" target="_blank" rel="noopener noreferrer" title="ADESCO">
-          <img loading="lazy" decoding="async" src="assets/Partenaires/ADESCO.jpeg" alt="Logo ADESCO" />
+          <img loading="lazy" decoding="async" src="assets/partners/adesco.jpeg" alt="Logo ADESCO" />
         </a>
         <a href="https://www.afdb.org/en/" target="_blank" rel="noopener noreferrer" title="Banque Africaine de Développement">
           <img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/African_Development_Bank_Logo.svg/120px-African_Development_Bank_Logo.svg.png" alt="Logo BAD" />
@@ -535,7 +498,7 @@
   </section>
 
   <!-- Footer -->
-  <div id="footer-placeholder"></div>
+  <div data-include="partials/footer.html"></div>
 
 
   <!-- FontAwesome CDN -->
@@ -549,153 +512,13 @@
     </svg>
   </button>
 
-  <!-- script.js doit être chargé EN PREMIER pour que initSlider() soit disponible -->
-  <script src="script.js"></script>
 
-  <script>
-    function loadComponent(placeholderId, filePath, callback) {
-      fetch(filePath)
-        .then(function (response) {
-          if (!response.ok) throw new Error('Erreur lors du chargement de ' + filePath);
-          return response.text();
-        })
-        .then(function (html) {
-          document.getElementById(placeholderId).outerHTML = html;
-          if (typeof callback === 'function') callback();
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-    }
 
-    // Lancer initSlider() seulement après que le slider est dans le DOM
-    loadComponent('slider-placeholder', 'slider.html', function () {
-      initSlider();
-    });
-    loadComponent('footer-placeholder', 'footer.html');
-  </script>
-
-  <script>
-    /* Scroll spy — menu actif selon section visible */
-    (function () {
-      var sections = document.querySelectorAll('section[id], div[id="slider-placeholder"]');
-      var navLinks = document.querySelectorAll('header nav a');
-
-      function setActive() {
-        var scrollY = window.scrollY + 100;
-        var current = '';
-
-        document.querySelectorAll('section[id]').forEach(function (section) {
-          if (section.offsetTop <= scrollY) {
-            current = section.getAttribute('id');
-          }
-        });
-
-        navLinks.forEach(function (link) {
-          link.classList.remove('active');
-          var href = link.getAttribute('href') || '';
-          var hash = href.indexOf('#') > -1 ? href.split('#')[1] : '';
-          if (current && hash === current) {
-            link.classList.add('active');
-          }
-          if (!current && href === 'index.html') {
-            link.classList.add('active');
-          }
-        });
-
-        /* Le menu déroulant parent s'allume quand une de ses sections est visible */
-        document.querySelectorAll('.nav-item[data-sections]').forEach(function (item) {
-          var list = item.getAttribute('data-sections').split(' ');
-          item.classList.toggle('has-active', list.indexOf(current) > -1);
-        });
-      }
-
-      window.addEventListener('scroll', setActive);
-      setActive();
-    })();
-
-    /* Bouton retour en haut */
-    var btn = document.getElementById('back-to-top');
-    window.addEventListener('scroll', function () {
-      btn.classList.toggle('visible', window.scrollY > 400);
-    });
-    btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    /* Animations au scroll */
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll(
-      '.vision-item, .programme-item, .event-card, .mini-slider-group, .intro-text, #equipe-dirigeante, #partenaires, #contact'
-    ).forEach(function (el) {
-      el.classList.add('scroll-hidden');
-      observer.observe(el);
-    });
-  </script>
-  <script>
-    // Archives vidéo : un clic sur une miniature charge la vidéo dans le lecteur principal
-    (function () {
-      var video = document.getElementById('archive-video');
-      var caption = document.getElementById('archive-caption');
-      if (!video || !caption) return;
-      var items = document.querySelectorAll('.archive-item');
-      function show(btn) {
-        items.forEach(function (b) {
-          var on = b === btn;
-          b.classList.toggle('is-active', on);
-          b.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        video.pause();
-        if (btn.dataset.poster) { video.poster = btn.dataset.poster; } else { video.removeAttribute('poster'); }
-        video.innerHTML = '<source src="' + btn.dataset.videoWebm + '" type="video/webm"><source src="' + btn.dataset.videoMp4 + '" type="video/mp4">';
-        video.load();
-        caption.classList.add('is-changing');
-        setTimeout(function () {
-          var d = document.getElementById('archive-date');
-          d.textContent = btn.dataset.date;
-          d.setAttribute('datetime', btn.dataset.iso);
-          document.getElementById('archive-title').textContent = btn.dataset.title;
-          document.getElementById('archive-text').textContent = btn.dataset.text;
-          document.getElementById('archive-cta').setAttribute('href', btn.dataset.href);
-          caption.classList.remove('is-changing');
-        }, 150);
-      }
-      items.forEach(function (b) { b.addEventListener('click', function () { show(b); }); });
-    })();
-  </script>
-  <script>
-    // Chiffres clés : décompte animé quand la bande entre à l'écran (valeur finale déjà dans le HTML)
-    (function () {
-      var nums = document.querySelectorAll('.stat-number[data-count]');
-      if (!nums.length) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-      function fmt(n) { return n.toLocaleString('fr-FR'); }
-      function run(el) {
-        var end = parseInt(el.dataset.count, 10), suffix = el.dataset.suffix || '', start = null, dur = 1400;
-        function step(t) {
-          if (start === null) start = t;
-          var p = Math.min((t - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(Math.round(end * eased)) + (p === 1 ? suffix : '');
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
-        });
-      }, { threshold: 0.6 });
-      nums.forEach(function (n) { io.observe(n); });
-    })();
-  </script>
+  <script src="js/includes.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/slider.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/home.js"></script>
 </body>
 
 </html>

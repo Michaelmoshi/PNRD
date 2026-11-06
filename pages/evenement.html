@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr" data-base="../">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Événement — PNRD</title>
+  <meta name="description" content="Détail d'un événement du Parti National du Renouveau pour le Développement (PNRD)." />
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta name="theme-color" content="#003b70" />
+</head>
+
+<body>
+  <div data-include="partials/header.html"></div>
+
+  <section class="ap-hero">
+    <div class="ap-hero-inner">
+      <span class="section-eyebrow"><time id="ev-date"></time></span>
+      <h1 id="ev-title">Événement</h1>
+      <p id="ev-desc"></p>
+      <div class="ap-chips">
+        <a href="../index.html#evenements">← Tous les événements</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="ap-section" id="ev-content">
+      <div class="ap-inner ev-layout">
+        <article class="ev-main">
+          <div class="archive-player">
+            <video id="ev-video" controls preload="metadata">
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+          </div>
+          <div class="ev-text">
+            <div class="section-head">
+              <span class="section-eyebrow">Compte rendu</span>
+              <h2>Retour sur l’événement</h2>
+            </div>
+            <div id="ev-report"></div>
+          </div>
+        </article>
+        <aside class="ev-side">
+          <span class="ev-side-label">Autres événements</span>
+          <ul id="ev-others"></ul>
+          <a href="../index.html#evenements" class="section-link">Tous les événements</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div data-include="partials/footer.html"></div>
+
+  <script src="../js/includes.js"></script>
+  <script src="../js/nav.js"></script>
+  <script src="../js/evenement.js"></script>
+</body>
+
+</html>

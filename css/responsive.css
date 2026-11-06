@@ -1,0 +1,551 @@
+/* Mobile : ajustements pour écrans <= 768px (à charger en dernier) */
+
+/* ============================================================
+   13. RESPONSIVE — @media (max-width: 768px)
+   ============================================================ */
+@media (max-width: 900px) and (min-width: 769px) {
+  .intro-layout {
+    gap: 30px;
+  }
+
+  .mini-slider {
+    height: 160px;
+  }
+
+  .intro-photo {
+    height: 340px;
+  }
+
+  .intro-photo-accent {
+    height: 170px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* — Vision : une seule colonne — */
+  .vision-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-item,
+  .vision-item:last-child {
+    grid-column: auto;
+    padding: 28px 24px 30px;
+  }
+
+  .vision-item::after {
+    top: 26px;
+    right: 24px;
+  }
+
+  .vision-item-icon {
+    margin-bottom: 18px;
+  }
+
+  /* — Page Membres : structure simple, identique aux Événements passés
+     (section + titre + bande défilante), sans conteneur flex parent
+     qui avait causé les bugs de largeur/scroll précédents. — */
+  .team-layout {
+    display: block;
+  }
+
+  .team-nav {
+    display: none;
+  }
+
+  .team-display {
+    display: block;
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+    background: none;
+    min-height: 0;
+  }
+
+  .team-group {
+    display: block !important;
+    margin-bottom: 30px;
+    animation: none;
+  }
+
+  .team-group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--color-gold);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-navy);
+  }
+
+  .team-group-header .hero-icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  /* Scroll horizontal abandonné sur mobile : trop peu fiable au toucher
+     (geste avalé par le carrousel au lieu de faire défiler la page).
+     Les cartes s'enroulent en grille à la place — un seul sens de
+     défilement possible, plus aucune ambiguïté de geste. */
+  .team-group .member-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .member-card {
+    width: 42%;
+    min-width: 140px;
+    flex-shrink: 0;
+    padding: 16px 12px;
+  }
+
+  .member-photo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+  }
+
+  .member-name {
+    font-size: 14px;
+  }
+
+  .member-function {
+    font-size: 0.68rem;
+    margin-bottom: 6px;
+  }
+
+  .member-description {
+    font-size: 12px;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  /* — Page À propos — */
+  .ap-hero {
+    margin-top: 80px;
+  }
+
+  .ap-hero-inner {
+    padding: 48px 20px 40px;
+  }
+
+  .ap-chips {
+    margin-top: 24px;
+  }
+
+  .ap-inner {
+    padding: 56px 20px;
+  }
+
+  .ap-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .ap-photo {
+    height: 260px;
+  }
+
+  .ap-photo-accent {
+    height: 140px;
+    border-width: 4px;
+  }
+
+  .ap-media {
+    padding-bottom: 44px;
+  }
+
+  .ap-duo,
+  .ap-values,
+  .ap-org {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-card {
+    padding: 28px 24px;
+  }
+
+  .ap-org-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .ap-cta-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 24px;
+  }
+
+  .ap-cta-btn {
+    justify-content: center;
+  }
+
+  /* — Navigation mobile — */
+  nav {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(255, 255, 255, 0.97);
+    width: min(340px, 100vw);
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    padding: 16px 16px 20px;
+    box-shadow: 0 8px 24px rgba(0, 30, 60, 0.18);
+    border-radius: 0 0 0 var(--radius-md);
+    gap: 0;
+    z-index: 1100;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  /* Le soulignement animé est pensé pour une barre horizontale : séparateurs nets en liste */
+  .nav-link {
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 6px;
+    border-bottom: 1px solid rgba(0, 82, 155, 0.1);
+    border-radius: 0;
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+
+  .nav-link.active,
+  .nav-item.has-active > .nav-trigger {
+    background: rgba(0, 82, 155, 0.06);
+  }
+
+  /* Les sous-menus s'ouvrent en accordéon sous leur titre */
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-dropdown {
+    position: static;
+    min-width: 0;
+    padding: 4px 0 8px 10px;
+    border: 0;
+    border-left: 3px solid var(--color-gold);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    display: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    margin: 6px 0 6px 6px;
+  }
+
+  .nav-dropdown::before {
+    display: none;
+  }
+
+  .nav-item.open .nav-dropdown {
+    display: block;
+  }
+
+  .nav-dropdown a {
+    padding: 10px 10px;
+  }
+
+  .nav-cta {
+    display: block;
+    margin: 14px 0 0;
+    text-align: center;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* — Logo — */
+  .logo {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+
+  .logo-text {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .logo-subtext {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 0 0;
+    display: block;
+  }
+
+  /* — Slider — */
+  .slider,
+  .slide {
+    height: 280px;
+  }
+
+  /* Marge latérale : le texte reste entre les deux flèches, sans déborder */
+  .slider-content {
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    padding: 0 56px;
+  }
+
+  .slider-content h1,
+  .slider-content p {
+    text-align: center;
+  }
+
+  .slider-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .slider-content p {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .slider-content .slide-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+  }
+
+  .slider-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+  }
+
+  .slider-arrow-prev {
+    left: 10px;
+  }
+
+  .slider-arrow-next {
+    right: 10px;
+  }
+
+  /* — Section Qui sommes-nous — */
+  .intro-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .intro-photo-group {
+    padding-bottom: 50px;
+  }
+
+  .intro-photo {
+    width: 86%;
+    height: 260px;
+  }
+
+  .intro-photo-accent {
+    width: 56%;
+    height: 150px;
+    border-width: 4px;
+  }
+
+  .mini-slider {
+    height: 200px;
+  }
+
+  .intro-section {
+    text-align: center;
+  }
+
+  .intro-section {
+    text-align: left;
+  }
+
+  .intro-text p {
+    text-align: left;
+  }
+
+  .leadership-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  /* — Programmes — */
+  .programme-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .programme-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .programme-featured {
+    grid-row: auto;
+    min-height: 380px;
+  }
+
+  .programme-featured .programme-content {
+    padding: 24px;
+  }
+
+  .programme-featured h3 {
+    font-size: 1.6rem;
+  }
+
+  .programme-item:not(.programme-featured) {
+    grid-template-columns: 1fr;
+  }
+
+  .programme-item:not(.programme-featured) img {
+    height: 180px;
+  }
+
+  .programme-content {
+    padding: 20px;
+  }
+
+  /* — Événements à venir — */
+  .upcoming-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .upcoming-events .event-card {
+    grid-template-columns: auto 1fr;
+    gap: 16px 18px;
+    padding: 18px;
+  }
+
+  .event-date-box {
+    width: 72px;
+    height: 72px;
+  }
+
+  .event-day {
+    font-size: 1.6rem;
+  }
+
+  .event-badge {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .events-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .archive {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .archive-caption {
+    padding-top: 20px;
+  }
+
+  .archive-thumb {
+    flex-basis: 96px;
+    height: 64px;
+  }
+
+  /* — Contact : carte plus basse sur mobile — */
+  .contact-map iframe {
+    height: 380px;
+  }
+
+  .contact-map-actions {
+    flex-direction: column;
+  }
+
+  .contact-details {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .contact-details li {
+    padding: 18px;
+  }
+
+  /* — Chiffres clés — */
+  .stats-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 56px 20px;
+  }
+
+  .stats-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 0;
+  }
+
+  .stat:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  /* — Pages Adhésion / Événement — */
+  .adhesion-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .adhesion-card {
+    padding: 32px 22px 36px;
+  }
+
+  .ev-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+
+  .ev-text {
+    padding-top: 28px;
+  }
+
+  /* — Footer — */
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-column {
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .logo-col p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-col p {
+    justify-content: center;
+  }
+
+  .social-icons-footer {
+    justify-content: center;
+  }
+}

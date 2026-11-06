@@ -1,0 +1,56 @@
+// Chargement des fragments communs (en-tête, pied de page, slider).
+//
+// Une page déclare un emplacement :  <div data-include="partials/header.html"></div>
+// Les liens du fragment sont écrits depuis la racine du site ; ils sont corrigés ici selon la
+// profondeur de la page (<html data-base="../"> pour les pages du dossier pages/).
+(function () {
+  var base = document.documentElement.getAttribute('data-base') || '';
+  var absolute = /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\/)/i;
+
+  function fix(value) {
+    return !value || absolute.test(value) ? value : base + value;
+  }
+
+  function rewrite(fragment) {
+    fragment.querySelectorAll('[href], [src], [poster]').forEach(function (el) {
+      ['href', 'src', 'poster'].forEach(function (attr) {
+        if (el.hasAttribute(attr)) el.setAttribute(attr, fix(el.getAttribute(attr)));
+      });
+    });
+    fragment.querySelectorAll('[style*="url("]').forEach(function (el) {
+      el.setAttribute('style', el.getAttribute('style').replace(/url\((['"]?)([^'")]+)\1\)/g, function (m, q, u) {
+        return 'url(' + q + fix(u) + q + ')';
+      }));
+    });
+  }
+
+  function load(placeholder) {
+    var file = placeholder.getAttribute('data-include');
+    return fetch(base + file)
+      .then(function (response) {
+        if (!response.ok) throw new Error('Impossible de charger ' + file);
+        return response.text();
+      })
+      .then(function (html) {
+        var template = document.createElement('template');
+        template.innerHTML = html;
+        rewrite(template.content);
+        placeholder.replaceWith(template.content);
+      })
+      .catch(function (err) { console.error(err); });
+  }
+
+  function run() {
+    var placeholders = Array.prototype.slice.call(document.querySelectorAll('[data-include]'));
+    Promise.all(placeholders.map(load)).then(function () {
+      // Les scripts (menu, slider, repérage de la page…) démarrent quand les fragments sont en place
+      document.dispatchEvent(new CustomEvent('partials:ready'));
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();

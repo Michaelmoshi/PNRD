@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-base="../">
 
 <head>
   <meta charset="UTF-8">
@@ -7,9 +7,14 @@
   <title>Politique de confidentialité — PNRD</title>
   <meta name="description" content="Comment le PNRD collecte et utilise les données personnelles saisies dans le formulaire d'adhésion." />
   <meta name="robots" content="index, follow" />
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="256x256" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +27,7 @@
 </head>
 
 <body>
-  <div id="header"></div>
+  <div data-include="partials/header.html"></div>
 
   <section class="ap-hero">
     <div class="ap-hero-inner">
@@ -89,23 +94,11 @@
     </section>
   </main>
 
-  <div id="footer-placeholder"></div>
+  <div data-include="partials/footer.html"></div>
 
-  <script src="script.js"></script>
-  <script>
-    async function loadPart(id, file, callback) {
-      const resp = await fetch(file);
-      const html = await resp.text();
-      document.getElementById(id).outerHTML = html;
-      if (typeof callback === 'function') callback();
-    }
 
-    loadPart('header', 'header.html', function () {
-      initMenuToggle();
-    });
-    loadPart('footer-placeholder', 'footer.html');
-  </script>
-
+  <script src="../js/includes.js"></script>
+  <script src="../js/nav.js"></script>
 </body>
 
 </html>

@@ -5,7 +5,7 @@ const path = require('path');
 // Serveur de développement local (non utilisé en production).
 // Lancer depuis la racine du projet :  node tools/server.js
 const root = path.join(__dirname, '..');
-const port = 5500;
+const port = process.env.PORT || 5500;
 
 const types = {
   '.html': 'text/html; charset=utf-8',

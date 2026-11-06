@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "date": "2025-07-15",
+    "dateLabel": "15 juillet 2025",
+    "title": "Clôture du Mois de la Femme",
+    "description": "Retour sur la cérémonie de clôture du Mois de la Femme, organisée en partenariat avec ADESCO.",
+    "report": [],
+    "poster": "",
+    "video": {
+      "webm": "",
+      "mp4": "assets/videos/evenements/2025-07-15-cloture-mois-de-la-femme.mp4"
+    }
+  },
+  {
+    "id": 2,
+    "date": "2025-08-28",
+    "dateLabel": "28 août 2025",
+    "title": "Assemblée générale annuelle",
+    "description": "Assemblée générale annuelle du PNRD et bilan des actions réalisées.",
+    "report": [],
+    "poster": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+    "video": {
+      "webm": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.webm",
+      "mp4": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/tokyo.mp4"
+    }
+  },
+  {
+    "id": 3,
+    "date": "2025-06-10",
+    "dateLabel": "10 juin 2025",
+    "title": "Atelier citoyen",
+    "description": "Atelier citoyen sur la participation politique et le renouveau démocratique.",
+    "report": [],
+    "poster": "https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80",
+    "video": {
+      "webm": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm",
+      "mp4": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"
+    }
+  },
+  {
+    "id": 4,
+    "date": "2025-06-10",
+    "dateLabel": "10 juin 2025",
+    "title": "Atelier citoyen, suite",
+    "description": "Atelier citoyen sur la participation politique et le renouveau démocratique.",
+    "report": [],
+    "poster": "https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=80",
+    "video": {
+      "webm": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.webm",
+      "mp4": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"
+    }
+  }
+]
