@@ -33,7 +33,15 @@ footer::before {
 
 .footer-column {
   flex: 1 1 200px;
-  min-width: 200px;
+  min-width: 190px;
+}
+
+.logo-col {
+  flex: 1.4 1 240px;
+}
+
+.contact-col {
+  flex: 1.5 1 260px;
 }
 
 /* Colonne 1 — Logo */
@@ -109,9 +117,26 @@ footer::before {
   margin: 12px 0;
   font-size: 0.98rem;
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
   color: #d9def0;
+}
+
+.contact-col p .hero-icon {
+  flex: 0 0 1.2em;
+  margin-top: 3px;
+  color: var(--color-gold-light);
+}
+
+.contact-col a {
+  color: #d9def0;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.contact-col a:hover {
+  color: var(--color-gold-light);
 }
 
 .address-icon {
