@@ -483,7 +483,6 @@ a.contact-details-value:hover {
 
 .partners-track a {
   display: inline-block;
-  width: 120px;
   flex-shrink: 0;
   transition: transform var(--transition);
 }
@@ -493,11 +492,17 @@ a.contact-details-value:hover {
 }
 
 .partners-track img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 48px;
+  max-width: 180px;
+  object-fit: contain;
   display: block;
   filter: grayscale(100%);
   transition: filter var(--transition);
+}
+
+.partners-track img.partner-logo-tall {
+  height: 76px;
 }
 
 .partners-track a:hover img {
