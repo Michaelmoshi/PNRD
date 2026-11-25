@@ -9,12 +9,18 @@
     "lint": "node tools/lint-html.js",
     "check": "node tools/build.js --check && node tools/lint-html.js && npm run validate",
     "prepare": "git config core.hooksPath .githooks",
-    "validate": "html-validate index.html pages 404.html"
+    "validate": "html-validate index.html pages 404.html",
+    "db:migrate": "node db/migrate.js",
+    "db:import": "node db/import-site.js"
   },
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
     "html-validate": "^8.29.0"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.10",
+    "pg": "^8.23.1"
   }
 }
