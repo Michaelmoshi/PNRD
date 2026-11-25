@@ -88,7 +88,8 @@ function section(html, id) {
     const display = mem.slice(mem.indexOf('<div class="team-display">'), mem.indexOf('<nav class="team-nav"'));
     for (const group of display.split(/<div class="team-group(?: active)?" /).slice(1)) {
       const key = first(group, /data-team="(\w+)"/);
-      const { rows } = await db.query('INSERT INTO member_categories (position, title) VALUES ($1,$2) RETURNING id', [pos++, labels.get(key) || key]);
+      const icon = first(group, /<svg[^>]*>([\s\S]*?)<\/svg>/).split('\n').map((l) => l.trim()).filter(Boolean).join('\n');
+      const { rows } = await db.query('INSERT INTO member_categories (position, title, slug, icon) VALUES ($1,$2,$3,$4) RETURNING id', [pos++, labels.get(key) || key, key, icon]);
       let mp = 0;
       for (const card of group.split('<div class="member-card">').slice(1)) {
         const name = text(first(card, /member-name">([\s\S]*?)<\/div>/));
@@ -104,10 +105,11 @@ function section(html, id) {
     const track = first(home, /<div class="partners-track">([\s\S]*?)<!-- Série 2/) || first(home, /<div class="partners-track">([\s\S]*?)<\/div>/);
     const seen = new Set();
     pos = 0;
-    for (const [, url, name, logo, alt] of all(track, /<a href="([^"]*)"[^>]*title="([^"]*)"[^>]*>\s*<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"/g)) {
+    for (const [, url, name, imgTag] of all(track, /<a href="([^"]*)"[^>]*title="([^"]*)"[^>]*>\s*(<img[^>]*>)/g)) {
+      const logo = first(imgTag, /src="([^"]+)"/), alt = first(imgTag, /alt="([^"]*)"/), cls = first(imgTag, /class="([^"]*)"/);
       if (seen.has(name)) continue;
       seen.add(name);
-      await db.query('INSERT INTO partners (position, name, url, logo_id) VALUES ($1,$2,$3,$4)', [pos++, text(name), url, await addMedia(logo, 'image', text(alt))]);
+      await db.query('INSERT INTO partners (position, name, url, logo_id, logo_class) VALUES ($1,$2,$3,$4,$5)', [pos++, text(name), url, await addMedia(logo, 'image', text(alt)), cls]);
     }
 
     // ------------------------------------------------ blocs de texte (HTML des sections, conserve tel quel)

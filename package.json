@@ -14,7 +14,9 @@
     "db:import": "node db/import-site.js",
     "server": "node server/index.js",
     "admin:create": "node db/create-admin.js",
-    "test": "node --test server/smoke.test.js"
+    "test": "node --test server/smoke.test.js",
+    "build:db": "node tools/build-db.js",
+    "check:db": "node tools/build-db.js --compare"
   },
   "engines": {
     "node": ">=18"

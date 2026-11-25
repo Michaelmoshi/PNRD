@@ -123,54 +123,59 @@ function seoHtml(site, page) {
 }
 
 // ---------------------------------------------------------------- assemblage
-const out = new Map();           // fichier -> contenu attendu
-const events = JSON.parse(read('data/evenements.json'));
-const siteRaw = readIfExists('site.json');
-const site = siteRaw ? JSON.parse(siteRaw) : null;
+function main() {
+  const out = new Map();           // fichier -> contenu attendu
+  const events = JSON.parse(read('data/evenements.json'));
+  const siteRaw = readIfExists('site.json');
+  const site = siteRaw ? JSON.parse(siteRaw) : null;
 
-for (const page of PAGES) {
-  let html = read(page);
-  const base = page.startsWith('pages/') ? '../' : '';
+  for (const page of PAGES) {
+    let html = read(page);
+    const base = page.startsWith('pages/') ? '../' : '';
 
-  for (const name of ['header', 'slider', 'footer']) {
-    const file = `partials/${name}.html`;
-    html = inject(html, `include:${name}`, rebase(read(file).trim(), base), `<div data-include="${file}"></div>`);
+    for (const name of ['header', 'slider', 'footer']) {
+      const file = `partials/${name}.html`;
+      html = inject(html, `include:${name}`, rebase(read(file).trim(), base), `<div data-include="${file}"></div>`);
+    }
+
+    if (page === 'index.html') html = inject(html, 'build:archive', archiveHtml(events));
+
+    if (site && site.url) {
+      // le bloc SEO remplace les anciennes balises de partage écrites à la main
+      html = html.replace(/[ \t]*<meta (?:property="og:image"|name="twitter:image"|name="twitter:card")[^>]*>\n/g, '');
+      if (!html.includes('<!-- build:seo -->')) html = html.replace('</head>', '<!-- build:seo -->\n<!-- /build:seo -->\n</head>');
+      html = inject(html, 'build:seo', seoHtml(site, page));
+    }
+    out.set(page, html);
   }
-
-  if (page === 'index.html') html = inject(html, 'build:archive', archiveHtml(events));
 
   if (site && site.url) {
-    // le bloc SEO remplace les anciennes balises de partage écrites à la main
-    html = html.replace(/[ \t]*<meta (?:property="og:image"|name="twitter:image"|name="twitter:card")[^>]*>\n/g, '');
-    if (!html.includes('<!-- build:seo -->')) html = html.replace('</head>', '<!-- build:seo -->\n<!-- /build:seo -->\n</head>');
-    html = inject(html, 'build:seo', seoHtml(site, page));
+    const url = site.url.replace(/\/$/, '');
+    const urls = PAGES.filter((p) => !NOT_INDEXED.has(p)).map((p) => (p === 'index.html' ? `${url}/` : `${url}/${p}`));
+    out.set('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
+      + urls.map((u) => `  <url><loc>${esc(u)}</loc></url>`).join('\n') + '\n</urlset>\n');
+    out.set('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${url}/sitemap.xml\n`);
   }
-  out.set(page, html);
-}
 
-if (site && site.url) {
-  const url = site.url.replace(/\/$/, '');
-  const urls = PAGES.filter((p) => !NOT_INDEXED.has(p)).map((p) => (p === 'index.html' ? `${url}/` : `${url}/${p}`));
-  out.set('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
-    + urls.map((u) => `  <url><loc>${esc(u)}</loc></url>`).join('\n') + '\n</urlset>\n');
-  out.set('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${url}/sitemap.xml\n`);
-}
-
-// ---------------------------------------------------------------- écriture ou vérification
-const stale = [];
-for (const [file, content] of out) {
-  if (readIfExists(file) === content) continue;
-  stale.push(file);
-  if (!CHECK) fs.writeFileSync(path.join(root, file), content, 'utf8');
-}
-
-if (CHECK) {
-  if (stale.length) {
-    console.error('Fichiers pas à jour (lancer « npm run build ») :\n' + stale.map((f) => '  ' + f).join('\n'));
-    process.exit(1);
+  // ---------------------------------------------------------------- écriture ou vérification
+  const stale = [];
+  for (const [file, content] of out) {
+    if (readIfExists(file) === content) continue;
+    stale.push(file);
+    if (!CHECK) fs.writeFileSync(path.join(root, file), content, 'utf8');
   }
-  console.log('Pages à jour.');
-} else {
-  stale.forEach((f) => console.log('mis à jour :', f));
-  console.log(stale.length ? `${stale.length} fichier(s) mis à jour.` : 'Rien à changer.');
+
+  if (CHECK) {
+    if (stale.length) {
+      console.error('Fichiers pas à jour (lancer « npm run build ») :\n' + stale.map((f) => '  ' + f).join('\n'));
+      process.exit(1);
+    }
+    console.log('Pages à jour.');
+  } else {
+    stale.forEach((f) => console.log('mis à jour :', f));
+    console.log(stale.length ? `${stale.length} fichier(s) mis à jour.` : 'Rien à changer.');
+  }
 }
+
+module.exports = { archiveHtml, esc, inject, rebase, PAGES, NOT_INDEXED, read };
+if (require.main === module) main();

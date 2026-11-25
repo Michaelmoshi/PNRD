@@ -20,3 +20,6 @@ _*.html
 
 # Images envoyees depuis la console (donnees, pas du code)
 assets/uploads/
+
+# Site genere depuis la base
+dist/
