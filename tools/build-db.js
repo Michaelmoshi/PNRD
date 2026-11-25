@@ -282,15 +282,21 @@ function buildPage(page, d) {
   return html;
 }
 
-// ---------------------------------------------------------------- principal
-(async () => {
-  const db = await connect();
+// ---------------------------------------------------------------- generation (utilisable par le serveur)
+// db : client ou pool PostgreSQL. Renvoie Map(fichier -> contenu) : les pages et data/evenements.json.
+async function generate(db) {
   const d = await load(db);
-  await db.end();
-
   const out = new Map();
   for (const page of PAGES) out.set(page, buildPage(page, d));
   out.set('data/evenements.json', JSON.stringify(eventsForSite(d.events), null, 2) + '\n');
+  return out;
+}
+
+// ---------------------------------------------------------------- ligne de commande
+async function main() {
+  const db = await connect();
+  const out = await generate(db);
+  await db.end();
 
   if (COMPARE || ADOPT) {
     let bad = 0;
@@ -320,4 +326,7 @@ function buildPage(page, d) {
     if (fs.existsSync(path.join(root, item))) fs.cpSync(path.join(root, item), path.join(dist, item), { recursive: true });
   }
   console.log(`Site genere dans dist/ (${out.size} fichiers de contenu).`);
-})().catch((e) => { console.error(e.message); process.exit(1); });
+}
+
+module.exports = { generate };
+if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

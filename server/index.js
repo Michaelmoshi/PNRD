@@ -6,6 +6,7 @@ const db = require('./db');
 const auth = require('./auth');
 const crud = require('./crud');
 const media = require('./media');
+const publish = require('./publish');
 const path = require('path');
 
 const app = express();
@@ -39,6 +40,7 @@ pub.use((req, res, next) => {                        // CORS : seulement les sit
 });
 
 const hits = new Map();                              // limite simple : N requetes / 15 min / IP
+app.locals.resetRateLimits = () => hits.clear();     // utilise par les tests
 function limit(max) {
   return (req, res, next) => {
     const key = req.path + req.ip;
@@ -121,6 +123,7 @@ admin.get('/auth/me', auth.require(), (req, res) => {
 
 admin.use(crud());
 admin.use('/media', media);
+admin.use(publish.admin);
 
 // ---- blocs de texte : /content/:page/:key
 admin.get('/content', auth.require('contenu.lire'), wrap(async (_req, res) => {
@@ -264,6 +267,7 @@ admin.get('/dashboard', auth.require(), wrap(async (req, res) => {
     out.content = (await q(`SELECT (SELECT count(*) FROM programmes)::int AS programmes, (SELECT count(*) FROM events)::int AS events,
       (SELECT count(*) FROM members)::int AS members, (SELECT count(*) FROM partners)::int AS partners, (SELECT count(*) FROM media)::int AS media`))[0];
   }
+  if (auth.can(req.user, 'contenu.lire')) out.publication = await publish.status();
   if (auth.can(req.user, '*')) {
     out.recentActivity = await q(`SELECT a.action, a.entity, a.created_at, u.full_name AS user_name FROM audit_log a
                                   LEFT JOIN users u ON u.id = a.user_id ORDER BY a.id DESC LIMIT 8`);
@@ -279,7 +283,14 @@ app.use('/admin', (_req, res, next) => {
   res.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
   next();
 }, express.static(path.join(ROOT, 'admin'), { index: 'index.html' }));
-app.use('/assets', express.static(path.join(ROOT, 'assets'), { maxAge: '1h' }));
+// css, scripts et images viennent du depot ; les pages viennent de la derniere version publiee
+const assets = express.Router();
+for (const d of ['css', 'js']) assets.use('/' + d, express.static(path.join(ROOT, d), { maxAge: '5m' }));
+assets.use('/assets', express.static(path.join(ROOT, 'assets'), { maxAge: '1h' }));
+app.use('/apercu', publish.previewPages, assets);   // apercu des modifications non publiees (connexion requise)
+app.use(assets);
+app.use(publish.publicSite);                        // le site public, a la racine
+publish.refreshLive().catch((e) => console.error('Publication :', e.message));
 
 app.get('/api/v1/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Route inconnue' }));

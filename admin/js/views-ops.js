@@ -42,6 +42,12 @@ export async function dashboardView() {
   const root = h('div', null, h('h1', null, `Bonjour ${d.user.full_name.split(' ')[0]}`),
     h('p', { class: 'muted' }, 'Voici l’état du site et des demandes.'));
 
+  if (d.publication) {
+    const p = d.publication;
+    root.append(h('a', { class: `publish-banner${p.upToDate ? ' is-ok' : ''}`, href: '#/publish' },
+      !p.published ? 'Le site n’a pas encore été publié depuis la console. Publier le site →'
+        : p.upToDate ? 'Le site en ligne est à jour.' : 'Des modifications ne sont pas encore en ligne. Aperçu et publication →'));
+  }
   if (d.applications) {
     const a = d.applications;
     root.append(h('section', null, h('h2', null, 'Demandes d’adhésion'),

@@ -23,3 +23,6 @@ assets/uploads/
 
 # Site genere depuis la base
 dist/
+
+# Versions publiees du site (donnees generees)
+published/

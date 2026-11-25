@@ -174,3 +174,57 @@ test('formulaire public : CORS pour le site autorise seulement, champ piege igno
   assert.equal(bot.status, 201);
   assert.equal((await db.query('SELECT count(*)::int AS n FROM applications')).rows[0].n, before);
 });
+
+test('publication : version, site en ligne, aperçu, retour arriere (sans laisser de trace)', async () => {
+  const liveBefore = (await db.query('SELECT id FROM publications WHERE live')).rows[0]?.id ?? null;
+  const maxBefore = (await db.query('SELECT coalesce(max(id), 0) AS m FROM publications')).rows[0].m;
+  app.locals.resetRateLimits();
+  const marker = 'Programme-test-publication';
+  try {
+    const c = client();
+    assert.equal((await c('POST', `${A}/publish`, {})).status, 401);
+    await c('POST', `${A}/auth/login`, { email: EDIT, password: PW });
+
+    // un contenu visible sur l'accueil (cartes des programmes)
+    const prog = await c('POST', `${A}/programmes`, { slug: 'test-pub', title: marker, summary: 'Test', body: 'Texte' });
+    assert.equal(prog.status, 201);
+    assert.equal((await c('GET', `${A}/publish/status`)).body.upToDate, false);
+
+    // apercu : connexion requise, montre la modification avant publication
+    assert.equal((await fetch(`${base}/apercu/`)).status, 401);
+    const cookie = (await (await fetch(`${base}${A}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: EDIT, password: PW }) })).headers.get('set-cookie')).split(';')[0];
+    const preview = await fetch(`${base}/apercu/`, { headers: { Cookie: cookie } });
+    assert.equal(preview.status, 200);
+    assert.match(await preview.text(), new RegExp(marker));
+
+    const first = await c('POST', `${A}/publish`, { note: 'test 1' });
+    assert.equal(first.status, 201);
+    const home = await fetch(`${base}/`);
+    assert.equal(home.status, 200);
+    assert.match(await home.text(), new RegExp(marker));
+    assert.equal((await fetch(`${base}/css/base.css`)).status, 200);
+    assert.equal((await fetch(`${base}/pages/membres.html`)).status, 200);
+    assert.equal((await c('GET', `${A}/publish/status`)).body.upToDate, true);
+    assert.equal((await c('POST', `${A}/publish`, {})).body.unchanged, true);
+
+    // on retire le contenu, on republie : le site ne l'affiche plus
+    assert.equal((await c('DELETE', `${A}/programmes/${prog.body.id}`)).status, 204);
+    assert.equal((await c('GET', `${A}/publish/status`)).body.upToDate, false);
+    const second = await c('POST', `${A}/publish`, { note: 'test 2' });
+    assert.equal(second.status, 201);
+    assert.doesNotMatch(await (await fetch(`${base}/`)).text(), new RegExp(marker));
+
+    // retour a la premiere version
+    assert.equal((await c('POST', `${A}/publish/${first.body.id}/restore`)).status, 200);
+    assert.match(await (await fetch(`${base}/`)).text(), new RegExp(marker));
+    const hist = (await c('GET', `${A}/publish/history`)).body;
+    assert.equal(hist.find((v) => v.id === first.body.id).live, true);
+    assert.equal((await c('POST', `${A}/publish/999999/restore`)).status, 404);
+  } finally {
+    await db.query("DELETE FROM programmes WHERE slug = 'test-pub'");
+    const mine = (await db.query('SELECT id FROM publications WHERE id > $1', [maxBefore])).rows;
+    await db.query('DELETE FROM publications WHERE id > $1', [maxBefore]);
+    for (const r of mine) fs.rmSync(path.join(__dirname, '..', 'published', `v${r.id}`), { recursive: true, force: true });
+    if (liveBefore) await db.query('UPDATE publications SET live = true WHERE id = $1', [liveBefore]);
+  }
+});

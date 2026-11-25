@@ -3,6 +3,7 @@ import { h, clear, toast } from './dom.js';
 import { get, post, ApiError } from './api.js';
 import { loginView, dashboardView } from './views-ops.js';
 import { applicationsView, messagesView, usersView, auditView } from './views-ops2.js';
+import { publishView } from './views-publish.js';
 import { resourceView, contentView, settingsView, mediaView } from './views-content.js';
 
 const app = document.getElementById('app');
@@ -22,6 +23,7 @@ const NAV = [
   { href: '#/content', label: 'Textes des pages', perm: 'contenu.lire' },
   { href: '#/settings', label: 'Coordonnées et réglages', perm: 'contenu.lire' },
   { href: '#/media', label: 'Images', perm: 'contenu.lire' },
+  { href: '#/publish', label: 'Publication du site', perm: 'contenu.lire' },
   { group: 'Adhésions', perm: 'adhesions.lire' },
   { href: '#/applications', label: 'Demandes d’adhésion', perm: 'adhesions.lire' },
   { href: '#/messages', label: 'Messages reçus', perm: 'messages.lire' },
@@ -36,6 +38,7 @@ const ROUTES = [
   [/^content(?:\/([\w-]+)\/([\w-]+))?$/, (m) => contentView(m[1], m[2])],
   [/^settings$/, () => settingsView()],
   [/^media$/, () => mediaView()],
+  [/^publish$/, (_m, ctx) => publishView(ctx)],
   [/^applications(?:\/(\d+))?$/, (m) => applicationsView(m[1])],
   [/^messages$/, () => messagesView()],
   [/^users$/, () => usersView()],
