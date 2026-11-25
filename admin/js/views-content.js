@@ -1,5 +1,5 @@
 // Contenu du site : listes et formulaires générés depuis une description, textes, réglages, images
-import { h, clear, toast, fmtDay, mediaUrl } from './dom.js';
+import { h, clear, toast, fmtDay, fmtDate, mediaUrl } from './dom.js';
 import { get, post, patch, put, del, upload } from './api.js';
 
 const PUBLISHED = { key: 'published', label: 'Visible sur le site', type: 'bool', default: true };
@@ -12,15 +12,19 @@ export const RESOURCES = {
   programmes: { title: 'Programmes', one: 'un programme', columns: [['title', 'Titre'], ['summary', 'Thème'], ['published', 'Visible', 'bool']],
     fields: [{ key: 'title', label: 'Titre', required: true }, { key: 'slug', label: 'Identifiant dans l’adresse', required: true, help: 'Lettres minuscules et tirets, par exemple « education ».' },
       { key: 'summary', label: 'Thème (ex. Social)' }, { key: 'body', label: 'Description', type: 'textarea' }, { key: 'image_id', label: 'Image', type: 'media' }, ORDER, PUBLISHED] },
-  events: { title: 'Événements', one: 'un événement', columns: [['event_date', 'Date', 'date'], ['title', 'Titre'], ['published', 'Visible', 'bool']],
+  events: { title: 'Événements passés (vidéos)', one: 'un événement passé', columns: [['event_date', 'Date', 'date'], ['title', 'Titre'], ['published', 'Visible', 'bool']],
     fields: [{ key: 'title', label: 'Titre', required: true }, { key: 'event_date', label: 'Date', type: 'date', required: true },
       { key: 'description', label: 'Description courte', type: 'textarea' },
       { key: 'report', label: 'Compte rendu', type: 'lines', help: 'Un paragraphe par ligne.' },
       { key: 'poster_id', label: 'Affiche', type: 'media' },
       { key: 'video_mp4', label: 'Vidéo (lien MP4)', help: 'Chemin ou adresse du fichier vidéo.' }, { key: 'video_webm', label: 'Vidéo (lien WebM, facultatif)' }, PUBLISHED] },
+  agenda: { title: 'Prochains événements', one: 'un événement à venir', columns: [['starts_at', 'Date et heure', 'datetime'], ['title', 'Titre'], ['published', 'Visible', 'bool']],
+    fields: [{ key: 'title', label: 'Titre', required: true }, { key: 'starts_at', label: 'Date et heure', type: 'datetime', required: true },
+      { key: 'description', label: 'Description', type: 'textarea' }, PUBLISHED] },
   members: { title: 'Équipe', one: 'un membre', columns: [['full_name', 'Nom'], ['function', 'Fonction'], ['category_id', 'Catégorie', 'ref:member-categories'], ['published', 'Visible', 'bool']],
     fields: [{ key: 'full_name', label: 'Nom complet', required: true }, { key: 'function', label: 'Fonction' }, { key: 'description', label: 'Présentation', type: 'textarea' },
-      { key: 'category_id', label: 'Catégorie', type: 'select', from: 'member-categories', required: true }, { key: 'photo_id', label: 'Photo', type: 'media' }, ORDER, PUBLISHED],
+      { key: 'category_id', label: 'Catégorie', type: 'select', from: 'member-categories', required: true }, { key: 'photo_id', label: 'Photo', type: 'media' },
+      { key: 'featured', label: 'Afficher dans l’équipe dirigeante de la page d’accueil', type: 'bool', default: false }, ORDER, PUBLISHED],
     extra: { href: '#/r/member-categories', label: 'Gérer les catégories' } },
   'member-categories': { title: 'Catégories de l’équipe', one: 'une catégorie', back: '#/r/members', columns: [['title', 'Nom'], ['position', 'Ordre']],
     fields: [{ key: 'title', label: 'Nom', required: true }, { key: 'intro', label: 'Introduction', type: 'textarea' }, ORDER] },
@@ -105,6 +109,7 @@ async function resourceList(name, res, refs) {
     const v = r[key];
     if (type === 'bool') return v ? 'Oui' : 'Non';
     if (type === 'date') return fmtDay(v);
+    if (type === 'datetime') return fmtDate(v);
     if (type?.startsWith('ref:')) return (refs[type.slice(4)].find((x) => x.id === v) || {}).title || '—';
     return v == null || v === '' ? '—' : String(v).slice(0, 90);
   };
@@ -134,6 +139,7 @@ async function resourceForm(name, res, id, refs) {
     else if (f.type === 'bool') input = h('input', { id: fid, type: 'checkbox', checked: !!val });
     else if (f.type === 'number') input = h('input', { id: fid, type: 'number', value: val });
     else if (f.type === 'date') input = h('input', { id: fid, type: 'date', value: String(val).slice(0, 10) });
+    else if (f.type === 'datetime') input = h('input', { id: fid, type: 'datetime-local', value: String(val).slice(0, 16).replace(' ', 'T') });
     else if (f.type === 'select') {
       input = h('select', { id: fid }, h('option', { value: '' }, '— Choisir —'), refs[f.from].map((o) => h('option', { value: o.id, selected: o.id === val }, o.title)));
     } else if (f.type === 'media') input = mediaPicker(val || null, () => {});
@@ -178,51 +184,92 @@ async function resourceForm(name, res, id, refs) {
 }
 
 // ------------------------------------------------------------ textes des pages
-const PAGES = { 'a-propos': 'À propos', accueil: 'Accueil' };
+const PAGES = { accueil: 'Page d’accueil', 'a-propos': 'Page À propos', programmes: 'Page Programmes', membres: 'Page Équipe', adhesion: 'Page Adhésion',
+  'mentions-legales': 'Mentions légales', confidentialite: 'Politique de confidentialité' };
+const BLOCKS = { hero: 'Bandeau de titre en haut de la page', main: 'Texte de la page', aside: 'Colonne « Pourquoi nous rejoindre »',
+  'a-propos': 'Section « À propos »', vision: 'Section « Vision »', programme: 'Section « Programmes »', implantation: 'Section « Chiffres clés » (textes)',
+  'prochains-evenements': 'Section « Prochains événements » (textes)', evenements: 'Section « Événements passés » (textes)', contact: 'Section « Contact »',
+  'equipe-dirigeante': 'Section « Équipe dirigeante » (textes)', partenaires: 'Section « Partenaires » (textes)',
+  creation: 'Création du parti', ideologie: 'Idéologie et doctrine', valeurs: 'Valeurs', embleme: 'Emblème', organisation: 'Organisation', adhesion: 'Appel à rejoindre le mouvement' };
+const LISTS = { programmes: 'Programmes', agenda: 'Prochains événements', equipe: 'Équipe (case « équipe dirigeante »)', partenaires: 'Partenaires', archive: 'Événements passés' };
+
 export async function contentView(page, key) {
   if (!page) {
     const rows = await get('/content');
-    return h('div', null, h('h1', null, 'Textes des pages'),
-      h('p', { class: 'muted' }, 'Chaque bloc correspond à une section du site.'),
-      h('div', { class: 'table-wrap' }, h('table', { class: 'table' }, h('thead', null, h('tr', null, ['Page', 'Section', 'Titre'].map((t) => h('th', { scope: 'col' }, t)))),
-        h('tbody', null, rows.map((r) => h('tr', null, h('td', null, PAGES[r.page] || r.page), h('td', null, h('a', { href: `#/content/${r.page}/${r.key}` }, r.key)), h('td', null, r.title)))))));
+    const root = h('div', null, h('h1', null, 'Textes des pages'),
+      h('p', { class: 'muted' }, 'Choisissez la zone à modifier. Les listes (programmes, événements, équipe, partenaires) se gèrent dans leurs propres menus.'));
+    for (const pg of Object.keys(PAGES)) {
+      const list = rows.filter((r) => r.page === pg);
+      if (!list.length) continue;
+      root.append(h('section', { class: 'card' }, h('h2', null, PAGES[pg]),
+        h('ul', { class: 'links' }, list.map((r) => h('li', null, h('a', { href: `#/content/${r.page}/${r.key}` }, BLOCKS[r.key] || r.key), r.title && h('span', { class: 'muted' }, ` — ${r.title}`))))));
+    }
+    return root;
   }
   const b = await get(`/content/${page}/${key}`);
   const title = h('input', { id: 'c-title', type: 'text', value: b.title });
-  const body = h('textarea', { id: 'c-body', rows: '22', class: 'code', spellcheck: 'false' }, b.body);
-  return h('div', null, h('p', null, h('a', { href: '#/content' }, '← Tous les textes')), h('h1', null, `${PAGES[page] || page} · ${key}`),
+  const body = h('textarea', { id: 'c-body', rows: '24', class: 'code', spellcheck: 'false' }, b.body);
+  const lists = [...b.body.matchAll(/<!--@(\w+)-->/g)].map((m) => LISTS[m[1]] || m[1]);
+  const tokens = [...new Set([...b.body.matchAll(/\{\{([\w.]+)\}\}/g)].map((m) => m[1]))];
+  return h('div', null, h('p', null, h('a', { href: '#/content' }, '← Tous les textes')), h('h1', null, `${PAGES[page] || page} · ${BLOCKS[key] || key}`),
     h('form', { class: 'card form', onsubmit: async (e) => {
       e.preventDefault();
       await put(`/content/${page}/${key}`, { title: title.value, body: body.value });
       toast('Texte enregistré');
     } },
     h('div', { class: 'notice' }, 'Ce bloc contient du texte avec des balises HTML (<p>, <h3>, <strong>…). Modifiez seulement les mots, sans toucher aux balises.'),
-    h('div', { class: 'field' }, h('label', { for: 'c-title' }, 'Titre de la section'), title),
+    lists.length > 0 && h('div', { class: 'notice' }, `Les lignes <!--@…--> affichent une liste gérée ailleurs : ${lists.join(', ')}. Ne les supprimez pas.`),
+    tokens.length > 0 && h('div', { class: 'notice' }, 'Les mots entre doubles accolades ({{…}}) sont remplacés par les réglages (coordonnées, réseaux sociaux). Ne les modifiez pas : changez-les dans « Coordonnées et réglages ».'),
+    h('div', { class: 'field' }, h('label', { for: 'c-title' }, 'Titre de la section (pour s’y retrouver ici)'), title),
     h('div', { class: 'field' }, h('label', { for: 'c-body' }, 'Contenu'), body),
     h('div', { class: 'form-actions' }, h('button', { type: 'submit', class: 'btn btn--primary' }, 'Enregistrer'), h('a', { class: 'btn', href: '#/content' }, 'Annuler'))));
 }
 
 // ------------------------------------------------------------ réglages
-const SETTING_LABELS = { 'contact.email': 'Adresse e-mail du parti', 'contact.telephone': 'Téléphone', 'social.facebook': 'Page Facebook', 'social.twitter': 'Compte X (Twitter)',
-  'social.instagram': 'Compte Instagram', 'social.youtube': 'Chaîne YouTube', 'social.whatsapp': 'Lien WhatsApp', 'site.url': 'Adresse du site' };
+const SETTING_LABELS = { 'contact.email': 'Adresse e-mail du parti', 'contact.telephone': 'Téléphone (avec l’indicatif, sans espaces : +243…)', 'contact.adresse': 'Adresse du siège',
+  'social.facebook': 'Page Facebook', 'social.twitter': 'Compte X (Twitter)', 'social.instagram': 'Compte Instagram', 'social.youtube': 'Chaîne YouTube', 'social.whatsapp': 'Lien WhatsApp',
+  'site.url': 'Adresse publique du site (https://…)', 'site.api_url': 'Adresse du serveur du parti (laisser vide tant qu’il n’est pas en ligne)' };
 const STAT_PART = { nombre: 'nombre', suffixe: 'signe après le nombre (ex. +)', libelle: 'texte' };
-const labelFor = (k) => SETTING_LABELS[k] || (k.startsWith('stats.') ? `Chiffre clé ${k.split('.')[1]} : ${STAT_PART[k.split('.')[2]] || k}` : k);
+const SEO_PART = { titre: 'titre', description: 'description pour Google', partage: 'description pour les réseaux sociaux' };
+const GROUPS = [
+  ['Contact', (k) => k.startsWith('contact.')],
+  ['Réseaux sociaux', (k) => k.startsWith('social.')],
+  ['Chiffres clés de l’accueil', (k) => k.startsWith('stats.')],
+  ['Référencement (Google et réseaux sociaux)', (k) => k.startsWith('seo.')],
+  ['Technique', () => true],
+];
+function labelFor(k) {
+  if (SETTING_LABELS[k]) return SETTING_LABELS[k];
+  const [kind, a, b] = k.split('.');
+  if (kind === 'stats') return `Chiffre clé ${a} : ${STAT_PART[b] || b}`;
+  if (kind === 'seo') return `${PAGES[a] || a} : ${SEO_PART[b] || b}`;
+  return k;
+}
 
 export async function settingsView() {
   const s = await get('/settings');
   const inputs = {};
-  const form = h('form', { class: 'card form', onsubmit: async (e) => {
+  const form = h('form', { class: 'form', onsubmit: async (e) => {
     e.preventDefault();
     await put('/settings', Object.fromEntries(Object.entries(inputs).map(([k, el]) => [k, el.value])));
     toast('Réglages enregistrés');
   } });
-  for (const k of Object.keys(s)) {
-    const id = uid();
-    inputs[k] = h('input', { id, type: 'text', value: s[k] });
-    form.append(h('div', { class: 'field' }, h('label', { for: id }, labelFor(k)), inputs[k]));
+  const left = new Set(Object.keys(s));
+  for (const [title, test] of GROUPS) {
+    const keys = [...left].filter(test);
+    if (!keys.length) continue;
+    const card = h('section', { class: 'card' }, h('h2', null, title));
+    for (const k of keys) {
+      left.delete(k);
+      const id = uid();
+      const long = k.startsWith('seo.') && (k.endsWith('description') || k.endsWith('partage'));
+      inputs[k] = long ? h('textarea', { id, rows: '3' }, s[k]) : h('input', { id, type: 'text', value: s[k] });
+      card.append(h('div', { class: 'field' }, h('label', { for: id }, labelFor(k)), inputs[k]));
+    }
+    form.append(card);
   }
-  form.append(h('div', { class: 'form-actions' }, h('button', { type: 'submit', class: 'btn btn--primary' }, 'Enregistrer')));
-  return h('div', null, h('h1', null, 'Coordonnées et chiffres'), form);
+  form.append(h('div', { class: 'form-actions' }, h('button', { type: 'submit', class: 'btn btn--primary' }, 'Enregistrer tous les réglages')));
+  return h('div', null, h('h1', null, 'Coordonnées et réglages'), form);
 }
 
 // ------------------------------------------------------------ médiathèque

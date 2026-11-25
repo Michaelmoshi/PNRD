@@ -9,7 +9,8 @@ const RESOURCES = {
   programmes: { table: 'programmes', cols: { slug: 's', position: 'int', title: 's', summary: 's', body: 's', image_id: 'int?', published: 'bool' }, required: ['slug', 'title'], order: 'position, id' },
   events: { table: 'events', cols: { event_date: 'date', title: 's', description: 's', report: 'arr', poster_id: 'int?', video_mp4: 's', video_webm: 's', published: 'bool' }, required: ['event_date', 'title'], order: 'event_date DESC, id' },
   'member-categories': { table: 'member_categories', cols: { position: 'int', title: 's', intro: 's' }, required: ['title'], order: 'position, id' },
-  members: { table: 'members', cols: { category_id: 'int', position: 'int', full_name: 's', function: 's', description: 's', photo_id: 'int?', published: 'bool' }, required: ['category_id', 'full_name'], order: 'category_id, position, id' },
+  agenda: { table: 'agenda', cols: { starts_at: 'datetime', title: 's', description: 's', published: 'bool' }, required: ['starts_at', 'title'], order: 'starts_at, id' },
+  members: { table: 'members', cols: { category_id: 'int', position: 'int', full_name: 's', function: 's', description: 's', photo_id: 'int?', featured: 'bool', published: 'bool' }, required: ['category_id', 'full_name'], order: 'category_id, position, id' },
   partners: { table: 'partners', cols: { position: 'int', name: 's', url: 's', logo_id: 'int?', published: 'bool' }, required: ['name'], order: 'position, id' },
 };
 
@@ -19,6 +20,7 @@ function coerce(type, v) {
   if (t === 'int') { const n = Number(v); if (!Number.isInteger(n)) throw new Error('entier attendu'); return n; }
   if (t === 'bool') return v === true || v === 'true';
   if (t === 'arr') { if (!Array.isArray(v) || v.some((x) => typeof x !== 'string')) throw new Error('liste de textes attendue'); return v; }
+  if (t === 'datetime') { if (!/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}$/.test(String(v))) throw new Error('date et heure AAAA-MM-JJ HH:MM attendues'); return String(v).replace('T', ' '); }
   if (t === 'date') { if (!/^\d{4}-\d{2}-\d{2}$/.test(String(v))) throw new Error('date AAAA-MM-JJ attendue'); return v; }
   if (typeof v !== 'string') throw new Error('texte attendu');
   return v.trim();

@@ -147,3 +147,30 @@ test('console : page servie avec une politique CSP stricte', async () => {
   assert.equal(res.status, 200);
   assert.match(res.headers.get('content-security-policy'), /default-src 'self'/);
 });
+
+test('dates : renvoyees telles quelles, sans decalage de fuseau', async () => {
+  const c = client();
+  await c('POST', `${A}/auth/login`, { email: EDIT, password: PW });
+  const ev = (await c('GET', `${A}/events`)).body.find((e) => e.id === 1);
+  assert.equal(ev.event_date, '2025-07-15');
+  const made = await c('POST', `${A}/agenda`, { starts_at: '2030-01-05T09:30', title: 'Test agenda' });
+  assert.equal(made.status, 201);
+  assert.equal(made.body.starts_at, '2030-01-05 09:30:00');
+  assert.equal((await c('POST', `${A}/agenda`, { starts_at: 'demain', title: 'x' })).status, 400);
+  assert.equal((await c('DELETE', `${A}/agenda/${made.body.id}`)).status, 204);
+});
+
+test('formulaire public : CORS pour le site autorise seulement, champ piege ignore', async () => {
+  const site = 'http://localhost:8080';
+  const ok = await fetch(`${base}/api/v1/public/adhesion`, { method: 'OPTIONS', headers: { Origin: site, 'Access-Control-Request-Method': 'POST' } });
+  assert.equal(ok.status, 204);
+  assert.equal(ok.headers.get('access-control-allow-origin'), site);
+  const evil = await fetch(`${base}/api/v1/public/adhesion`, { method: 'OPTIONS', headers: { Origin: 'https://evil.example' } });
+  assert.equal(evil.headers.get('access-control-allow-origin'), null);
+
+  const before = (await db.query('SELECT count(*)::int AS n FROM applications')).rows[0].n;
+  const bot = await fetch(`${base}/api/v1/public/adhesion`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nom: 'Bot', prenom: 'Bot', telephone: '1', email: 'candidat@test.local', consent: true, site: 'http://spam' }) });
+  assert.equal(bot.status, 201);
+  assert.equal((await db.query('SELECT count(*)::int AS n FROM applications')).rows[0].n, before);
+});

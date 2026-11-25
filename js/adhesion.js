@@ -1,7 +1,9 @@
-// Formulaire d'adhésion : validation, anti-spam et envoi par EmailJS (service, modèle et clé publique ci-dessous).
+// Formulaire d'adhésion : validation, anti-spam, puis envoi.
+//  - si le formulaire porte un attribut data-api : envoi à l'API du parti (base de données, suivi dans la console) ;
+//  - sinon : envoi par EmailJS (service, modèle et clé publique ci-dessous).
 
 (function () {
-  emailjs.init('0VBOxYZujOv7UuSVa');
+  if (window.emailjs) emailjs.init('0VBOxYZujOv7UuSVa');
 })();
 
 (function () {
@@ -81,6 +83,34 @@
     btn.disabled = true;
     btn.textContent = 'Envoi en cours…';
     say('info', 'Envoi de votre demande…');
+
+    var api = form.getAttribute('data-api');
+    if (api) {
+      fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nom: params.nom, postnom: params.postnom, prenom: params.prenom, telephone: params.telephone, email: params.email,
+          piece: params.piece, sexe: params.sexe, profession: params.profession, ville: params.ville, adresse: params.adresse,
+          consent: true
+        })
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (data) {
+            if (!res.ok) throw new Error(data.error || 'Erreur');
+            say('success', "Votre demande d'adhésion a bien été enregistrée. Merci de votre engagement !");
+            form.reset();
+          });
+        })
+        .catch(function (err) {
+          say('error', (err && err.message && err.message !== 'Failed to fetch' ? err.message + ' ' : '') + "L'envoi a échoué. Vérifiez votre connexion et réessayez, ou écrivez-nous à infopnrd09@gmail.com.");
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = "S'enregistrer";
+        });
+      return;
+    }
 
     emailjs.send('service_a2c1zxf', 'template_caknya8', params)
       .then(function () {

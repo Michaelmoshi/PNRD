@@ -53,6 +53,7 @@ function limit(max) {
 
 pub.post('/adhesion', limit(10), wrap(async (req, res) => {
   const b = req.body || {};
+  if (str(b.site, 200)) return res.status(201).json({ ok: true });      // champ piege rempli : robot, on fait semblant
   const d = { nom: str(b.nom, 100), postnom: str(b.postnom, 100), prenom: str(b.prenom, 100), telephone: str(b.telephone, 30), email: str(b.email, 200),
     piece: str(b.piece, 100), sexe: str(b.sexe, 20), profession: str(b.profession, 150), ville: str(b.ville, 100), adresse: str(b.adresse, 300) };
   if (!d.nom || !d.prenom || !d.telephone) return bad(res, 'Nom, prenom et telephone sont obligatoires');

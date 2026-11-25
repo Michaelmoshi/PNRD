@@ -15,11 +15,12 @@ const NAV = [
   { group: 'Contenu du site', perm: 'contenu.lire' },
   { href: '#/r/slides', label: 'Bandeau d’accueil', perm: 'contenu.lire' },
   { href: '#/r/programmes', label: 'Programmes', perm: 'contenu.lire' },
-  { href: '#/r/events', label: 'Événements', perm: 'contenu.lire' },
+  { href: '#/r/agenda', label: 'Prochains événements', perm: 'contenu.lire' },
+  { href: '#/r/events', label: 'Événements passés', perm: 'contenu.lire' },
   { href: '#/r/members', label: 'Équipe', perm: 'contenu.lire' },
   { href: '#/r/partners', label: 'Partenaires', perm: 'contenu.lire' },
   { href: '#/content', label: 'Textes des pages', perm: 'contenu.lire' },
-  { href: '#/settings', label: 'Coordonnées et chiffres', perm: 'contenu.lire' },
+  { href: '#/settings', label: 'Coordonnées et réglages', perm: 'contenu.lire' },
   { href: '#/media', label: 'Images', perm: 'contenu.lire' },
   { group: 'Adhésions', perm: 'adhesions.lire' },
   { href: '#/applications', label: 'Demandes d’adhésion', perm: 'adhesions.lire' },
@@ -31,7 +32,7 @@ const NAV = [
 
 const ROUTES = [
   [/^$/, () => dashboardView()],
-  [/^r\/(slides|programmes|events|members|partners|member-categories)(?:\/(new|\d+))?$/, (m) => resourceView(m[1], m[2])],
+  [/^r\/(slides|programmes|events|agenda|members|partners|member-categories)(?:\/(new|\d+))?$/, (m) => resourceView(m[1], m[2])],
   [/^content(?:\/([\w-]+)\/([\w-]+))?$/, (m) => contentView(m[1], m[2])],
   [/^settings$/, () => settingsView()],
   [/^media$/, () => mediaView()],
