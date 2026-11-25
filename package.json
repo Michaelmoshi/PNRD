@@ -11,7 +11,10 @@
     "prepare": "git config core.hooksPath .githooks",
     "validate": "html-validate index.html pages 404.html",
     "db:migrate": "node db/migrate.js",
-    "db:import": "node db/import-site.js"
+    "db:import": "node db/import-site.js",
+    "server": "node server/index.js",
+    "admin:create": "node db/create-admin.js",
+    "test": "node --test server/smoke.test.js"
   },
   "engines": {
     "node": ">=18"
@@ -21,6 +24,7 @@
   },
   "dependencies": {
     "dotenv": "^18.0.10",
+    "express": "^5.3.0",
     "pg": "^8.23.1"
   }
 }
