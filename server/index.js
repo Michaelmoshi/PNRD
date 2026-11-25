@@ -5,6 +5,8 @@ const express = require('express');
 const db = require('./db');
 const auth = require('./auth');
 const crud = require('./crud');
+const media = require('./media');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +15,7 @@ const ADMIN_ORIGINS = (process.env.ADMIN_ORIGINS || 'http://localhost:3000,http:
 
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
-app.use(express.json({ limit: '100kb' }));
+app.use(express.json({ limit: '100kb' }));   // ignore les envois d'images (type non JSON)
 app.use((req, res, next) => {
   res.set({ 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', 'Referrer-Policy': 'same-origin', 'Cache-Control': 'no-store' });
   next();
@@ -80,7 +82,8 @@ admin.use((req, res, next) => {                      // anti-CSRF : origine conn
   if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     const o = req.headers.origin;
     if (o && !ADMIN_ORIGINS.includes(o)) return res.status(403).json({ error: 'Origine refusee' });
-    if (!req.is('application/json') && req.headers['content-length'] !== '0' && req.headers['content-length']) return res.status(415).json({ error: 'JSON requis' });
+    const isUpload = req.path === '/media' && req.method === 'POST';
+    if (!isUpload && !req.is('application/json') && Number(req.headers['content-length'])) return res.status(415).json({ error: 'JSON requis' });
   }
   next();
 });
@@ -116,6 +119,7 @@ admin.get('/auth/me', auth.require(), (req, res) => {
 });
 
 admin.use(crud());
+admin.use('/media', media);
 
 // ---- blocs de texte : /content/:page/:key
 admin.get('/content', auth.require('contenu.lire'), wrap(async (_req, res) => {
@@ -202,6 +206,11 @@ admin.patch('/messages/:id', auth.require('messages.lire'), wrap(async (req, res
   rows[0] ? res.json(rows[0]) : res.status(404).json({ error: 'Introuvable' });
 }));
 
+// ---- collaborateurs (pour assigner une adhesion)
+admin.get('/staff', auth.require('adhesions.lire'), wrap(async (_req, res) => {
+  res.json((await db.query('SELECT id, full_name FROM users WHERE active ORDER BY full_name')).rows);
+}));
+
 // ---- utilisateurs et audit (administrateur seulement)
 admin.get('/roles', auth.require('*'), wrap(async (_req, res) => { res.json((await db.query('SELECT id, code, label FROM roles ORDER BY id')).rows); }));
 admin.get('/users', auth.require('*'), wrap(async (_req, res) => {
@@ -242,7 +251,34 @@ admin.get('/audit', auth.require('*'), wrap(async (req, res) => {
                               FROM audit_log a LEFT JOIN users u ON u.id = a.user_id ORDER BY a.id DESC LIMIT $1`, [limit])).rows);
 }));
 
+admin.get('/dashboard', auth.require(), wrap(async (req, res) => {
+  const q = async (sql) => (await db.query(sql)).rows;
+  const out = { user: { full_name: req.user.full_name, role: req.user.role } };
+  if (auth.can(req.user, 'adhesions.lire')) {
+    out.applications = Object.fromEntries((await q('SELECT status, count(*)::int AS n FROM applications GROUP BY status')).map((r) => [r.status, r.n]));
+    out.recentApplications = await q('SELECT id, nom, prenom, status, created_at FROM applications ORDER BY created_at DESC LIMIT 5');
+  }
+  if (auth.can(req.user, 'messages.lire')) out.messagesToHandle = (await q('SELECT count(*)::int AS n FROM contact_messages WHERE NOT handled'))[0].n;
+  if (auth.can(req.user, 'contenu.lire')) {
+    out.content = (await q(`SELECT (SELECT count(*) FROM programmes)::int AS programmes, (SELECT count(*) FROM events)::int AS events,
+      (SELECT count(*) FROM members)::int AS members, (SELECT count(*) FROM partners)::int AS partners, (SELECT count(*) FROM media)::int AS media`))[0];
+  }
+  if (auth.can(req.user, '*')) {
+    out.recentActivity = await q(`SELECT a.action, a.entity, a.created_at, u.full_name AS user_name FROM audit_log a
+                                  LEFT JOIN users u ON u.id = a.user_id ORDER BY a.id DESC LIMIT 8`);
+  }
+  res.json(out);
+}));
+
 app.use('/api/v1/admin', admin);
+
+// ---- console (fichiers statiques) et images envoyees
+const ROOT = path.join(__dirname, '..');
+app.use('/admin', (_req, res, next) => {
+  res.set('Content-Security-Policy', "default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
+  next();
+}, express.static(path.join(ROOT, 'admin'), { index: 'index.html' }));
+app.use('/assets', express.static(path.join(ROOT, 'assets'), { maxAge: '1h' }));
 
 app.get('/api/v1/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Route inconnue' }));

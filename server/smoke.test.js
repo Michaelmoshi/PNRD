@@ -3,6 +3,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const crypto = require('crypto');
+const sharp = require('sharp');
+const fs = require('fs');
+const path = require('path');
 const db = require('./db');
 const auth = require('./auth');
 const app = require('./index');
@@ -116,4 +119,31 @@ test('deconnexion invalide la session', async () => {
   await c('POST', `${A}/auth/login`, { email: EDIT, password: PW });
   await c('POST', `${A}/auth/logout`, {});
   assert.equal((await c('GET', `${A}/auth/me`)).status, 401);
+});
+
+test('images : envoi converti en WebP reduit, service statique, suppression', async () => {
+  const c = client();
+  await c('POST', `${A}/auth/login`, { email: EDIT, password: PW });
+  const png = await sharp({ create: { width: 3000, height: 2000, channels: 3, background: '#336699' } }).png().toBuffer();
+  const up = await fetch(`${base}${A}/media?name=Photo%20d%27%C3%A9t%C3%A9.png&alt=Essai`, {
+    method: 'POST', headers: { 'Content-Type': 'image/png', Cookie: (await (async () => { const r = await fetch(`${base}${A}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: EDIT, password: PW }) }); return r.headers.get('set-cookie').split(';')[0]; })()) },
+    body: png,
+  });
+  assert.equal(up.status, 201);
+  const m = await up.json();
+  assert.match(m.path, /^assets\/uploads\/\d{4}\/photo-d-ete-[0-9a-f]{6}\.webp$/);
+  assert.equal(m.width, 1600);
+  assert.equal((await fetch(`${base}/${m.path}`)).status, 200);
+
+  const bad = await fetch(`${base}${A}/media`, { method: 'POST', headers: { 'Content-Type': 'text/plain', Cookie: (await (async () => { const r = await fetch(`${base}${A}/auth/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: EDIT, password: PW }) }); return r.headers.get('set-cookie').split(';')[0]; })()) }, body: 'pas une image' });
+  assert.equal(bad.status, 415);
+
+  assert.equal((await c('DELETE', `${A}/media/${m.id}`)).status, 204);
+  assert.equal(fs.existsSync(path.join(__dirname, '..', m.path)), false);
+});
+
+test('console : page servie avec une politique CSP stricte', async () => {
+  const res = await fetch(`${base}/admin/`);
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-security-policy'), /default-src 'self'/);
 });

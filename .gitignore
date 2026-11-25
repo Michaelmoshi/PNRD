@@ -17,3 +17,6 @@ _*.html
 
 # Secrets
 .env
+
+# Images envoyees depuis la console (donnees, pas du code)
+assets/uploads/

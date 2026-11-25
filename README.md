@@ -133,3 +133,21 @@ dans `js/adhesion.js`. Protections : champ piège invisible, délai minimal, con
 - Compresser les images (WebP, < 200 Ko) et les vidéos (c'est la principale marge d'amélioration de la vitesse).
 - Mettre le nom de domaine définitif dans `site.json` puis `npm run build`.
 - Tester sur un vrai téléphone.
+
+## Console d'administration (branche `cms`)
+
+Prerequis : PostgreSQL, une base `pnrd_dev`, et un fichier `.env` copie de `.env.example`.
+
+```
+npm install
+npm run db:migrate                          # cree les tables
+npm run db:import                           # charge le contenu actuel du site dans la base
+npm run admin:create -- email "Nom" admin   # cree un compte (mot de passe genere et affiche)
+npm run server                              # API + console : http://localhost:3000/admin/
+npm test                                    # tests de l'API sur la base locale
+```
+
+- `db/` : schema et migrations (structure seulement, jamais de donnees personnelles dans Git).
+- `server/` : API REST (`/api/v1/public` pour les formulaires, `/api/v1/admin` pour la console).
+- `admin/` : console (HTML/CSS/JS sans etape de compilation).
+- Les images envoyees vont dans `assets/uploads/` (ignore par Git).
