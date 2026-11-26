@@ -46,7 +46,7 @@ function limit(max) {
     const key = req.path + req.ip;
     const now = Date.now();
     const list = (hits.get(key) || []).filter((t) => now - t < 15 * 60e3);
-    if (list.length >= max) return res.status(429).json({ error: 'Trop de tentatives, reessayez plus tard' });
+    if (list.length >= max) return res.status(429).json({ error: 'Trop de tentatives. Réessayez dans un quart d’heure.' });
     list.push(now);
     hits.set(key, list);
     next();
@@ -101,7 +101,7 @@ admin.post('/auth/login', limit(10), wrap(async (req, res) => {
   const ok = u && u.active && auth.verifyPassword(password, u.password_hash);
   if (!ok) {
     await db.query("INSERT INTO audit_log (action, entity, details, ip) VALUES ('connexion_echec','auth',$1,$2)", [{ email }, req.ip]);
-    return res.status(401).json({ error: 'Identifiants incorrects' });
+    return res.status(401).json({ error: 'Adresse e-mail ou mot de passe incorrect' });
   }
   await auth.createSession(res, u.id);
   await db.query('UPDATE users SET last_login_at = now() WHERE id = $1', [u.id]);
@@ -136,6 +136,10 @@ admin.get('/content/:page/:key', auth.require('contenu.lire'), wrap(async (req, 
 admin.put('/content/:page/:key', auth.require('contenu.ecrire'), wrap(async (req, res) => {
   const { title, body } = req.body || {};
   if (typeof body !== 'string') return bad(res, 'body (texte) obligatoire');
+  // seul l'administrateur peut introduire du code actif dans une page du site
+  if (!auth.can(req.user, '*') && /<\s*(script|object|embed|base|meta)\b|[\s/"']on\w+\s*=|javascript:/i.test(body)) {
+    return bad(res, 'Ce texte contient du code qui n’est pas autorisé.');
+  }
   const { rows } = await db.query(
     `UPDATE content_blocks SET title = COALESCE($3, title), body = $4, updated_by = $5, updated_at = now()
       WHERE page = $1 AND key = $2 RETURNING page, key, title, updated_at`,
@@ -223,8 +227,8 @@ admin.get('/users', auth.require('*'), wrap(async (_req, res) => {
 }));
 admin.post('/users', auth.require('*'), wrap(async (req, res) => {
   const email = str(req.body?.email, 200), full_name = str(req.body?.full_name, 150), password = req.body?.password;
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !full_name) return bad(res, 'E-mail et nom obligatoires');
-  if (typeof password !== 'string' || password.length < 10) return bad(res, 'Mot de passe : 10 caracteres minimum');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !full_name) return bad(res, 'Indiquez le nom et l’adresse e-mail');
+  if (typeof password !== 'string' || password.length < 10) return bad(res, 'Le mot de passe doit contenir au moins 10 caractères');
   const role = await db.query('SELECT id FROM roles WHERE code = $1', [req.body?.role]);
   if (!role.rows[0]) return bad(res, 'Role inconnu');
   try {
@@ -233,14 +237,14 @@ admin.post('/users', auth.require('*'), wrap(async (req, res) => {
     await auth.audit(req, 'creer', 'users', rows[0].id, { email, role: req.body.role });
     res.status(201).json({ id: rows[0].id });
   } catch (e) {
-    if (e.code === '23505') return res.status(409).json({ error: 'E-mail deja utilise' });
+    if (e.code === '23505') return res.status(409).json({ error: 'Cette adresse e-mail a déjà un compte' });
     throw e;
   }
 }));
 admin.patch('/users/:id', auth.require('*'), wrap(async (req, res) => {
   const { active, password } = req.body || {};
-  if (active === false && Number(req.params.id) === req.user.id) return bad(res, 'Vous ne pouvez pas desactiver votre propre compte');
-  if (password !== undefined && (typeof password !== 'string' || password.length < 10)) return bad(res, 'Mot de passe : 10 caracteres minimum');
+  if (active === false && Number(req.params.id) === req.user.id) return bad(res, 'Vous ne pouvez pas désactiver votre propre compte');
+  if (password !== undefined && (typeof password !== 'string' || password.length < 10)) return bad(res, 'Le mot de passe doit contenir au moins 10 caractères');
   const { rows } = await db.query(
     `UPDATE users SET active = COALESCE($2, active), password_hash = COALESCE($3, password_hash) WHERE id = $1 RETURNING id, active`,
     [req.params.id, typeof active === 'boolean' ? active : null, password ? auth.hashPassword(password) : null]);
@@ -295,10 +299,11 @@ publish.refreshLive().catch((e) => console.error('Publication :', e.message));
 app.get('/api/v1/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Route inconnue' }));
 app.use((err, _req, res, _next) => {
+  if (err.type === 'entity.too.large') return res.status(413).json({ error: 'Fichier trop lourd (10 Mo au maximum)' });
   if (err.type === 'entity.parse.failed') return res.status(400).json({ error: 'JSON invalide' });
   if (err.status && err.status < 500) return res.status(err.status).json({ error: err.message });
-  if (err.code === '23505') return res.status(409).json({ error: 'Valeur deja utilisee' });
-  if (err.code === '23503') return res.status(409).json({ error: 'Element lie a un autre contenu' });
+  if (err.code === '23505') return res.status(409).json({ error: 'Cette valeur est déjà utilisée' });
+  if (err.code === '23503') return res.status(409).json({ error: 'Impossible : cet élément est utilisé ailleurs' });
   if (err.code === '22P02' || err.code === '22007') return res.status(400).json({ error: 'Valeur invalide' });
   console.error(err);
   res.status(500).json({ error: 'Erreur serveur' });

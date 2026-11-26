@@ -22,13 +22,13 @@ r.get('/', auth.require('contenu.lire'), wrap(async (_req, res) => {
 }));
 
 r.post('/', auth.require('medias.ecrire'), express.raw({ type: () => true, limit: MAX_BYTES }), wrap(async (req, res) => {
-  if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Aucun fichier recu' });
+  if (!Buffer.isBuffer(req.body) || !req.body.length) return res.status(400).json({ error: 'Aucun fichier reçu' });
   let image;
   try {
     image = sharp(req.body, { limitInputPixels: 50e6 }).rotate().resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 80 });
     await image.metadata();
   } catch {
-    return res.status(415).json({ error: 'Fichier non reconnu : envoyez une image JPEG, PNG, WebP ou GIF' });
+    return res.status(415).json({ error: 'Ce fichier n’est pas une image. Choisissez une photo (JPEG, PNG, WebP ou GIF).' });
   }
   const { data, info } = await image.toBuffer({ resolveWithObject: true });
   const year = String(new Date().getFullYear());

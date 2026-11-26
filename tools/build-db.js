@@ -25,6 +25,7 @@ const initials = (name) => name.split(/\s+/).filter(Boolean).map((w) => w[0].toU
 const titleCase = (name) => name.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (_, a, b) => a + b.toUpperCase());
 const MONTHS = ['Janv', 'Févr', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc'];
 const CLOCK = '<svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>';
+const DEFAULT_ICON = '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.9 17.9 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z" />';
 const SVG_OPEN = '<svg class="hero-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">';
 
 // Remplace l'interieur d'une zone en gardant la balise ouvrante et les espaces autour
@@ -35,26 +36,19 @@ function replaceRegion(html, find, render) {
   return html.slice(0, at.start) + old.match(/^\s*/)[0] + render() + old.match(/\s*$/)[0] + html.slice(at.end);
 }
 
-// Remplace l'element <section ... id="id"> en entier (indentation comprise)
-function replaceSection(html, id, render) {
-  const open = html.search(new RegExp(`<section[^>]*\\bid="${id}"`));
-  if (open < 0) return html;
-  const start = html.lastIndexOf('\n', open) + 1;
-  const end = html.indexOf('</section>', open) + '</section>'.length;
-  return html.slice(0, start) + render() + html.slice(end);
-}
-
 // ---------------------------------------------------------------- lecture de la base
 async function load(db) {
   const q = async (sql) => (await db.query(sql)).rows;
   const d = {};
-  d.slides = await q('SELECT * FROM slides WHERE published ORDER BY position, id');
+  d.slides = await q(`SELECT s.*, m.path AS image FROM slides s LEFT JOIN media m ON m.id = s.image_id
+                       WHERE s.published ORDER BY s.position, s.id`);
   d.events = await q(`SELECT e.id, e.event_date AS date, e.title, e.description, e.report, e.video_mp4, e.video_webm, COALESCE(m.path, '') AS poster
                         FROM events e LEFT JOIN media m ON m.id = e.poster_id WHERE e.published ORDER BY e.id`);
   d.agenda = await q('SELECT * FROM agenda WHERE published ORDER BY starts_at, id');
   d.programmes = await q(`SELECT p.*, m.path AS image, m.alt AS image_alt FROM programmes p LEFT JOIN media m ON m.id = p.image_id
                            WHERE p.published ORDER BY p.position, p.id`);
-  d.categories = await q('SELECT * FROM member_categories ORDER BY position, id');
+  d.categories = (await q('SELECT * FROM member_categories ORDER BY position, id'))
+    .map((c) => ({ ...c, slug: c.slug || `categorie-${c.id}`, icon: c.icon || DEFAULT_ICON }));
   d.members = await q(`SELECT mb.*, m.path AS photo FROM members mb JOIN member_categories c ON c.id = mb.category_id
                          LEFT JOIN media m ON m.id = mb.photo_id WHERE mb.published ORDER BY c.position, mb.position, mb.id`);
   d.partners = await q(`SELECT p.*, m.path AS logo, m.alt AS logo_alt FROM partners p LEFT JOIN media m ON m.id = p.logo_id
@@ -66,7 +60,7 @@ async function load(db) {
 
 // ---------------------------------------------------------------- rendus
 function sliderHtml(slides) {
-  const items = slides.map((s, i) => `  <div class="slide ${esc(s.style)}${i === 0 ? ' active' : ''}">
+  const items = slides.map((s, i) => `  <div class="slide ${esc(s.style)}${i === 0 ? ' active' : ''}">${s.image ? `\n    <img class="slide-bg" src="${esc(s.image)}" alt="" />` : ''}
     <div class="slider-content">
       <span class="slide-eyebrow">${esc(s.eyebrow)}</span>
       <h1>${esc(s.title)}</h1>
@@ -91,6 +85,11 @@ const eventsForSite = (events) => events.map((e) => ({
   id: e.id, date: e.date, dateLabel: frDate(e.date), title: e.title, description: e.description, report: e.report || [],
   poster: e.poster, video: { webm: e.video_webm, mp4: e.video_mp4 },
 }));
+
+function archiveBlock(events) {
+  const videos = events.filter((e) => e.video.mp4 || e.video.webm);
+  return videos.length ? archiveHtml(videos) : '    <p class="archive-empty">Les vidéos de nos événements seront bientôt disponibles.</p>';
+}
 
 function programmeHtml(p, i) {
   return `    <section class="ap-section${i % 2 ? ' ap-band-gray' : ''}" id="${esc(p.slug)}">
@@ -257,7 +256,7 @@ function buildPage(page, d) {
     agenda: () => agendaHtml(d.agenda),
     equipe: () => leadershipHtml(d.members),
     partenaires: () => partnersHtml(d.partners),
-    archive: () => archiveHtml(eventsForSite(d.events)),
+    archive: () => archiveBlock(eventsForSite(d.events)),
   };
   for (const reg of REGIONS.filter((x) => x.file === page)) {
     const block = d.blocks[`${reg.page}/${reg.key}`];
@@ -271,7 +270,9 @@ function buildPage(page, d) {
   }
 
   if (page === 'pages/programmes.html') {
-    d.programmes.forEach((p, i) => { html = replaceSection(html, p.slug, () => rebase(programmeHtml(p, i), base)); });
+    const cards = d.programmes.map((p, i) => rebase(programmeHtml(p, i), base)).join('\n');
+    // la zone remplacee s'arrete avant la section « adhesion » (et le commentaire qui la precede)
+    html = html.replace(/(<main id="contenu">\n)[\s\S]*?((?:\n\n[ \t]*<!--[^\n]*-->)?\n[ \t]*<section class="ap-section ap-cta" id="adhesion">)/, (_, a, b) => a + cards + b);
   }
   if (page === 'pages/membres.html') {
     const { groups, tabs } = teamHtml(d.categories, d.members);

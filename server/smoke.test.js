@@ -9,6 +9,7 @@ const path = require('path');
 const db = require('./db');
 const auth = require('./auth');
 const app = require('./index');
+const { generate } = require('../tools/build-db');
 
 let base;
 let server;
@@ -227,4 +228,47 @@ test('publication : version, site en ligne, aperçu, retour arriere (sans laisse
     for (const r of mine) fs.rmSync(path.join(__dirname, '..', 'published', `v${r.id}`), { recursive: true, force: true });
     if (liveBefore) await db.query('UPDATE publications SET live = true WHERE id = $1', [liveBefore]);
   }
+});
+
+test('ajouts depuis la console : identifiant automatique, visibles sur le site (sans toucher aux donnees)', async () => {
+  const client2 = await db.connect();
+  try {
+    await client2.query('BEGIN');                       // tout est annule a la fin
+    await client2.query("INSERT INTO programmes (slug, position, title, body) VALUES ('test-zz', 99, 'Programme ajoute', 'x')");
+    const cat = (await client2.query("INSERT INTO member_categories (position, title) VALUES (99, 'Groupe ajoute') RETURNING id")).rows[0].id;
+    const media = (await client2.query("INSERT INTO media (path, kind) VALUES ('assets/uploads/test/bandeau.webp', 'image') RETURNING id")).rows[0].id;
+    await client2.query("INSERT INTO slides (position, title, image_id) VALUES (99, 'Photo ajoutee', $1)", [media]);
+    let out = await generate(client2);
+    assert.match(out.get('pages/programmes.html'), /Programme ajoute/);
+    assert.match(out.get('pages/membres.html'), new RegExp(`data-team="categorie-${cat}"`));
+    assert.match(out.get('index.html'), /class="slide-bg" src="assets\/uploads\/test\/bandeau\.webp"/);
+
+    await client2.query("UPDATE programmes SET published = false WHERE slug = 'test-zz'");
+    await client2.query('UPDATE events SET published = false');
+    out = await generate(client2);                      // aucun evenement : pas d'erreur
+    assert.doesNotMatch(out.get('pages/programmes.html'), /Programme ajoute/);
+    assert.match(out.get('index.html'), /bientôt disponibles/);
+  } finally {
+    await client2.query('ROLLBACK');
+    client2.release();
+  }
+});
+
+test('programme sans identifiant saisi, et code actif refuse a un editeur', async () => {
+  app.locals.resetRateLimits();
+  const c = client();
+  await c('POST', `${A}/auth/login`, { email: EDIT, password: PW });
+  const a = await c('POST', `${A}/programmes`, { title: 'Santé pour tous (test auto)' });
+  const b = await c('POST', `${A}/programmes`, { title: 'Santé pour tous (test auto)' });
+  try {
+    assert.equal(a.body.slug, 'sante-pour-tous-test-auto');
+    assert.equal(b.body.slug, 'sante-pour-tous-test-auto-2');
+  } finally {
+    await db.query("DELETE FROM programmes WHERE slug LIKE 'sante-pour-tous-test-auto%'");
+  }
+  const block = (await c('GET', `${A}/content/accueil/vision`)).body.body;
+  for (const bad of ['<script>alert(1)</script>', '<img src=x onerror="alert(1)">', '<a href="javascript:alert(1)">x</a>']) {
+    assert.equal((await c('PUT', `${A}/content/accueil/vision`, { body: block + bad })).status, 400, bad);
+  }
+  assert.equal((await c('GET', `${A}/content/accueil/vision`)).body.body, block);
 });

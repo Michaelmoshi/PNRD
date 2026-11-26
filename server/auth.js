@@ -56,7 +56,7 @@ const can = (user, perm) => !!user && (user.permissions.includes('*') || user.pe
 // Exige une connexion et, si perm est donnee, cette permission
 const require_ = (perm) => (req, res, next) => {
   if (!req.user) return res.status(401).json({ error: 'Connexion requise' });
-  if (perm && !can(req.user, perm)) return res.status(403).json({ error: 'Droits insuffisants' });
+  if (perm && !can(req.user, perm)) return res.status(403).json({ error: 'Votre compte ne permet pas cette action' });
   next();
 };
 

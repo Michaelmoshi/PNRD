@@ -149,5 +149,7 @@ npm test                                    # tests de l'API sur la base locale
 
 - `db/` : schema et migrations (structure seulement, jamais de donnees personnelles dans Git).
 - `server/` : API REST (`/api/v1/public` pour les formulaires, `/api/v1/admin` pour la console).
-- `admin/` : console (HTML/CSS/JS sans etape de compilation).
+- `admin/` : console (HTML/CSS/JS sans etape de compilation, polices du parti incluses). Menu : Accueil, Mon site, Adhesions, Photos, Publier.
+- Les modifications ne sont visibles sur le site qu'apres le bouton « Publier » (apercu : `/apercu/`).
+- `npm run db:import` ecrase le contenu de la base : a ne plus lancer une fois la console utilisee.
 - Les images envoyees vont dans `assets/uploads/` (ignore par Git).

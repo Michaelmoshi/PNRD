@@ -3,10 +3,22 @@ const express = require('express');
 const db = require('./db');
 const auth = require('./auth');
 
+// identifiant d'un programme dans l'adresse (#education) : deduit du titre, l'utilisateur n'a pas a le saisir
+async function programmeSlug(data, creating) {
+  if (data.slug) return;
+  delete data.slug;
+  if (!creating) return;
+  const base = String(data.title).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'programme';
+  let slug = ['adhesion', 'contenu'].includes(base) ? `${base}-2` : base;
+  for (let n = 2; (await db.query('SELECT 1 FROM programmes WHERE slug = $1', [slug])).rowCount; n += 1) slug = `${base}-${n}`;
+  data.slug = slug;
+}
+
 // table, colonnes modifiables (nom -> type), colonnes obligatoires a la creation, ordre d'affichage
 const RESOURCES = {
   slides: { table: 'slides', cols: { position: 'int', eyebrow: 's', title: 's', subtitle: 's', style: 's', image_id: 'int?', published: 'bool' }, required: ['title'], order: 'position, id' },
-  programmes: { table: 'programmes', cols: { slug: 's', position: 'int', title: 's', summary: 's', body: 's', image_id: 'int?', published: 'bool' }, required: ['slug', 'title'], order: 'position, id' },
+  programmes: { table: 'programmes', prepare: programmeSlug, cols: { slug: 's', position: 'int', title: 's', summary: 's', body: 's', image_id: 'int?', published: 'bool' }, required: ['title'], order: 'position, id' },
   events: { table: 'events', cols: { event_date: 'date', title: 's', description: 's', report: 'arr', poster_id: 'int?', video_mp4: 's', video_webm: 's', published: 'bool' }, required: ['event_date', 'title'], order: 'event_date DESC, id' },
   'member-categories': { table: 'member_categories', cols: { position: 'int', title: 's', intro: 's' }, required: ['title'], order: 'position, id' },
   agenda: { table: 'agenda', cols: { starts_at: 'datetime', title: 's', description: 's', published: 'bool' }, required: ['starts_at', 'title'], order: 'starts_at, id' },
@@ -34,7 +46,7 @@ function pick(res, body, partial) {
   }
   if (!partial) {
     for (const col of res.required) {
-      if (out[col] === undefined || out[col] === '' || out[col] === null) throw Object.assign(new Error(`${col} obligatoire`), { status: 400 });
+      if (out[col] === undefined || out[col] === '' || out[col] === null) throw Object.assign(new Error('Un champ obligatoire est vide'), { status: 400 });
     }
   }
   return out;
@@ -58,6 +70,7 @@ function crud(name, res) {
 
   r.post('/', write, wrap(async (req, out) => {
     const data = pick(res, req.body, false);
+    if (res.prepare) await res.prepare(data, true);
     const cols = Object.keys(data);
     const { rows } = await db.query(
       `INSERT INTO ${res.table} (${cols.join(',')}) VALUES (${cols.map((_, i) => '$' + (i + 1)).join(',')}) RETURNING *`,
@@ -68,8 +81,9 @@ function crud(name, res) {
 
   r.patch('/:id', write, wrap(async (req, out) => {
     const data = pick(res, req.body, true);
+    if (res.prepare) await res.prepare(data, false);
     const cols = Object.keys(data);
-    if (!cols.length) return out.status(400).json({ error: 'Aucun champ a modifier' });
+    if (!cols.length) return out.status(400).json({ error: 'Aucune modification à enregistrer' });
     const { rows } = await db.query(
       `UPDATE ${res.table} SET ${cols.map((c, i) => `${c} = $${i + 1}`).join(',')} WHERE id = $${cols.length + 1} RETURNING *`,
       [...cols.map((c) => data[c]), req.params.id]);
