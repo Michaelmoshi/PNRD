@@ -2,6 +2,7 @@
 import { h, clear, toast, field, back, pageHead, ask, fmtDate } from './dom.js';
 import { icon } from './icons.js';
 import { get, post, patch } from './api.js';
+import { ACTIONS, ENTITIES } from './labels.js';
 
 const ROLES = { admin: 'Administrateur', editeur: 'Éditeur du contenu', secretariat: 'Secrétariat des adhésions' };
 const ROLE_HELP = { admin: 'peut tout faire', editeur: 'modifie et publie le site', secretariat: 'traite les adhésions et les messages' };
@@ -60,19 +61,13 @@ export async function usersView() {
   field('Mot de passe de départ', pass, { required: true, help: '10 caractères minimum.' }), field('Ce que la personne peut faire', role),
   h('button', { type: 'submit', class: 'btn btn--primary' }, 'Créer le compte'));
 
-  return h('div', null, back('#/account', 'Mon compte'), pageHead('Comptes', 'Les personnes qui peuvent se connecter à la console.'), holder,
+  return h('div', null, back('#/', 'Tableau de bord'), pageHead('Comptes', 'Les personnes qui peuvent se connecter à la console.'), holder,
     h('details', { class: 'card more' }, h('summary', null, icon('userPlus'), 'Ajouter un compte'), form));
 }
 
-const ACTIONS = { creer: 'a ajouté', modifier: 'a modifié', supprimer: 'a supprimé', connexion: 's’est connecté', deconnexion: 's’est déconnecté',
-  connexion_echec: 'connexion refusée', consulter: 'a consulté', noter: 'a ajouté une note à', envoyer: 'a envoyé', publier: 'a publié', restaurer: 'a remis en ligne une ancienne version de' };
-const ENTITIES = { slides: 'une grande photo', programmes: 'un programme', events: 'un événement passé', agenda: 'un événement à venir', members: 'un membre',
-  'member-categories': 'une catégorie d’équipe', partners: 'un partenaire', content: 'un texte', settings: 'les réglages', media: 'une photo',
-  applications: 'une demande d’adhésion', users: 'un compte', site: 'le site', auth: '' };
-
 export async function auditView() {
   const rows = await get('/audit?limit=100');
-  return h('div', null, back('#/account', 'Mon compte'), pageHead('Historique des actions', 'Les 100 dernières actions.'),
+  return h('div', null, back('#/', 'Tableau de bord'), pageHead('Historique des actions', 'Les 100 dernières actions.'),
     h('ul', { class: 'rows' }, rows.map((r) => h('li', { class: 'row row--static' }, h('span', { class: 'row-body' },
       h('strong', null, `${r.user_name || 'Un visiteur'} ${ACTIONS[r.action] || r.action} ${ENTITIES[r.entity] ?? r.entity}`.trim()),
       h('span', null, fmtDate(r.created_at)))))));

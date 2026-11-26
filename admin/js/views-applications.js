@@ -109,7 +109,7 @@ async function applicationDetail(id, can) {
   notes.append(...a.notes.map((n) => noteItem(n, n.author || 'Compte supprimé')));
   const note = h('textarea', { rows: '3', oninput: () => { dirty.on = !!note.value.trim(); } });
 
-  return h('div', null, back('#/applications', 'Toutes les demandes'),
+  return h('div', { class: 'narrow' }, back('#/applications', 'Toutes les demandes'),
     h('header', { class: 'page-head' }, h('div', null, h('h1', null, name), h('p', { class: 'intro' }, badge, ` Reçue le ${fmtDate(a.created_at)}`))),
     h('div', { class: 'contact-actions' },
       h('a', { class: 'btn btn--primary', href: `tel:${a.telephone}` }, icon('phone'), 'Appeler'),

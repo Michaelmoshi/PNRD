@@ -270,6 +270,13 @@ admin.get('/dashboard', auth.require(), wrap(async (req, res) => {
   if (auth.can(req.user, 'contenu.lire')) {
     out.content = (await q(`SELECT (SELECT count(*) FROM programmes)::int AS programmes, (SELECT count(*) FROM events)::int AS events,
       (SELECT count(*) FROM members)::int AS members, (SELECT count(*) FROM partners)::int AS partners, (SELECT count(*) FROM media)::int AS media`))[0];
+    out.upcoming = await q(`SELECT id, title, starts_at FROM agenda WHERE published AND starts_at >= now()::timestamp ORDER BY starts_at LIMIT 4`);
+    out.photosWithoutText = (await q("SELECT count(*)::int AS n FROM media WHERE alt = ''"))[0].n;
+  }
+  if (auth.can(req.user, 'adhesions.lire')) {             // demandes recues par mois, six derniers mois
+    out.applicationsByMonth = await q(`SELECT to_char(m, 'YYYY-MM') AS month, count(a.id)::int AS n
+      FROM generate_series(date_trunc('month', now()) - interval '5 months', date_trunc('month', now()), interval '1 month') m
+      LEFT JOIN applications a ON date_trunc('month', a.created_at) = m GROUP BY m ORDER BY m`);
   }
   if (auth.can(req.user, 'contenu.lire')) out.publication = await publish.status();
   if (auth.can(req.user, '*')) {

@@ -1,5 +1,5 @@
 // Textes des pages : chaque phrase devient un champ simple. La mise en page (balises) n'est jamais touchée.
-import { h, toast, field, back, pageHead, dirty, mediaUrl } from './dom.js';
+import { h, toast, field, pageHead, dirty, mediaUrl } from './dom.js';
 import { icon } from './icons.js';
 import { get, put } from './api.js';
 import { PAGES, BLOCKS, BLOCK_ORDER } from './labels.js';
@@ -67,7 +67,7 @@ export async function textView(page, key, { can }) {
 async function list() {
   const rows = await get('/content');
   const rank = (k) => { const i = BLOCK_ORDER.indexOf(k); return i < 0 ? 99 : i; };
-  return h('div', null, back('#/site', 'Mon site'), pageHead('Textes des pages', 'Choisissez la page, puis la partie à corriger.'),
+  return h('div', null, pageHead('Textes des pages', 'Choisissez la page, puis la partie à corriger.', null, ['#/', 'Tableau de bord']),
     Object.keys(PAGES).map((p) => {
       const blocks = rows.filter((r) => r.page === p).sort((a, b) => rank(a.key) - rank(b.key));
       return blocks.length ? h('details', { class: 'card more', open: p === 'accueil' }, h('summary', null, PAGES[p]),
@@ -154,5 +154,5 @@ async function editor(page, key, can) {
       } }, 'Enregistrer le code'));
   }
 
-  return h('div', null, back('#/content', 'Textes des pages'), pageHead(BLOCKS[key] || key, PAGES[page] || page), form, advanced);
+  return h('div', { class: 'narrow' }, pageHead(BLOCKS[key] || key, PAGES[page] || page, h('a', { class: 'btn', href: '/apercu/', target: '_blank', rel: 'noopener noreferrer' }, icon('eye'), 'Voir l’aperçu'), ['#/content', 'Textes des pages']), form, advanced);
 }

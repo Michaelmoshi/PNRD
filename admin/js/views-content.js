@@ -1,5 +1,6 @@
 // Listes en cartes et formulaires (décrits ci-dessous), réglages et photos
 import { h, clear, toast, field, toggle, back, pageHead, empty, ask, uid, dirty, fmtDate, fmtDay, mediaUrl } from './dom.js';
+import { calendarView, prefill } from './views-calendar.js';
 import { icon } from './icons.js';
 import { get, post, patch, put, del, upload } from './api.js';
 import { PAGES } from './labels.js';
@@ -8,21 +9,21 @@ const PUBLISHED = { key: 'published', label: 'Afficher sur le site', type: 'bool
 const ORIGINAL_SLIDES = { 'slide--renouveau': 'assets/images/hero/slide-1-renouveau.jpeg', 'slide--jeunesse': 'assets/images/hero/slide-2-jeunesse.jpeg', 'slide--diversite': 'assets/images/hero/slide-3-diversite.jpeg' };
 
 export const RESOURCES = {
-  slides: { title: 'Grandes photos', intro: 'Les images qui défilent en haut de la page d’accueil.', add: 'Ajouter une grande photo', none: 'Aucune grande photo', order: true,
+  slides: { title: 'Bandeau d’accueil', intro: 'Les images qui défilent en haut de la page d’accueil.', add: 'Ajouter une grande photo', none: 'Aucune grande photo', order: true,
     name: (r) => r.title, meta: (r) => r.subtitle, image: (r) => r.image_id, fallback: (r) => ORIGINAL_SLIDES[r.style], icon: 'photo',
     fields: [{ key: 'image_id', label: 'Photo de fond', type: 'media', fallback: (r) => ORIGINAL_SLIDES[r.style], help: 'Choisissez de préférence une photo horizontale.' },
       { key: 'title', label: 'Grand titre', required: true }, { key: 'subtitle', label: 'Phrase sous le titre' }, { key: 'eyebrow', label: 'Petit texte au-dessus du titre' }, PUBLISHED] },
   programmes: { title: 'Programmes', intro: 'Les projets et réalisations du parti.', add: 'Ajouter un programme', none: 'Aucun programme', order: true,
-    name: (r) => r.title, meta: (r) => r.summary, image: (r) => r.image_id, icon: 'programme',
+    name: (r) => r.title, meta: (r) => r.body, col: ['Thème', (r) => r.summary], image: (r) => r.image_id, icon: 'programme',
     fields: [{ key: 'title', label: 'Titre', required: true }, { key: 'summary', label: 'Thème', help: 'Un ou deux mots, par exemple « Social ».' },
       { key: 'body', label: 'Présentation', type: 'textarea' }, { key: 'image_id', label: 'Photo', type: 'media', required: true }, PUBLISHED] },
   agenda: { title: 'Prochains événements', intro: 'Les rendez-vous annoncés sur la page d’accueil.', add: 'Annoncer un événement', none: 'Aucun événement annoncé',
-    name: (r) => r.title, meta: (r) => fmtDate(r.starts_at), icon: 'calendar',
+    name: (r) => r.title, meta: (r) => r.description, col: ['Date', (r) => fmtDate(r.starts_at)], icon: 'calendar', calendar: true,
     warn: (r) => new Date(r.starts_at.replace(' ', 'T')) < new Date() && 'Date passée',
     fields: [{ key: 'title', label: 'Nom de l’événement', required: true }, { key: 'starts_at', label: 'Date et heure', type: 'datetime', required: true },
       { key: 'description', label: 'En une phrase', type: 'textarea' }, PUBLISHED] },
   events: { title: 'Événements passés', intro: 'Les vidéos à revoir sur la page d’accueil.', add: 'Ajouter un événement passé', none: 'Aucun événement passé',
-    name: (r) => r.title, meta: (r) => fmtDay(r.event_date), image: (r) => r.poster_id, icon: 'video',
+    name: (r) => r.title, meta: (r) => r.description, col: ['Date', (r) => fmtDay(r.event_date)], image: (r) => r.poster_id, icon: 'video',
     warn: (r) => !r.video_mp4 && !r.video_webm && 'Sans vidéo : pas affiché sur l’accueil',
     fields: [{ key: 'title', label: 'Nom de l’événement', required: true }, { key: 'event_date', label: 'Date', type: 'date', required: true },
       { key: 'description', label: 'En une phrase', type: 'textarea' },
@@ -140,21 +141,32 @@ function mediaField(f, value, item) {
 // ------------------------------------------------------------ listes
 export async function resourceView(name, id) {
   const res = RESOURCES[name];
-  return id ? resourceForm(name, res, id) : resourceList(name, res);
+  if (id === 'calendrier') return calendarView();
+  const list = await resourceList(name, res);
+  if (!id) return list;
+  return h('div', null, list, await resourcePanel(name, res, id));
 }
+
+// Onglets Liste / Calendrier des evenements a venir
+export const agendaTabs = (current) => h('nav', { class: 'tabs', 'aria-label': 'Affichage' },
+  h('a', { href: '#/r/agenda', 'aria-current': current === 'liste' ? 'page' : false }, 'Liste'),
+  h('a', { href: '#/r/agenda/calendrier', 'aria-current': current === 'calendrier' ? 'page' : false }, 'Calendrier'));
 
 async function resourceList(name, res) {
   const [rows, media, groups] = await Promise.all([get(`/${name}`), get('/media'), res.group ? get('/member-categories') : null]);
   const paths = new Map(media.map((m) => [m.id, m.path]));
   const holder = h('div');
-  let query = '';
+  const stats = h('p', { class: 'stats' });
+  let query = '', filter = '', group = '';
+  const column = res.col;
+  const ordering = () => res.order && !query && !filter;
 
   const picture = (r) => {
     const src = paths.get(res.image?.(r)) || res.fallback?.(r);
     if (src) return h('img', { class: `thumb${res.round ? ' thumb--round' : ''}${res.contain ? ' thumb--contain' : ''}`, src: mediaUrl(src), alt: '', loading: 'lazy' });
     if (name === 'agenda') {
       const d = new Date(r.starts_at.replace(' ', 'T'));
-      return h('span', { class: 'thumb thumb--date', 'aria-hidden': 'true' }, h('strong', null, d.getDate()), d.toLocaleDateString('fr-FR', { month: 'short' }));
+      return h('span', { class: 'thumb thumb--date', 'aria-hidden': 'true' }, h('small', null, d.toLocaleDateString('fr-FR', { month: 'short' })), h('strong', null, d.getDate()));
     }
     if (res.round) {
       const letters = res.name(r).split(/\s+/).filter(Boolean).map((w) => w[0].toUpperCase()).slice(0, 2).join('');
@@ -173,61 +185,84 @@ async function resourceList(name, res) {
     holder.querySelector(`[data-move="${list[to].id}:${to > from ? 'down' : 'up'}"]:not([disabled])`)?.focus();
   }
 
-  const card = (r, i, list) => {
+  const count = () => {
+    const shown = rows.filter((r) => r.published).length;
+    clear(stats).append(h('span', null, h('strong', null, rows.length), ` au total`));
+    if (!res.noVisibility) stats.append(h('span', null, h('strong', null, shown), ' sur le site'), rows.length - shown ? h('span', { class: 'stats-warn' }, `${rows.length - shown} masqué(s)`) : '');
+    for (const b of tabs ? tabs.querySelectorAll('[data-count]') : []) b.textContent = b.dataset.count === 'on' ? shown : b.dataset.count === 'off' ? rows.length - shown : rows.length;
+  };
+
+  const row = (r, i, list) => {
     const label = res.name(r);
     const warning = res.warn?.(r);
     const li = h('li', { class: `item${r.published === false ? ' is-hidden' : ''}` },
       h('a', { class: 'item-main', href: `#/r/${name}/${r.id}` }, picture(r),
-        h('span', { class: 'row-body' }, h('strong', null, label), res.meta?.(r) && h('span', null, res.meta(r)), warning && h('span', { class: 'badge badge--recue' }, warning)),
-        h('span', { class: 'item-edit' }, icon('pencil'), h('span', null, 'Modifier'))),
-      (!res.noVisibility || (res.order && !query)) && h('div', { class: 'item-tools' },
-        !res.noVisibility ? (() => {
-          const t = toggle(r.published ? 'Visible' : 'Masqué', r.published, async (on) => {
-            try {
-              await patch(`/${name}/${r.id}`, { published: on });
-              r.published = on;
-              li.classList.toggle('is-hidden', !on);
-              t.querySelector('.switch-label').textContent = on ? 'Visible' : 'Masqué';
-              toast(on ? `« ${label} » sera affiché après publication` : `« ${label} » sera masqué après publication`);
-            } catch (e) { t.input.checked = !on; throw e; }
-          });
-          t.input.setAttribute('aria-label', `Afficher « ${label} » sur le site`);
-          return t;
-        })() : h('span'),
-        res.order && !query && list.length > 1 && h('span', { class: 'order' },
+        h('span', { class: 'row-body' }, h('strong', null, label), res.meta?.(r) && h('span', null, res.meta(r)), warning && h('span', { class: 'pill pill--warn' }, warning))),
+      column && h('span', { class: 'item-col' }, column[1](r) || '—'),
+      !res.noVisibility && h('span', { class: 'item-state' }, (() => {
+        const t = toggle(r.published ? 'Visible' : 'Masqué', r.published, async (on) => {
+          try {
+            await patch(`/${name}/${r.id}`, { published: on });
+            r.published = on;
+            li.classList.toggle('is-hidden', !on);
+            t.querySelector('.switch-label').textContent = on ? 'Visible' : 'Masqué';
+            count();
+            toast(on ? `« ${label} » sera affiché après publication` : `« ${label} » sera masqué après publication`);
+          } catch (e) { t.input.checked = !on; throw e; }
+        });
+        t.input.setAttribute('aria-label', `Afficher « ${label} » sur le site`);
+        return t;
+      })()),
+      h('span', { class: 'item-actions' },
+        ordering() && list.length > 1 && [
           h('button', { type: 'button', class: 'icon-btn', disabled: i === 0, 'data-move': `${r.id}:up`, 'aria-label': `Monter « ${label} »`, title: 'Monter', onclick: () => move(list, i, i - 1) }, icon('up')),
-          h('button', { type: 'button', class: 'icon-btn', disabled: i === list.length - 1, 'data-move': `${r.id}:down`, 'aria-label': `Descendre « ${label} »`, title: 'Descendre', onclick: () => move(list, i, i + 1) }, icon('down')))));
+          h('button', { type: 'button', class: 'icon-btn', disabled: i === list.length - 1, 'data-move': `${r.id}:down`, 'aria-label': `Descendre « ${label} »`, title: 'Descendre', onclick: () => move(list, i, i + 1) }, icon('down'))],
+        h('a', { class: 'icon-btn', href: `#/r/${name}/${r.id}`, 'aria-label': `Modifier « ${label} »`, title: 'Modifier' }, icon('pencil'))));
     return li;
   };
 
-  const listOf = (items) => h('ul', { class: 'items' }, items.map((r, i) => card(r, i, items)));
+  const listOf = (items) => h('ul', { class: 'items' }, items.map((r, i) => row(r, i, items)));
+  const header = () => h('div', { class: `items-head${column ? '' : ' no-col'}`, 'aria-hidden': 'true' },
+    h('span', null, res.one || 'Nom'), column && h('span', { class: 'item-col' }, column[0]), !res.noVisibility && h('span', { class: 'item-state' }, 'Sur le site'), h('span', { class: 'item-actions' }, ''));
+
   function draw() {
-    const shown = rows.filter((r) => !query || `${res.name(r)} ${res.meta?.(r) || ''}`.toLowerCase().includes(query));
-    if (!rows.length) return clear(holder).append(empty(res.icon, res.none, 'Commencez avec le bouton ci-dessus.'));
-    if (!shown.length) return clear(holder).append(empty('search', 'Aucun résultat', 'Essayez un autre mot.'));
-    if (!res.group) return clear(holder).append(listOf(shown));
-    clear(holder).append(...groups.map((g) => {
+    count();
+    const shown = rows.filter((r) => (!query || `${res.name(r)} ${res.meta?.(r) || ''}`.toLowerCase().includes(query))
+      && (!filter || r.published === (filter === 'on')) && (!group || r[res.group] === Number(group)));
+    if (!rows.length) return clear(holder).append(empty(res.icon, res.none, 'Commencez avec le bouton « ' + res.add + ' ».'));
+    if (!shown.length) return clear(holder).append(empty('search', 'Aucun résultat', 'Essayez un autre mot ou un autre filtre.'));
+    if (!res.group) return clear(holder).append(header(), listOf(shown));
+    clear(holder).append(header(), ...groups.map((g) => {
       const items = shown.filter((r) => r[res.group] === g.id);
-      return items.length ? h('section', null, h('h2', null, g.title), listOf(items)) : '';
+      return items.length ? h('section', null, h('h2', { class: 'group-title' }, g.title, h('span', null, items.length)), listOf(items)) : '';
     }));
   }
+
+  const tabs = !res.noVisibility && h('div', { class: 'tabs', role: 'group', 'aria-label': 'Filtrer' }, [['', 'Tous', 'all'], ['on', 'Visibles', 'on'], ['off', 'Masqués', 'off']].map(([v, label, key]) =>
+    h('button', { type: 'button', 'aria-pressed': String(v === ''), onclick: (e) => {
+      filter = v;
+      for (const b of tabs.children) b.setAttribute('aria-pressed', String(b === e.currentTarget));
+      draw();
+    } }, label, h('span', { class: 'count', 'data-count': key }))));
+
+  const toolbar = rows.length > 0 && h('div', { class: 'toolbar' },
+    h('div', { class: 'search' }, icon('search'), h('input', { type: 'search', placeholder: 'Rechercher…', 'aria-label': 'Chercher dans la liste', oninput: (e) => { query = e.target.value.trim().toLowerCase(); draw(); } })),
+    res.group && h('select', { 'aria-label': 'Choisir un groupe', onchange: (e) => { group = e.target.value; draw(); } },
+      h('option', { value: '' }, 'Tous les groupes'), groups.map((g) => h('option', { value: g.id }, g.title))));
   draw();
 
-  const search = rows.length > 7 && h('div', { class: 'search' }, icon('search'),
-    h('input', { type: 'search', placeholder: 'Chercher un nom…', 'aria-label': 'Chercher dans la liste', oninput: (e) => { query = e.target.value.trim().toLowerCase(); draw(); } }));
-  return h('div', null,
-    back(res.parent || '#/site', res.parent ? 'Équipe' : 'Mon site'),
+  return h('div', { class: 'list-page' },
     pageHead(res.title, res.intro, h('div', { class: 'head-actions' },
-      res.extra && h('a', { class: 'btn', href: res.extra.href }, res.extra.label),
-      h('a', { class: 'btn btn--primary', href: `#/r/${name}/new` }, icon('plus'), res.add))),
-    search, holder);
+      res.extra && h('a', { class: 'btn btn--quiet', href: res.extra.href }, res.extra.label),
+      h('a', { class: 'btn btn--accent', href: `#/r/${name}/new` }, icon('plus'), res.add)), res.parent ? [res.parent, 'Équipe'] : ['#/', 'Tableau de bord']),
+    stats, name === 'agenda' && agendaTabs('liste'), tabs, h('div', { class: 'card card--list' }, toolbar, holder));
 }
 
-// ------------------------------------------------------------ formulaire
-async function resourceForm(name, res, id) {
+// ------------------------------------------------------------ panneau lateral : ajouter ou modifier
+async function resourcePanel(name, res, id) {
   const isNew = id === 'new';
   const all = [...res.fields, ...(res.more || [])];
-  const item = isNew ? {} : await get(`/${name}/${id}`);
+  const item = isNew ? { ...prefill.take() } : await get(`/${name}/${id}`);
   const refs = {};
   for (const f of all) if (f.from) refs[f.from] = await get(`/${f.from}`);
   const list = `#/r/${name}`;
@@ -258,11 +293,25 @@ async function resourceForm(name, res, id) {
     return w;
   };
 
-  const submit = h('button', { type: 'submit', class: 'btn btn--primary btn--large' }, isNew ? 'Ajouter' : 'Enregistrer');
-  const form = h('form', { class: 'form', novalidate: true },
-    h('div', { class: 'card' }, res.fields.map(build)),
-    res.more && h('details', { class: 'card more' }, h('summary', null, 'Options avancées'), res.more.map(build)),
-    h('div', { class: 'savebar' }, submit, h('a', { class: 'btn btn--large', href: list }, 'Annuler')));
+  const aside = (f) => ['media', 'bool', 'select'].includes(f.type);
+  const side = res.fields.filter(aside);
+  const title = isNew ? res.add : res.name(item);
+  const submit = h('button', { type: 'submit', class: 'btn btn--primary' }, isNew ? 'Ajouter' : 'Enregistrer');
+  const remove = !isNew && h('span', { class: 'delete-zone' }, h('button', { type: 'button', class: 'btn btn--danger', onclick: async () => {
+    const text = res.deleteWarning ? await res.deleteWarning(item) : 'Cette suppression est définitive. Pour le cacher seulement, désactivez « Afficher sur le site ».';
+    if (!(await ask({ title: `Supprimer « ${title} » ?`, text, yes: 'Supprimer', no: 'Garder', danger: true }))) return;
+    await del(`/${name}/${id}`);
+    dirty.on = false;
+    toast('Supprimé. Pensez à publier.');
+    location.hash = list;
+  } }, icon('trash'), 'Supprimer'));
+
+  const form = h('form', { class: 'form panel-form', novalidate: true },
+    h('div', { class: `panel-body${side.length ? '' : ' panel-body--single'}` },
+      h('div', { class: 'panel-main' }, res.fields.filter((f) => !aside(f)).map(build),
+        res.more && h('details', { class: 'more' }, h('summary', null, 'Options avancées'), res.more.map(build))),
+      side.length > 0 && h('div', { class: 'panel-side' }, side.map(build))),
+    h('div', { class: 'savebar' }, remove, h('a', { class: 'btn', href: list }, 'Annuler'), submit));
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -294,16 +343,13 @@ async function resourceForm(name, res, id) {
     } finally { submit.disabled = false; }
   });
 
-  const title = isNew ? res.add : res.name(item);
-  return h('div', null, back(list, res.title), pageHead(title), form,
-    !isNew && h('p', { class: 'delete-zone' }, h('button', { type: 'button', class: 'btn btn--danger', onclick: async () => {
-      const text = res.deleteWarning ? await res.deleteWarning(item) : 'Cette suppression est définitive. Pour le cacher seulement, désactivez « Afficher sur le site ».';
-      if (!(await ask({ title: `Supprimer « ${title} » ?`, text, yes: 'Supprimer', no: 'Garder', danger: true }))) return;
-      await del(`/${name}/${id}`);
-      dirty.on = false;
-      toast('Supprimé. Pensez à publier.');
-      location.hash = list;
-    } }, icon('trash'), 'Supprimer')));
+  return h('div', { class: 'overlay' }, h('a', { class: 'overlay-back', href: list, tabindex: '-1', 'aria-hidden': 'true' }),
+    h('section', { class: 'panel', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'panel-title', tabindex: '-1' },
+      h('header', { class: 'panel-head' },
+        h('div', null, h('span', { class: 'pill pill--blue' }, isNew ? 'Nouveau' : 'Modification'), h('h2', { id: 'panel-title' }, title),
+          h('p', null, 'Enregistrez, puis publiez pour mettre le site à jour.')),
+        h('a', { class: 'icon-btn panel-close', href: list, 'aria-label': 'Fermer' }, icon('close'))),
+      form));
 }
 
 // ------------------------------------------------------------ réglages
@@ -378,30 +424,62 @@ export async function settingsView(section = 'contact', { can }) {
     } finally { submit.disabled = false; }
   } }, body, h('div', { class: 'savebar' }, submit));
 
-  return h('div', null, back('#/site', 'Mon site'), pageHead(page.title, page.intro), form);
+  return h('div', { class: 'narrow' }, pageHead(page.title, page.intro, null, ['#/', 'Tableau de bord']), form);
 }
 
 // ------------------------------------------------------------ photos
 export async function mediaView() {
   const holder = h('div');
-  const draw = async () => {
-    const items = await get('/media');
-    clear(holder).append(items.length ? h('ul', { class: 'gallery' }, items.map((m) => {
+  const stats = h('p', { class: 'stats' });
+  let items = [], filter = '', query = '';
+  const draw = () => {
+    const missing = items.filter((m) => !m.alt).length;
+    clear(stats).append(h('span', null, h('strong', null, items.length), ' photos'), missing ? h('span', { class: 'stats-warn' }, `${missing} sans description`) : '');
+    for (const b of tabs.querySelectorAll('[data-count]')) b.textContent = b.dataset.count === 'none' ? missing : items.length;
+    const shown = items.filter((m) => (!filter || !m.alt) && (!query || `${m.alt} ${m.path}`.toLowerCase().includes(query)));
+    clear(holder).append(shown.length ? h('ul', { class: 'gallery' }, shown.map((m) => {
       const label = m.alt || 'Photo sans description';
+      const file = m.path.startsWith('http') ? 'Photo en ligne' : m.path.split('/').pop();
       const alt = h('input', { type: 'text', value: m.alt, placeholder: 'Que montre la photo ?', 'aria-label': `Description : ${label}`, onchange: async () => {
         await patch(`/media/${m.id}`, { alt: alt.value });
+        m.alt = alt.value.trim();
         toast('Description enregistrée');
+        draw();
       } });
-      return h('li', null, h('img', { src: mediaUrl(m.path), alt: label, loading: 'lazy' }),
+      return h('li', null, h('div', { class: 'gallery-image' }, h('img', { src: mediaUrl(m.path), alt: label, loading: 'lazy', class: /\.(svg|png)$/i.test(m.path) ? 'is-contain' : false }), !m.alt && h('span', { class: 'pill pill--warn' }, 'Sans description')),
+        h('div', { class: 'gallery-info' }, h('strong', { title: file }, file), h('small', null, m.width ? `${m.width} × ${m.height}` : m.path.startsWith('http') ? 'Hébergée ailleurs' : 'Fournie avec le site')),
         h('div', { class: 'gallery-tools' }, alt, h('button', { type: 'button', class: 'icon-btn icon-btn--danger', 'aria-label': `Supprimer : ${label}`, title: 'Supprimer', onclick: async () => {
           if (!(await ask({ title: 'Supprimer cette photo ?', text: 'Elle disparaîtra de tous les endroits où elle est utilisée.', yes: 'Supprimer', no: 'Garder', danger: true }))) return;
           await del(`/media/${m.id}`);
           toast('Photo supprimée');
-          await draw();
+          await load();
         } }, icon('trash'))));
-    })) : empty('photo', 'Aucune photo', 'Ajoutez vos premières photos.'));
+    })) : empty('photo', items.length ? 'Aucun résultat' : 'Aucune photo', items.length ? 'Essayez un autre filtre.' : 'Ajoutez vos premières photos.'));
   };
-  await draw();
-  return h('div', null, pageHead('Photos', 'Toutes les photos du site. Elles sont allégées automatiquement.',
-    uploadButton('Ajouter des photos', 'btn btn--primary', true, draw)), holder);
+  const load = async () => { items = await get('/media'); draw(); };
+  const tabs = h('div', { class: 'tabs', role: 'group', 'aria-label': 'Filtrer les photos' }, [['', 'Toutes', 'all'], ['none', 'Sans description', 'none']].map(([v, label, key]) =>
+    h('button', { type: 'button', 'aria-pressed': String(v === ''), onclick: (e) => {
+      filter = v;
+      for (const b of tabs.children) b.setAttribute('aria-pressed', String(b === e.currentTarget));
+      draw();
+    } }, label, h('span', { class: 'count', 'data-count': key }))));
+  await load();
+
+  const page = h('div', { class: 'drop-zone' },
+    pageHead('Photos', 'Toutes les photos du site. Vous pouvez aussi les déposer sur cette page.', uploadButton('Ajouter des photos', 'btn btn--accent', true, load), ['#/', 'Tableau de bord']),
+    stats, tabs,
+    h('div', { class: 'toolbar toolbar--bare' }, h('div', { class: 'search' }, icon('search'), h('input', { type: 'search', placeholder: 'Rechercher une photo…', 'aria-label': 'Rechercher une photo', oninput: (e) => { query = e.target.value.trim().toLowerCase(); draw(); } }))),
+    holder);
+  page.addEventListener('dragover', (e) => { e.preventDefault(); page.classList.add('is-over'); });
+  page.addEventListener('dragleave', (e) => { if (!page.contains(e.relatedTarget)) page.classList.remove('is-over'); });
+  page.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    page.classList.remove('is-over');
+    const files = [...e.dataTransfer.files].filter((f) => f.type.startsWith('image/'));
+    if (!files.length) return toast('Déposez des images.', 'error');
+    for (const f of files) await send(f);
+    toast(files.length > 1 ? `${files.length} photos ajoutées` : 'Photo ajoutée');
+    await load();
+  });
+  return page;
 }

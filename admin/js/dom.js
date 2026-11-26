@@ -80,8 +80,9 @@ export function toggle(label, checked, onchange) {
 
 export const back = (href, label = 'Retour') => h('a', { class: 'back', href }, icon('left'), label);
 
-export const pageHead = (title, intro, action) => h('header', { class: 'page-head' },
-  h('div', null, h('h1', null, title), intro && h('p', { class: 'intro' }, intro)), action);
+export const pageHead = (title, intro, action, crumb) => h('header', { class: 'page-head' },
+  h('div', null, crumb && h('nav', { class: 'crumbs', 'aria-label': 'Fil d’Ariane' }, h('a', { href: crumb[0] }, crumb[1]), icon('right'), h('span', { 'aria-current': 'page' }, title)),
+    h('h1', null, title), intro && h('p', { class: 'intro' }, intro)), action);
 
 export const empty = (name, title, text, action) => h('div', { class: 'empty' }, icon(name, 'icon--xl'), h('h2', null, title), text && h('p', null, text), action);
 
